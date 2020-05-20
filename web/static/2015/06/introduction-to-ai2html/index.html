@@ -1,0 +1,273 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">AI 變 HTML！ai2html 讓你用 Adobe Illustrator 做網頁</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1025 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-adobe-illustrator tag-ai2html tag-css tag-html tag-nytimes tag-svg" id="post-1025">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-06-20" class="updated">20 6 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/06/ai2html-cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/ai2html-cover.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/ai2html-cover-300x176.jpg 300w" height="527" width="900" alt="ai2html - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/06/ai2html-cover.jpg" class="aligncenter size-full wp-image-1027"></a>
+<p>常常我們嘔心瀝血的圖表作品最後會轉換成圖後以圖片的方式發表，但麻煩的是圖片的內容 Google 搜尋無法分析，而每次修改又都要重新產生圖片。像這樣的困擾並不是只有我們會有，新聞編輯室也會有喔！所以紐約時報編輯室就開發了開源專案「 ai2html 」，幫我們把向量原稿轉成網頁源碼！那麼，我們就來看看 ai2html 的效果如何吧！</p>
+<p><span id="more-1025"></span></p>
+<p>網路媒體興起、多媒體的報導方式，使用圖表、插畫的機會越來越多，文章曝光的管道也越來越多元，「Social Media Optimization 」與「Search Engine Optimization 」逐漸成為拓展傳播效率的重要管道。然而圖片與網路時代有個最重要的衝突在：圖片缺乏了數位化的內容資訊，無法簡單的讓程式分析使用。</p>
+<p>當我們編輯網頁時，我們會將文章逐字的打在網頁中，內文是以數位化的方式逐字呈現，任何程式都可以讀取文章的內容；但當我們將文字寫在圖片之中，程式無法再分析數位化的文字，於是內文的資訊就藏在圖片中而失去了，相對的在社交網站、搜尋引擎中相關的關鍵字就無法對應到我們製作的圖片。</p>
+<p>其次，當我們用圖片的方式傳播資訊時，並不知道讀者會用什麼樣的螢幕尺寸來閱讀；一但我們做了張大圖而他們拿著手機來看，圖中的文字會連同圖片一起縮小以塞進手機螢幕中，這時字就會變得太小而無法閱讀。</p>
+<p>要解決這些問題最快的方式就是直接將圖中的文字部份抽出後另外填入網頁。但這帶來了另外一個困難：當排版分成了圖稿製作、網頁編輯兩步驟時，不僅開發門檻提高 ( 設計師也得懂 HTML ) ，開發時間也相對變長了。</p>
+<p>ai2html 幫我們將 Adobe Illustrator 設計稿轉換成 HTML / CSS 並將文字抽離，這帶來了什麼好處呢？</p>
+<ol>
+<li>混合文字的圖片有利於搜尋引擎建立網頁索引</li>
+<li>修改設計稿時我們不再需要重新填入文字，ai2html 產生的結構化輸出讓我們能夠自動帶入文字</li>
+<li>HTML + CSS 使文字在不同的解析度保持在適合的大小，這點從 AI 檔直接產生 SVG 時做不到的。</li>
+<li>AI 產生的 SVG 檔中，所有文字都依行切分，不利於程式化操作，而 ai2html 解決了這問題。</li>
+</ol>
+<p>ai2html 官方網站列出了一些使用 ai2html 製作的專案，比方說<a href="http://www.nytimes.com/interactive/2015/06/17/world/middleeast/map-isis-attacks-around-the-world.html?smid=tw-nytimes&amp;_r=0">紐約時報關於伊斯蘭國的這篇報導</a>：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/isis-nyt.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/isis-nyt.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/isis-nyt-300x153.jpg 300w" height="460" width="900" alt="NYTimes - ISIS Attack Map" src="http://blog.infographics.tw/wp-content/uploads/2015/06/isis-nyt.jpg" class="aligncenter size-full wp-image-1029"></a>
+<p>注意原報導中地圖上的文字 ( 包含國名 ) 是可以用滑鼠選取的，而在不同的螢幕大小時地圖會縮放，但文字不會跟著縮放，而會保持在一個適合閱讀的大小，可以說是圖表的「響應式設計 ( Responsive Design ) 」。</p>
+<h2>使用簡介</h2>
+<p>ai2html 的使用方式相當簡單，不過必須要有 Adobe Illustrator。首先我們連至 <a href="http://ai2html.org/">ai2html 官網</a> 取得 <a href="https://github.com/newsdev/ai2html/raw/master/ai2html.js">ai2html 程式碼</a>，放到 Illustrator 的指令碼目錄下 ( 例如「D:\Program Files\Adobe Illustrator CC (64 Bit)\Presets\zh_TW\指令檔」 ) ：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/save-jsx.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/save-jsx.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/save-jsx-300x107.jpg 300w" height="320" width="900" alt="save jsx into illustrator preset" src="http://blog.infographics.tw/wp-content/uploads/2015/06/save-jsx.jpg" class="aligncenter size-full wp-image-1031"></a>
+<p>( 在 Mac 上則可嘗試存入「 /Applications/Adobe Illustrator CC 2014/Presets/en_US/Scripts/ai2html.jsx 」，其中 Adobe Illustrator CC 2014 請對應到自己使用的版本。 )</p>
+<p>檔案儲存好之後，開啟 Adobe Illustrator 便會在「檔案」→「指令檔」選單中看到「ai2html」，代表你有安裝成功：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/use-ai2html.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/use-ai2html.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/use-ai2html-300x133.jpg 300w" height="400" width="900" alt="ai2html in Menu" src="http://blog.infographics.tw/wp-content/uploads/2015/06/use-ai2html.jpg" class="aligncenter size-full wp-image-1032"></a>
+<p>接著開啟我們要用的原始稿然後點擊 ai2html ，他便會為我們產生 HTML 。舉例來說，我們製作了「不能沒有醬汁」的設計稿：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/sauce-ai-outline.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/sauce-ai-outline.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/sauce-ai-outline-300x133.jpg 300w" height="400" width="900" alt="where is the sauce - ai" src="http://blog.infographics.tw/wp-content/uploads/2015/06/sauce-ai-outline.jpg" class="aligncenter size-full wp-image-1034"></a>
+<p>使用 ai2html 產生後的檔案會與我們的原始稿檔案位於相同目錄下，名為「ai2html-output」， HTML 檔案則與原始稿檔名相同：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/wrong-encoding.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/wrong-encoding.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/wrong-encoding-300x186.jpg 300w" height="557" width="900" alt="result with incorrect encoding" src="http://blog.infographics.tw/wp-content/uploads/2015/06/wrong-encoding.jpg" class="aligncenter size-full wp-image-1035"></a>
+<p>ai2html 產生的 HTML 並不包含編碼，所以我們有可能得自己手動調整成 utf-8，以下便是調整完的最終結果，可以看到就連右下角的「醬汁」兩字也是文字型態，可以選取：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/sauce-html2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/sauce-html2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/sauce-html2-300x157.jpg 300w" height="470" width="900" alt="Where is the sauce? HTML version" src="http://blog.infographics.tw/wp-content/uploads/2015/06/sauce-html2.jpg" class="aligncenter size-full wp-image-1037"></a>
+<h3>設定 ai2html</h3>
+<p>當我們製作 html 之後，會在 illustrator 中自動產生一個文字方塊；這是 ai2html 的設定，我們可以修改其內容值來改變產生 HTML 的方式。 ( 下圖右 )</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/config.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/config.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/config-300x133.jpg 300w" height="400" width="900" alt="Configuration" src="http://blog.infographics.tw/wp-content/uploads/2015/06/config.jpg" class="aligncenter size-full wp-image-1038"></a>
+<p>&nbsp;</p>
+<p>在我們 illustrator 原稿中的文字方塊只要開頭有「ai2html-」字樣的，都會被當成設定項來讀取；不同的首行字串有不同的意義，包含了下列四種：</p>
+<ul>
+<li>ai2html-settings：產生檔案的設定</li>
+<li>ai2html-css：在產出檔案中插入額外的 CSS</li>
+<li>ai2html-js：在產出檔案中插入額外的 JS</li>
+<li>ai2html-html：在產出檔案中插入額外的&nbsp;HTML</li>
+<li>ai2html-text：設定變數，方便在其它文字方塊中引用
+<ul>
+<li>在 ai2html-text 中以「variable-name: value」的方式設定變數，就可以在其它文字方塊中以「&lt;%=variable-name%&gt;」的方式使用變數。</li>
+</ul>
+</li>
+</ul>
+<p>設定項的細節這裡就不逐項介紹，如果有需要詳細解釋可以參考 ai2html 官網。我們舉其中一項來看看修改的效果：「responsiveness」這個項目可以控制 HTML 是否自動佔滿畫面，並在不同螢幕大小下自動縮放圖片。以那個醬汁為例，我們把 responsiveness 從「fixed」改為「dynamic」後，可以看到在不同的螢幕大小時文字與圖片間的變化：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1039"><a href="http://blog.infographics.tw/wp-content/uploads/2015/06/small.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/small.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/small-300x127.jpg 300w" height="380" width="900" alt="Example - Small" src="http://blog.infographics.tw/wp-content/uploads/2015/06/small.jpg" class="wp-image-1039 size-full" aria-describedby="caption-attachment-1039"></a><p class="wp-caption-text" id="caption-attachment-1039">小螢幕時的效果</p></div>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1040"><a href="http://blog.infographics.tw/wp-content/uploads/2015/06/large.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/large.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/large-300x167.jpg 300w" height="500" width="900" alt="Example - Large" src="http://blog.infographics.tw/wp-content/uploads/2015/06/large.jpg" class="wp-image-1040 size-full" aria-describedby="caption-attachment-1040"></a><p class="wp-caption-text" id="caption-attachment-1040">大螢幕時的效果，因為完整畫面過大，僅截取含字部份的螢幕</p></div>
+<p>最後，要注意這些設定區塊不可以出現在工作區域中，不然 ai2html 會連帶這些設定文字一併產生到 HTML 之中喔！</p>
+<hr>
+<h2>結語</h2>
+<p>ai2html 的設計是針對圖文穿插型的圖表，若一般以文字為主的版面設計，使用 ai2html 可能會因為變動的文字與螢幕大小而造成文字走位，這種情況還是請大家乖乖的切版囉！即便如此， ai2html 仍然是個相當方便的工具，如果讀者們有圖表上網的需求，不妨考慮使用 ai2html ，以便得到更好的閱讀體驗以及 SEO 的效果喔！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/adobe-illustrator/">adobe illustrator</a>,<a rel="tag" href="http://blog.infographics.tw/tag/ai2html/">ai2html</a>,<a rel="tag" href="http://blog.infographics.tw/tag/css/">css</a>,<a rel="tag" href="http://blog.infographics.tw/tag/html/">html</a>,<a rel="tag" href="http://blog.infographics.tw/tag/nytimes/">nytimes</a>,<a rel="tag" href="http://blog.infographics.tw/tag/svg/">svg</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/06/data-crawling-with-import-io/">資料爬梳一鍵搞定 － 使用 import.io 爬梳網頁資料</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/06/voronoi-with-d3js/">D3.JS 入門系列 － Voronoi Diagram 教學</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>1</span> Comment</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-1429">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/700b780011bd480650158db90318fdcd?s=40">
+                <cite class="fn">Clara</cite>         <time datetime="2018-11-21"><a href="http://blog.infographics.tw/2015/06/introduction-to-ai2html/#comment-1429">21 11 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>請問一下<br>
+這個js功能有說哪個版本以上的Illustrator才可使用嗎?<br>
+感謝喔~</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

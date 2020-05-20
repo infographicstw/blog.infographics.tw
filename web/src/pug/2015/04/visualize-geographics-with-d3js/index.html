@@ -1,0 +1,546 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">視覺化實戰 － D3.js 地理區塊視覺化</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-502 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-cartogram tag-colorpleth tag-d3js tag-dorling tag-geojson tag-mercator tag-open-data tag-shapefile tag-shp tag-topojson tag-186 tag-190 tag-188 tag-202" id="post-502">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-04-16" class="updated">16 4 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2015/04/cover1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/cover1.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/cover1-300x176.png 300w" height="527" width="900" alt="Taiwan Map Cover" src="https://blog.infographics.tw/wp-content/uploads/2015/04/cover1.png" class="alignnone size-full wp-image-525"></a>
+<p>在台灣地圖上做視覺化常常讓人困擾，因為很多工具雖然支援地圖上的資料視覺化，但在台灣往往卻看不到比縣市還更細緻的區塊。沒問題，今天我們就來實戰一下，看看利用開源套件我們如何在台灣地圖上製作資料視覺化。</p>
+<p><span id="more-502"></span></p>
+<p>前陣子我們看過了如何用 D3.js 繪製地球儀，相信大家對 GeoJSON 與 TopoJSON 都稍微有了一點概念。基本上，他們是一種用來描述地圖的資料格式，而 D3.js 有足夠的支援讓我們可以很快的把他們畫出來。</p>
+<p>我們可以利用類似地球儀的方法來描繪台灣地圖的 TopoJSON ，接著再根據我們的需求著色以製作面量圖 ( Choropleth Map ) 或是統計地圖 ( Cartogram ) 等等的圖表。 問題是，台灣地圖的電子檔哪裡來？</p>
+<p>近年由於 OpenData.tw 、 零時政府 G0V 等等組織的推動，政府也逐漸的擁抱開放資料的潮流，甚至出現了政府官方的開放資料平台&nbsp;<a rel="noopener" href="https://data.gov.tw" title="政府開放資料平台">data.gov.tw</a> ；而行政邊界圖自然也成為開放資料的其中一項。零時政府有整理好的<a rel="noopener" href="https://g0v.github.com/twgeojson" title="台灣行政區域圖">開源台灣行政區域圖</a>， 網頁上甚至有 Leaflet 、 WebGL 與 Dorling Cartogram 的範例，但並沒有技術細節的說明，今天就讓小編來為大家介紹一下吧！</p>
+<h2>轉換行政區域圖資料格式</h2>
+<p>說到行政區域圖，政府釋出了三個等級的資料：</p>
+<ol>
+<li><a rel="noopener" href="https://data.gov.tw/node/7442" title="縣(市)行政區界線">縣(市)行政區界線</a></li>
+<li><a rel="noopener" href="https://data.gov.tw/node/7441" title="鄉(鎮、市、區)行政區域界線">鄉(鎮、市、區)行政區域界線</a></li>
+<li><a rel="noopener" href="https://data.gov.tw/node/7440" title="全國村里界圖">全國村里界圖</a></li>
+</ol>
+<p>因為政府內部所使用系統的關係，釋出的格式均為 SHP 檔格式。感謝 D3.js 的作者 Mike ，剛好他最近在 Github 上開了一個新專案「<a rel="noopener" href="https://github.com/mbostock/shapefile" title="mbostock - shapefile project">shapefile</a>」，讓我們可以讀取 SHP 檔並輸出成 GeoJSON 格式；事實上， Mike 已經將 shapefile 整進了他的另一個專案「topojson」，讓我們可以直接由 SHP 檔產生 TopoJSON 檔。</p>
+<p>由於 topojson&nbsp;是 NodeJS 的模組，所以需要先安裝 NodeJS ；NodeJS 的安裝在另一篇文章「<a rel="noopener" href="https://blog.infographics.tw/2015/03/crawl-data-with-nodejs/" title="crawler with NodeJS">資料爬蟲實戰－使用 NodeJS</a>」有說明過，在 Window 下可以到&nbsp;https://nodejs.org/download/ 下載安裝檔，而在 Linux 或 Mac 環境下則可以參考<a rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server" title="install nodejs on linux or mac">這個網頁</a>提供的作法來安裝。</p>
+<p>確認 NodeJS 安裝完成後，我們解壓縮政府提供的下載檔並使用 topojson&nbsp;讀取( 以縣市邊界圖為例 )：</p>
+<pre>  npm install -g topojson
+  topojson -s 0.0000001 -o county.json -p --shapefile-encoding big5 county.shp</pre>
+<p>產生了一個檔案 county.json 即為我們需要的 TopoJSON 檔。</p>
+<p>我們也可以使用 API 的方式程式化處理，但事情會變得比較複雜，這裡先略過不談。特別要注意的是原始資料採 Big5 格式，所以我們要用「–shapefile-encoding 」參數提醒 shapefile 使用正確的編碼來轉換。</p>
+<h2>TopoJSON 處理與繪製</h2>
+<p>產生 TopoJSON 檔後，我們便利用 topojson 模組提供的函式讀取該檔案：</p>
+<pre>  &lt;svg width="800px" height="600px" viewBox="0 0 800 600"&gt;&lt;/svg&gt;
+  &lt;script type="text/javascript" src="https://d3js.org/topojson.v1.min.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    d3.json("county.json", function(topodata) {
+      var features = topojson.feature(topodata, topodata.objects["county"]).features;
+      // 這裡要注意的是 topodata.objects["county"] 中的 "county" 為原本 shp 的檔名
+    });
+  &lt;/script&gt;</pre>
+<p>然後利用 d3.geo.path 搭配 d3.geo.mercator 來繪圖：</p>
+<pre>  var path = d3.geo.path().projection( // 路徑產生器
+    d3.geo.mercator().center([121,24]).scale(6000) // 座標變換函式
+  );
+  d3.select("svg").selectAll("path").data(features)
+    .enter().append("path").attr("d",path);</pre>
+<p>繪製的結果如下：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/04/attempt-1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/attempt-1.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/attempt-1-300x141.png 300w" height="424" width="900" alt="Taiwan TopoJSON" src="https://blog.infographics.tw/wp-content/uploads/2015/04/attempt-1.png" class="alignnone size-full wp-image-524"></a>
+<h2>色階對應製作面量圖</h2>
+<p>一旦將行政區塊變成資料對應到 SVG 區塊，接下來就與一般視覺化沒有什麼不同了。假設我們想製作人口密度的視覺化，並有類似下表這樣的人口密度資料 ( 資料來源: <a rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%87%BA%E7%81%A3%E8%A1%8C%E6%94%BF%E5%8D%80%E4%BA%BA%E5%8F%A3%E5%AF%86%E5%BA%A6%E8%A1%A8" title="台灣行政區人口密度">wiki</a> )：</p>
+<pre>  var density = {"臺北市": 9952.60,&nbsp;"嘉義市": 4512.66, "新竹市": 4151.27, ...};</pre>
+<p>我們想要將密度資訊插入到行政區塊的物件中，但我們要怎麼知道哪個區塊是臺北市、哪個區塊嘉義市呢？政府提供的 SHP 檔中行政區塊都帶有名字，經過 topojson 轉換後則存在物件的 properties.C_Name 屬性中。只要知道這一點，一個簡單的迴圈就可以整理好資料。</p>
+<pre>&nbsp; for(i=features.length - 1; i &gt;= 0; i-- ) {
+&nbsp; &nbsp; features[i].properties.density = density[features[i].properties.C_Name];
+&nbsp; }</pre>
+<p>在上例中，我們搭配人口密度資料來更新行政區塊的物件。每個行政區塊物件都帶有一個 properties 物件，裡面會包含各個區塊的額外資訊；這裡的資訊各筆資料都不太一樣，以此處的例子來說， properties.C_Name 會存放區塊對應的縣市名稱。</p>
+<p>接著區塊著色也就不是難事了，利用 d3.scale.linear 函式把密度 ( 0 ~ 10000 ) 投射到顏色空間 ( #090 ~ #f00 )：</p>
+<pre>  var color = d3.scale.linear().domain([0,10000]).range(["#090","#f00"]);
+  d3.select("svg").selectAll("path").data(features).attr({
+    d: path,
+    fill: function(d) {
+      return color(d.properties.density);
+    }
+  });</pre>
+<p>執行結果如下：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/04/attempt-2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/attempt-2.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/attempt-2-300x140.png 300w" height="420" width="900" alt="Taiwan Map Visualize (2)" src="https://blog.infographics.tw/wp-content/uploads/2015/04/attempt-2.png" class="alignnone size-full wp-image-527"></a>
+<h2>處理圖資的難題</h2>
+<p>做到這邊，大致上都還算簡單，但是其實這類型的視覺化有一些潛在的問題。台灣開放資料尚在起步，除了最基本的「五星開放資料」標準尚無法達成外，歷史資料追朔、全面萬國碼、名稱標準化等諸多良好資料具有的要素都還辦法達成；行政區塊是個很典型的例子，比方說：</p>
+<ul>
+<li>舊資料無法正確在新地圖上呈現：
+<ul>
+<li><span style="line-height: 1.5;">村里會增減、縣市有改制，例如台北縣更名成新北市後，很多資料都需要重新對應</span></li>
+<li><span style="line-height: 1.5;">這有待政府提供詳細的邊界變化、名稱修正的歷史紀錄才有辦法很好的處理</span></li>
+</ul>
+</li>
+<li>文字編碼問題
+<ul>
+<li>有些地方的名字非常特別，Big5 無法呈現，最後只能用造字的手法來處理。這在萬國碼轉換時會產生亂碼</li>
+<li>有時是異體字的問題，比方說「台北市」與「臺北市」、「五峰鄉」與「五峯鄉」造成的問題</li>
+<li>所幸政府提供的 SHP 檔中有附上地名對應的 ISO 3316-2 ID，可以讓我們透過代碼做比較</li>
+</ul>
+</li>
+<li>顯示範圍問題
+<ul>
+<li>台澎金馬涵蓋範圍頗廣，若要納入同一份地圖，海會佔很大一片面積</li>
+<li>因此有必要利用客製化投影轉換函式把離島拉到台灣本島附近，但也帶來了額外實作負擔</li>
+</ul>
+</li>
+<li>資料檔太大：
+<ul>
+<li>村里級的 TopoJSON 即使簡化過仍耗費 1MB 以上的空間</li>
+<li>另外，上千筆的資料建立 SVG 物件，效能會變成一個很重要的問題</li>
+</ul>
+</li>
+</ul>
+<p>實際上在運用地理區塊做視覺化時，多少都還是需要手動做一些修正。即使如此，能夠自己使用 D3.js 畫出行政區塊也是很不錯的開始；接著我們就有機會嘗試 Cartogram 、 Google Maps Overlay 、 Dorling Transformation 等等的變化，對地圖做更好的視覺化運用，比方說下面這個例子在滑鼠移過地圖時，地圖區塊會有膨脹的效果出現：</p>
+<p></p>
+<p>上例的程式碼可以在<a rel="noopener" href="https://github.com/infographicstw/example/tree/gh-pages/502" title="topojson with fisheye effect rendering example">這裡</a>找到。</p>
+<p>相關的主題我們會陸續在這裡與大家分享，如果有興趣的話不妨定時關注我們的動態，以免漏掉了最新的地圖視覺化教學喔！</p>
+<h3>技術問題補充 ( 2016/01/19 )</h3>
+<p>有些朋友在使用 d3.json 時碰到了困難，這是因為 d3.json 使用 AJAX ( XMLHttpRequest ) 向網頁伺服器要求資料，但當我們直接用瀏覽器開啟本機電腦網頁時，使用的是「file://」Protocol ，這時我們的電腦上並沒有網頁伺服器可以提供回應，因此就會失敗。</p>
+<p>如果上面這一長串看不懂的讀者，可以試著自己改用下面的方式來讀取 json 檔。首先，開啟我們的 geojson 檔 ( 以上例來說，就是 county.json ) ，原始碼如下：</p>
+<pre>{"type":"Topology","objects":{"county":{"type":"GeometryCollection","bbox":[116.7062 ..... }</pre>
+<p>在最前面加上一個變數宣告，並在結尾加上一個「;」分號：</p>
+<pre><strong><span style="color: #ff0000;">&nbsp; var topodata =&nbsp;</span></strong>{"type":"Topology","objects":{"county":{"type":"GeometryCol ... }<span style="color: #ff0000;"><strong>;</strong></span></pre>
+<p>接著，把檔名改為 county.js 後，在我們的 html 之中引入該檔：</p>
+<pre>  ...
+  &lt;svg width="800px" height="600px" viewBox="0 0 800 600"&gt;&lt;/svg&gt;
+  &lt;script type="text/javascript" src="https://d3js.org/topojson.v1.min.js"&gt;&lt;/script&gt;
+<span style="color: #ff0000;"><strong>  &lt;script type="text/javascript" src="county.js"&gt;&lt;/script&gt;</strong></span>
+  &lt;script&gt;
+  ...</pre>
+<p>這時我們便已經將地理資料 json 存在「topodata」，在網頁中可以直接利用，原本使用 d3.json 讀取資料的程式碼片段便不需要了：</p>
+<pre>  &lt;script&gt;
+    /* d3.json 不再需要了 */
+<span style="color: #ff0000;">    /*<del>d3.json("county.json", function(topodata) {</del>*/
+</span>    var features = topojson.feature(topodata, topodata.objects["county"]).features;
+    // 這裡要注意的是 topodata.objects["county"] 中的 "county" 為原本 shp 的檔名
+<span style="color: #ff0000;">    /*<del> });</del> */
+</span>  &lt;/script&gt;</pre>
+<p>這是類似的 jsonp 的技巧 (但使用全域變數)，如果只是需要做開發測試用途，還算是方便。當然，建議如果開發的程式會應用到 Production 環境，還是要考量到是否在自己的電腦架設網頁伺服器，以避免開發與實際運作環境需要兩份程式碼喔！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/cartogram/">cartogram</a>,<a rel="tag" href="https://blog.infographics.tw/tag/colorpleth/">colorpleth</a>,<a rel="tag" href="https://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/dorling/">dorling</a>,<a rel="tag" href="https://blog.infographics.tw/tag/geojson/">geojson</a>,<a rel="tag" href="https://blog.infographics.tw/tag/mercator/">mercator</a>,<a rel="tag" href="https://blog.infographics.tw/tag/open-data/">open data</a>,<a rel="tag" href="https://blog.infographics.tw/tag/shapefile/">shapefile</a>,<a rel="tag" href="https://blog.infographics.tw/tag/shp/">shp</a>,<a rel="tag" href="https://blog.infographics.tw/tag/topojson/">topojson</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%8f%b0%e7%81%a3%e5%9c%b0%e5%9c%96/">台灣地圖</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e6%9d%91%e9%87%8c%e5%9c%b0%e5%9c%96/">村里地圖</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e9%84%89%e9%8e%ae%e5%9c%b0%e5%9c%96/">鄉鎮地圖</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e9%96%8b%e6%94%be%e8%b3%87%e6%96%99/">開放資料</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/04/making-infographics-with-piktochart/">資訊圖表製作百寶箱 － Piktochart</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2015/04/geoevent-earthquake-visualization/">台灣歷年地震多嚴重？地震視覺化告訴你</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="https://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="https://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>20</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-18">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/9c3000fc16f70906dcb7b5311e104929?s=40">
+                <cite class="fn">RexLi</cite>         <time datetime="2015-05-20"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-18">20 5 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>很棒的教學 ，範例的程式法好像有點錯。</p>
+<p><code><br>
+var features = topojson(topodata, topodata.objects["county"]).features;</code></p>
+<p>var features = topojson.<strong>feature</strong>(topodata, topodata.objects["county"]).features;<br>
+</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-19">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-05-21"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-19">21 5 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>感謝提醒 🙂</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-42">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/d000c25c58a0c890b52df7c88d404f31?s=40">
+                <cite class="fn">Andy</cite>         <time datetime="2015-09-1"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-42">1 9 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>請問我下載範例打開來沒有顯示地圖<br>
+是需要安裝甚麼嗎?</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment odd alt thread-even depth-1 cf" id="comment-43">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/d000c25c58a0c890b52df7c88d404f31?s=40">
+                <cite class="fn">Andy</cite>         <time datetime="2015-09-1"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-43">1 9 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>打擾了~~<br>
+我剛有留言說範例打不開<br>
+自己找到原因了~~<br>
+IIS沒有添加JSON的MIME檔案類型</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor even depth-2 cf" id="comment-44">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-09-1"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-44">1 9 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>感謝你的答覆！ 😀</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment odd alt thread-odd thread-alt depth-1 cf" id="comment-59">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/d000c25c58a0c890b52df7c88d404f31?s=40">
+                <cite class="fn">Andy</cite>         <time datetime="2015-09-16"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-59">16 9 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>你好~~<br>
+想請問一下<br>
+目前這個地圖描繪出來縣市邊界的顏色是白色<br>
+有沒有設定選項或參數可以修改邊界的顏色呢?</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor even depth-2 cf" id="comment-60">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-09-16"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-60">16 9 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好，可以透過 stroke 與 stroke-width 屬性來改變邊界的樣式；例如：</p>
+<p>d3.select(“svg”).selectAll(“path”).data(features).attr({<br>
+  stroke: “red”,<br>
+  strokeWidth: “2”<br>
+});</p>
+<p>會設定邊界寬度為 2 以及顏色為紅色。</p>
+      </section>
+          </article>
+    <div class="comment odd alt depth-3 cf" id="comment-61">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/d000c25c58a0c890b52df7c88d404f31?s=40">
+                <cite class="fn">Andy</cite>         <time datetime="2015-09-16"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-61">16 9 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>謝謝</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment even depth-3 cf" id="comment-322">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/4cf57379ee47a4a26882d1e9120484a9?s=40">
+                <cite class="fn">wish</cite>         <time datetime="2016-05-14"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-322">14 5 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>謝謝大大的示範，很有幫助！</p>
+      </section>
+          </article>
+  </div>
+</div>
+</div>
+  <div class="comment odd alt thread-even depth-1 cf" id="comment-386">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/5363138658c8d084d0964f866061cf51?s=40">
+                <cite class="fn">Kay</cite>         <time datetime="2016-08-16"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-386">16 8 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>想請問要如何各縣市顯示的資訊分開出現，非常感謝</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor even depth-2 cf" id="comment-388">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-08-17"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-388">17 8 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>分開出現是指使用彈出式對話框像這樣嗎? <a rel="nofollow ugc" href="https://plotdb.io/v/chart/989">https://plotdb.io/v/chart/989</a></p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment odd alt thread-odd thread-alt depth-1 cf" id="comment-753">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/b614ca024aa30e15e0012af469186ed8?s=40">
+                <cite class="fn">crouse</cite>         <time datetime="2017-01-9"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-753">9 1 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>你好：</p>
+<p>請問你有將它編譯成程式過嗎？我用pyinstaller編譯成程式，通過了編譯，但執行時卻發生Notimplementederror問題，然後程式就自動關閉，我也用過py2exe，結果一樣，不知這個你有辦法解決嗎？﻿</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor even depth-2 cf" id="comment-782">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2017-02-6"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-782">6 2 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>crouse 您好, 我們沒有試過 pyinstaller or pyExe, 所以這次可能沒辦法幫上你的忙囉！</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment odd alt thread-even depth-1 cf" id="comment-783">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/e8f2c925bf45d96736040800c1ed79c3?s=40">
+                <cite class="fn">菜鳥</cite>         <time datetime="2017-02-7"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-783">7 2 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好：<br>
+我是2017/02/07才安裝Homebrew、Node.js然後接著執行<br>
+npm install -g topojson<br>
+但接下來這一段：topojson -s 0.0000001 -o county.json -p –shapefile-encoding big5 county.shp<br>
+terminal卻出現 「-bash: topojson: command not found」，錯誤訊息很明顯告訴我topojson是個認不得的指令，可否指點如何才能正確安裝topojson嗎？</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor even depth-2 cf" id="comment-795">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2017-02-20"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-795">20 2 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>Hi Samuel, topojson 應該會在安裝位置上一層的 .bin/ 資料夾中，如果沒有的話，可能是套件更新了，可以試著安裝看看舊版。<br>
+topojson 目前被 Mike Bostock 拆成許多塊，可以很方便的製作各種需求的地圖，不過目前還沒有中文教學，你可以參考一下 Mike Bostock 自己寫的文件「<a rel="nofollow" href="https://medium.com/@mbostock/command-line-cartography-part-1-897aa8f8ca2c#.wpnobsg6b">Command-Line Cartography</a>」</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment odd alt thread-odd thread-alt depth-1 cf" id="comment-1110">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/58611963bc1ecc91cd9b0fc592242ca2?s=40">
+                <cite class="fn">SonMei</cite>         <time datetime="2017-11-10"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-1110">10 11 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>你好，謝謝您的分享，真的很棒。<br>
+文章中有提到可利用客製化函數將外島的澎金馬拉近，使海洋面積不會顯得佔太多空間，想請教要如何拉近呢?試了幾個函數發現都沒辦法@@ 謝謝您~</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment even thread-even depth-1 cf" id="comment-1111">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/58611963bc1ecc91cd9b0fc592242ca2?s=40">
+                <cite class="fn">SonMei</cite>         <time datetime="2017-11-10"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-1111">10 11 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好，我後來直接條country.json 中的定點位置就可以完成了。(雖然這樣做不知道是否恰當…)<br>
+謝謝您！</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-1205">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2018-01-24"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-1205">24 1 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>其實這樣也是個做法囉 🙂 若靠程式的話, 大概就是改 project 函式中判斷經緯度來做位移這樣</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-1151">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/641ad2e95577b33be831bfc70f1d6a26?s=40">
+                <cite class="fn">TonyQ</cite>         <time datetime="2017-12-5"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-1151">5 12 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>這不是 jsonp 的技巧，jsonp 會使用 function callback 而不是使用全域變數….</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-1199">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2018-01-24"><a href="https://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/#comment-1199">24 1 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>已更新, thanks</p>
+      </section>
+          </article>
+  </div>
+</div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

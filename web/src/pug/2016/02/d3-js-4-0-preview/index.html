@@ -1,0 +1,232 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">D3.js 重大更新！ 4.0 版新鮮功能摘要整理</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1672 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-axis tag-color tag-d3-js tag-shape tag-transition" id="post-1672">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-02-29" class="updated">29 2 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1675" href="https://blog.infographics.tw/wp-content/uploads/2016/02/cover-1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/02/cover-1.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2016/02/cover-1-300x176.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/02/cover-1-768x450.jpg 768w" height="527" width="900" alt="cover" src="https://blog.infographics.tw/wp-content/uploads/2016/02/cover-1.jpg" class="aligncenter size-full wp-image-1675"></a>
+<p>正在學 D3.js&nbsp;嗎？那錯過這篇你就糗大了！大約在兩個多月前， D3.js 作者 Michael Bostock 宣佈下一版本的 D3.js – D3.js 4.0 開始釋出 Alpha 版，相信再過不久、 Beta 與正式版也很快就要跟大家見面，其中的改動可說不少，如果你正要開始學 D3.js ，趕快一起來看看 4.0 裡面裝了什麼料，才不會因此抽中再學一次的大獎喔！</p>
+<p><span id="more-1672"></span></p>
+<p>D3.js 的作者 Michael Bostock 在<a href="https://twitter.com/mbostock/status/595252571658260481">去年年中宣布</a>將結束紐約時報的工作，並將心力完全放在打造視覺化工具上面，震驚了許多視覺化領域的同好。與其說震驚，不如說感到驚喜，因為 D3.js 的作者宣布要專注於打造視覺化工具，大概也就代表當下最受歡迎的D3.js 將會有更多更棒的新功能不斷冒出來！</p>
+<p>然而，每次大改版對軟體的使用者都是陣痛苦，需要重新學習、理解與適應；所幸兩個月前 D3.js 4.0 Alpha 版開始釋出，我們有機會事先了解到 D3.js 大升級的內容，有更多的時間可以自我調整。那麼， 新版本的 D3.js 究竟有什麼樣的改動呢？</p>
+<h3>模組化</h3>
+<p>首先，第一個最大的改變就是： D3.js 模組化了！原本整包的 d3.js ，現在切成許多小塊，各別放在不同的專案目錄下。這樣做的好處主要在於：</p>
+<ul>
+<li>易擴充 — 任何人可以用相同的方式建立 D3.js 的新模組。</li>
+<li>易替換 — 我們可以把 D3.js 的原生實作替換成自己的版本。</li>
+<li>最小化 — 當我們不需要完整的 D3.js 實作時，可以自行快速建立客製版本。</li>
+<li>本機化 — 不會用到 DOM 或瀏覽器功能的元件，馬上就可以搭配 node.js 使用。</li>
+</ul>
+<p>若我們要自行建立一個新的 D3.js 模組，只要下載 <a href="https://bost.ocks.org/mike/d3-plugin/d3-plugin.zip">Bostock</a> 提供的樣版檔，將內容修改為我們的模組即可，甚至也可以試著提交進 D3.js 的程式庫。目前 4.0 Alpha 版的各個模組都放在 <a href="https://github.com/d3/">D3.js 的程式庫</a>中，皆以 「d3-」 開頭，模組功能做結尾，例如「d3-shape」 協助我們繪製各種形狀，「d3-scale」則包含了原先 d3.scale 裡的函式組。在我們撰文的當下大約已有 34 個 d3.js 模組，有興趣可以到 <a href="https://github.com/d3">D3.js 的程式庫</a>&nbsp;中一睹為快。</p>
+<h3>命名規則</h3>
+<p>另一個很大的不同在於命名的方式；很多原本就有的 D3.js 函式，使用方式將會有些許不同。例如在現有的版本中，我們可以利用 d3.scale.linear() 建立一個線性轉換函式，然而預計在 4.0 版中 linear 會直接於 d3 物件之下存在，變成：</p>
+<pre>  d3.scaleLinear()</pre>
+<p>其它類似的例子還有 d3.voronoi() ( 原本是 d3.geom.voronoi() ) 、 d3.line() ( 原本是 d3.svg.line() ) 。這個改變會影響到所有舊的 D3.js 用戶，讓 D3.js 不再向下相容，所以要特別注意。</p>
+<h3>用法改變</h3>
+<p>除了命名方式，有些工具的使用方式也與先前不同了，比方說建立軸線的 d3.svg.axis() 函式，並非只是改名為 d3.axis() 而已，而是包含了其走向：</p>
+<pre>  d3.axisLeft()</pre>
+<p>另外像是設定動畫速率的 d3.transition().ease() 函式，也因為 easing function 整組拉出來成為 d3-ease 而改變了參數的使用方法。原本的寫法若是：</p>
+<pre>  transition.ease("back", 3);</pre>
+<p>那麼 4.0 之後則會變成：</p>
+<pre>  transition.ease(d3.easeBackIn.overshoot(3));</pre>
+<h3>新增的功能</h3>
+<p>此外， D3.js 當然還有增加許多有趣的功能！我們挑一些有趣的改變在此做一個簡單的條列：</p>
+<ul>
+<li>d3-interpolate 模組讓我們可以自由內差物件、陣列、各種顏色 ( RGB、HSL 等 ) 、甚至 CSS 與 SVG 的 Transofmration。</li>
+<li>利用 d3-active 來做連鎖動畫 ( 可參考<a href="https://bl.ocks.org/mbostock/70d5541b547cc222aa02">此範例</a> &nbsp;)</li>
+<li>d3-color 開始支援透明度</li>
+<li>d3-scale 增加 band 與 point 兩種轉換，分別對應到長條圖與散佈圖的使用；也新增了數組類似 category20 的預建函式，不同的地方在於這些函式產生的是內差過的顏色值：<br>
+<a rel="attachment wp-att-1673" href="https://blog.infographics.tw/wp-content/uploads/2016/02/sequential-color.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/02/sequential-color.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2016/02/sequential-color-300x112.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/02/sequential-color-768x286.jpg 768w" height="335" width="900" alt="sequential-color" src="https://blog.infographics.tw/wp-content/uploads/2016/02/sequential-color.jpg" class="aligncenter size-full wp-image-1673"></a></li>
+</ul>
+<p>估計這些只是新增內容中的一小部份，畢竟目前只是 Alpha 版釋出，讓我們繼續期待 D3.js 4.0 後續的更新吧！</p>
+<h2>總結</h2>
+<p>其實 D3.js 除了做為一個強大的視覺化函式庫，其提供的許多功能在各種場合也都相當方便，例如例用 d3.csv 讀取 CSV 檔、透過 d3.geo.path 轉換 geojson 檔案等等，在過去未模組化的時候我們只能另尋其它可能，現在卻真的可以考慮 D3.js 更多種的不同用途了！然而，開源專案最棒的一點還是在於所有使用者都有機會貢獻，你是否也曾經自行開發過 D3.js 所缺乏的功能呢？現在，可以考慮包裝成 D3.js 模組，貢獻回 D3.js 囉！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/axis/">axis</a>,<a rel="tag" href="https://blog.infographics.tw/tag/color/">color</a>,<a rel="tag" href="https://blog.infographics.tw/tag/d3-js/">d3.js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/shape/">shape</a>,<a rel="tag" href="https://blog.infographics.tw/tag/transition/">transition</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/02/data-restructure-with-d3js/">總整理！你不可錯過的 d3.js 資料轉換技巧</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/03/d3js-with-excel-e2d3/">E2D3 — 不懂程式也能用 Excel 建立 D3 圖表</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>2</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-301">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/8b8615226e05ac17c318c824009b4f59?s=40">
+                <cite class="fn">ShaunWu</cite>         <time datetime="2016-03-1"><a href="https://blog.infographics.tw/2016/02/d3-js-4-0-preview/#comment-301">1 3 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>請問是已經更新到4.0了嗎？我去看github，還是用3.5的版本，所以想確定一下。</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-302">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-03-4"><a href="https://blog.infographics.tw/2016/02/d3-js-4-0-preview/#comment-302">4 3 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>Hi ShaunWu, 目前 4.0 還是 alpha 版本, 所以暫時還是先使用 3.5 版喔!</p>
+      </section>
+          </article>
+  </div>
+</div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

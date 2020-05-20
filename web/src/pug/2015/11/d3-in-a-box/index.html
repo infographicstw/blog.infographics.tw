@@ -1,0 +1,211 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">改作學習兩相宜、D3 源碼任你用 － D3 in a Box</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1435 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-c3-js tag-cloudstitch tag-d3 tag-d3-js tag-d3js tag-dimple tag-excel tag-google tag-google-spreadsheet tag-nvd3 tag-spreadsheet" id="post-1435">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-11-15" class="updated">15 11 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2015/10/cover4.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/10/cover4.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/10/cover4-300x176.jpg 300w" height="527" width="900" alt="D3 in a Box - Cover" src="https://blog.infographics.tw/wp-content/uploads/2015/10/cover4.jpg" class="aligncenter size-full wp-image-1445"></a>
+<p>強大的 D3.js 有個極大的缺點 — 任何圖表都要自己重頭寫！彈性往往帶來繁瑣的副作用，然而 Cloudstitch 這間公司顯然找到了解決方法 — 他們所推出的 「<a href="https://www.cloudstitch.com/d3-in-a-box">D3 in a Box </a>」服務提供了十來種的 D3 圖表源碼任你使用、修改，還提供圖表 Hosting 服務！那麼，就讓我們來看看如何用 D3 in a Box 快速做出 D3.js 圖表吧！</p>
+<p><span id="more-1435"></span></p>
+<p>如果有使用過 <a href="https://blog.infographics.tw/2015/03/d3js-the-introduction/">D3.js</a> ，你可能就有像這樣的經驗：只是要做個長條圖，除了長條要自己畫、軸線要自己刻、圖例要自己寫、連數值跟格線也都要自己來產生。 D3.js 就像是特力屋賣場，所有的東西我們買回家都要自己組裝。</p>
+<p>於是，開始有人利用 D3.js 兜出各式各樣的圖表函式庫，像是 c3.js 、 nvd3 、 dimple 等等的函式庫，可以說相當方便 — 唯一的問題就是他們失去了原本 D3.js 所帶來的好處，也就是彈性與變化性。</p>
+<p>如同過去我們曾介紹過的「<a href="https://blog.infographics.tw/2015/02/chart-visualization-with-d3-generator/">D3 Generator</a>」一般，如果有個服務能提供各種 D3.js 圖表的基本程式碼讓我們快速改作，是不是會很方便呢？沒錯， D3 in a Box 就是這樣的服務。</p>
+<p>D3 in a Box 將十來種的圖表以 D3.js 實現並做成範例專案，我們所要做的就是點擊「Clone」，將專案複製一份到自己的帳號下：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/10/clone.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/10/clone.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/10/clone-300x183.jpg 300w" height="550" width="900" alt="D3 in a Box - Clone Project" src="https://blog.infographics.tw/wp-content/uploads/2015/10/clone.jpg" class="aligncenter size-full wp-image-1437"></a>
+<p>舉個例子，假設我們想要製作超炫泡泡圖，我們可以點擊上圖「Bubble Chart」下方的「Clone」按鈕，將 Bubble Chart 專案複製一份到我們的帳號下。下圖為複製完成後的泡泡圖原始程式碼，可以看到除了「 Javascript」 之外，上方還有「HTML」、「CSS」兩個檔案我們可以做修改：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/10/script.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/10/script.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/10/script-300x153.jpg 300w" height="460" width="900" alt="D3 in a Box - script" src="https://blog.infographics.tw/wp-content/uploads/2015/10/script.jpg" class="aligncenter size-full wp-image-1438"></a>
+<p>你可能會問，只有 JS、HTML 與 CSS 檔，那資料怎麼辦呢？其實， Cloudstitch 是專門在做 Google Spreadsheet 整合的公司，所以資料當然是從 Google Spreadsheet 來囉！D3 in a Box 的源碼都由一個進入點函式包覆，並會在這個進入點執行時帶入我們所指定的資料，所以在程式碼中我們不需要去考慮資料來源的問題，除了提升了圖表的再利用性，也省去了處理資料取得的額外程式碼。進入點函式的基本定義如下：</p>
+<pre>&nbsp; module.exports = function(root, rawdata) { ... }</pre>
+<p>可以看到函式的參數有兩個， root 為圖表的根元素， rawdata 則即是欲繪製的資料囉。</p>
+<p>D3 in a Box 將圖表包裝成一個個的專案，除了 HTML 、 CSS 、 JS 等基本的檔案以外，專案本身也有一些設定可以調整，比方說資料來源即是其中一項。下圖為整個專案的基本介面：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/10/interface.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/10/interface.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/10/interface-300x213.jpg 300w" height="640" width="900" alt="D3 in a Box - Interface" src="https://blog.infographics.tw/wp-content/uploads/2015/10/interface.jpg" class="aligncenter size-full wp-image-1439"></a>
+<p>資料自然也就是直接在 Google Spreadsheet 編輯了，點擊 EDIT 會連到 Google Spreadsheet 檔案，剛 Clone 完的專案會帶入範例資料，如下圖即為泡泡圖用的範例資料：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/10/spreadsheet.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/10/spreadsheet.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/10/spreadsheet-300x117.jpg 300w" height="350" width="900" alt="D3 in a Box - Spreadsheet" src="https://blog.infographics.tw/wp-content/uploads/2015/10/spreadsheet.jpg" class="aligncenter size-full wp-image-1440"></a>
+<h3>快速改作</h3>
+<p>本篇的標題也提到了：「改作、學習兩相宜」，如果對於 D3.js 不熟悉的朋友可以透過 D3 in a Box 學習如何使用 D3.js ，而需要快速開發客製圖表的朋友也能利用 D3 in a Box 很快的做出需要的客製化。舉個例子來說，若我想要把泡泡圖的圓圈改成矩形，我只要找到程式碼中附加圓圈的程式碼片段略作修改即可。下面的程式碼是建立泡泡的片段：</p>
+<pre>&nbsp; node.append("circle")
+&nbsp; .attr("r", function(d) { return d.r; })
+&nbsp; .style("fill", function(d) { return fill(d.packageName); });</pre>
+<p>改作後變成下列程式碼 ( 紅色為改作部份 )：</p>
+<pre>&nbsp; node.append("<span style="color: #ff0000;"><strong>rect</strong></span>")
+&nbsp; &nbsp; .attr({
+<span style="color: #ff6600;">&nbsp; &nbsp; &nbsp; <span style="color: #ff0000;"><strong>x: function(d) { return -d.r * 0.8;},</strong></span></span>
+<span style="color: #ff0000;"><strong>&nbsp; &nbsp; &nbsp; y: function(d) { return -d.r * 0.8;},</strong></span>
+<span style="color: #ff0000;"><strong>&nbsp; &nbsp; &nbsp; width: function(d) { return d.r * 1.6;},</strong></span>
+<span style="color: #ff0000;"><strong>&nbsp; &nbsp; &nbsp; height: function(d) { return d.r * 1.6;},</strong></span>
+&nbsp; &nbsp; })
+    .style("fill", function(d) { return fill(d.packageName); });</pre>
+<p>那麼方塊泡泡圖便完成了：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/10/rect.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/10/rect.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/10/rect-300x200.jpg 300w" height="600" width="900" alt="D3 in a Box - Rect Bubble" src="https://blog.infographics.tw/wp-content/uploads/2015/10/rect.jpg" class="aligncenter size-full wp-image-1442"></a>
+<p>是不是真的方便了許多呢？</p>
+<h3><strong>存檔問題</strong></h3>
+<p>我們實際上在試玩 D3 in a Box 時發現檔案檢視中雖然可以直接編輯，但並沒有辦法存檔，一定要進到檔案瀏覽畫面並明確的開啟該檔後，才有存檔按鈕可以按。如果想玩的朋友可以參考下圖來找到存檔功能：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/10/editor1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/10/editor1.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/10/editor1-300x147.jpg 300w" height="440" width="900" alt="D3 in a Box - editor" src="https://blog.infographics.tw/wp-content/uploads/2015/10/editor1.jpg" class="aligncenter size-full wp-image-1443"></a>
+<ol>
+<li>點擊「Interface」旁的齒輪按鈕</li>
+<li>點擊想要編輯的檔案</li>
+<li>編輯檔案完成後，點擊「Save」按鈕</li>
+</ol>
+<h3>發布圖表</h3>
+<p>完成了我們的 &nbsp;D3.js 圖表後， D3 in a Box 還提供了 Hosting 的服務，我們可以點擊左方選單的「Publish」來直接使用 &nbsp;D3 in a Box 提供的連結將圖表以嵌入的方式顯示。下面即為嵌入的範例：</p>
+<p></p>
+<h2><strong>結語</strong></h2>
+<p>由於 Cloudstitch 本身專注於製作銜接 Google Spreadsheet 的服務，除了提供 D3 in a Box 以外，他還有提供像是「Stack in a Box」、「Magic Form」、「Sheet API」等方便做各種配合的服務，不過我們在此僅專注於觀察他在 D3.js 視覺化上提供的服務。</p>
+<p>D3 in a Box 真的是個很不錯的東西，雖然現階段圖表十來個還不算多，使用上也有些小地方還可以改進或需要修正的，但很令人期待他後續的進展。你還有需要編修的 D3.js 視覺化圖表嗎？下一次試試看 D3 in a Box 吧！</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/c3-js/">c3.js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/cloudstitch/">cloudstitch</a>,<a rel="tag" href="https://blog.infographics.tw/tag/d3/">d3</a>,<a rel="tag" href="https://blog.infographics.tw/tag/d3-js/">d3.js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/dimple/">dimple</a>,<a rel="tag" href="https://blog.infographics.tw/tag/excel/">excel</a>,<a rel="tag" href="https://blog.infographics.tw/tag/google/">google</a>,<a rel="tag" href="https://blog.infographics.tw/tag/google-spreadsheet/">google spreadsheet</a>,<a rel="tag" href="https://blog.infographics.tw/tag/nvd3/">nvd3</a>,<a rel="tag" href="https://blog.infographics.tw/tag/spreadsheet/">spreadsheet</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/11/visualize-large-dataset-with-datacomb/">用視覺化快速掌握大量資料 － Datacomb</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2015/11/highchart-overview/">彈性與易用性兼具的圖表工具 — Highchart</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

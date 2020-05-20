@@ -1,0 +1,242 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">Open Graph？跟資料視覺化有什麼關係？</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-340 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-facebook-debugger tag-jsdom tag-node-canvas tag-open-graph tag-phantomjs tag-url2png tag-58" id="post-340">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-03-16" class="updated">16 3 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/03/open-graph-cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/open-graph-cover.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/open-graph-cover-300x176.png 300w" height="527" width="900" alt="Open Graph: Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/03/open-graph-cover.png" class="aligncenter size-full wp-image-346"></a>
+<p>做網站從來都沒有好好設定過 Open Graph Meta Data 嗎？你這下糗大了！ 現在已有相當多的網站能讀取 Open Graph Protocol ，它讓我們作品的摘要能以最完美的型式呈現於潛在讀者面前。那今天就讓我們來探討一下 Open Graph 與視覺化的應用。</p>
+<p><span id="more-340"></span></p>
+<p>現在有越來越多的網站讓人可以分享連結，因此為了提供讀者更好的體驗，除了網址以外他們也會顯示額外的資訊，例如標題、內容摘要等等。然而如果沒有統一的標準，大家截取標題、內容的方式都不同的話，我們的網頁貼到不同網路平台上的時候讀者也會看到各種不同的摘要；有的也許圖只顯示一半，有的內容摘要只取到日期與作者欄等等。</p>
+<p>Open Graph Protocol 是 Facebook 在 2010 年提出，規格化定義的 HTML Meta 屬性提供網頁的標題、縮圖、描述等等資訊，Facebook 本身也藉由讀取 Open Graph Protocol 中的資訊將網址以內容摘要的型態顯示出來。雖然是 Facebook 定義的協定，這些年來也陸續有許多網路平台支援了，因此 Open Graph Protocol 也就變成對網頁很重要的東西。<strong>你希望你的網站摘要醜不拉機的，讓人看了一點都不想點嗎？</strong> Of course not！</p>
+<p>Open Graph Protocol 以 HTML 的 META 標籤定義，一般都放置在 HTML 中的 &lt;HEAD&gt; 標籤之下。META 標籤的格式如下：</p>
+<pre>  &lt;meta property="..." content="..."/&gt;</pre>
+<p>從語意很容易就能理解，網頁的 meta 標籤可以替這個網頁設定屬性的值。Open Grap Protocol 定義了許多屬性，其中有幾個是必要的屬性，包含：</p>
+<ul>
+<li>og:title － 此文件的標題，例如： 「資料視覺化 － 使用 d3.js」</li>
+<li>og:type －此文件的類型，例如：「website」</li>
+<li>og:image －此文件的縮圖或是代表性的圖片</li>
+<li>og:url&nbsp;－ 此文件的永久網址</li>
+</ul>
+<p>來簡單比較一下吧！下圖是截取自臉書上產生的網址摘要，左邊網站有妥善規畫 Open Graph Meta ，右邊則沒有。左邊的照片經過恰當構圖，文字敘述跟標題都有重新編排過；右邊的縮圖沒有截取到重點，沒有內容摘要，也無法從標題得知內容在講什麼。</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/compare.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/compare.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/compare-300x107.jpg 300w" height="320" width="900" alt="Open Graph - Comparison" src="http://blog.infographics.tw/wp-content/uploads/2015/03/compare.jpg" class="aligncenter size-full wp-image-341"></a>
+<p>如果需要確認網頁 Open Graph 的內容，你可以使用 <a href="https://developers.facebook.com/tools/debug/" title="Facebook Debugger">Facebook Debugger</a>&nbsp;；將網址貼入 Debugger 後他便會把抓到的 Open Graph Metadata 與縮圖顯示出來，這裡就完全跟動態牆上會看到的一樣了喔！</p>
+<p>更深入的 Open Graph Protocol 細節可以參考&nbsp;<a href="http://ogp.me/" title="Open Graph Protocol">http://ogp.me/</a> ，裡面有詳盡的解說 ( 雖然是英文的 ) 。</p>
+<h2>資料視覺化</h2>
+<p>大致了解差異後，讓我們回頭來看看資料視覺化的狀況。一般網站如果不填好 Open Graph Metadata 也許還不算太糟，網頁通常有足夠的內容，也會有標題 ( title ) 或是頭條 ( headline ) 標籤，自動截取摘要取得的結果往往也還算可以。</p>
+<p>但視覺化作品就不同了，視覺化作品的網頁裡可能充滿了 SVG 向量標籤、塞滿了 Canvas ，若是資訊圖表那更是只有一張大圖，連個文字都沒有，這種情況下猜猜拿到的東西會長什麼樣？取不到重點的縮圖 ( 或更糟的，把按鈕或網站 Logo 當縮圖！ ) 、缺乏摘要文字，標題不精準… 看都看不懂，CTR 自然就低了，網站流量等於收益，CTR 低就沒收入，光想到就急了，還不趕快回去改！</p>
+<p>基本上，你需要準備的東西大致上就是標題、文字摘要、與一張適當的縮圖。縮圖的尺寸，由於各個媒體平台大小都不同，可以參考這張資訊圖表： 「<a href="http://visual.ly/social-media-image-size-cheat-sheet" title="Social Media Image Size Cheat Sheet">Social Media Image Size Cheat Sheet</a>」</p>
+<h2>客製化摘要</h2>
+<p>有時候，我們的視覺化作品會製作個人化的結果並鼓勵讀者分享，例如：測驗得分、占卜測字等等，又或像是萌典可以針對任何詞產生毛筆字縮圖等等。這種情況下，縮圖與摘要必須要能反應出讀者所得到的結果，否則分享的效力就大大的打折了。想像一下做完測驗的使用者迫不及待的想跟朋友分享他的成績，可是分享時只看到我們網站的 Logo，他大概就會默默的把視窗關掉了吧。</p>
+<p>視覺化作品縮圖牽涉到網頁截圖的問題，基本上有幾個做法可以考慮：</p>
+<ol>
+<li><strong>預先產生的固定縮圖</strong><br>
+在沒有後端程式的情況下，最簡單就是作者自己截取網頁畫面來製作成合適的縮圖。好處是容易實作且相當輕量化，缺點就是無法客製化。不過，如果作品的最終結果不多，可以考慮替所有結果都產生一份縮圖跟網頁，再利用 meta 標籤將所有網頁重導向同一份，這樣開啟網頁的使用者會看到同樣的作品，但 Facebook Crawler 會看到不同的縮圖，算是一個節省成本的權宜之計。<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/dup.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/dup.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/dup-300x127.png 300w" height="380" width="900" alt="Open Graph: Multiple Thumbnail" src="http://blog.infographics.tw/wp-content/uploads/2015/03/dup.png" class="aligncenter size-full wp-image-344"></a></li>
+<li><strong>使用網頁截圖服務</strong><br>
+網路上有些服務可以幫你做網站截圖 (例如&nbsp;<a href="https://www.url2png.com" title="URL to PNG">https://www.url2png.com</a> ) ，因此你可以利用他來協助取得各種不同的縮圖畫面。然而，縮圖的網址必須用後端程式置入網頁的 meta 標籤之中，而且通常都得付錢。</li>
+<li><strong>程式化手段自行截取執行畫面</strong><br>
+有些軟體套件可以讓你利用程式開啟網站並截取畫面，例如 PhantomJS ；下面是使用 PhantomJS 截取畫面的範例 ( 程式碼片段改編自<a href="http://phantomjs.org/screen-capture.html" title="phantomjs: screen capture example">這裡</a> ) :<p></p>
+<pre>  var page = require('webpage').create();
+  page.open("http://blog.infographics.tw", function (status) {
+    page.render('landing.png');
+    phantom.exit();
+  });</pre>
+<p>取得的網站畫面便會儲存到 landing.png 。</p></li>
+<li><strong>直接在後端執行繪製視覺化內容</strong><br>
+舉例來說，若你使用 d3.js 做視覺化，你可以在後端搭配 jsdom 模組來直接產生 DOM tree 後截取 SVG 內容來使用。若使用 canvas 技術做視覺化，也可以使用 node-canvas 模組來做到。</li>
+</ol>
+<p>上述各種技術我們沒辦法在此一個一個的描述細節，因為每一項都已經可以單獨寫成一篇專文來說明了，如果讀者們有任何想深入了解的部份的話可以在底下留言，我們再一一做介紹。</p>
+<h2>結語</h2>
+<p>現在資訊傳播的管道多元化，我們已經不能只看著自己的作品了，作品是如何被使用、轉貼、分享也變得相當重要。下次做好視覺化作品的時候，別忘了再多檢查一遍你的作品在常見的網路平台上會以什麼樣的形式呈現喔！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/facebook-debugger/">facebook debugger</a>,<a rel="tag" href="http://blog.infographics.tw/tag/jsdom/">jsdom</a>,<a rel="tag" href="http://blog.infographics.tw/tag/node-canvas/">node-canvas</a>,<a rel="tag" href="http://blog.infographics.tw/tag/open-graph/">Open Graph</a>,<a rel="tag" href="http://blog.infographics.tw/tag/phantomjs/">phantomjs</a>,<a rel="tag" href="http://blog.infographics.tw/tag/url2png/">url2png</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e8%a6%96%e8%a6%ba%e5%8c%96/">視覺化</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/03/d3js-bar-pie-morph-chart/">D3JS 實戰 － 是長條也是圓餅的變形圖表</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/03/d3js-the-introduction/">網頁視覺化利器 － D3.js 簡介</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

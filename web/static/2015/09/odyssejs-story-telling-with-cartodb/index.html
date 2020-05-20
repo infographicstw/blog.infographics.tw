@@ -1,0 +1,261 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">Odyssey.js — 幫你用 CartoDB 地圖說出動人故事</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1284 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-cartodb tag-map tag-markdown tag-odyssey tag-scroll tag-slide tag-torque tag-304 tag-514 tag-510 tag-512" id="post-1284">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-09-5" class="updated">5 9 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/09/cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/cover.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/cover-300x176.jpg 300w" height="527" width="900" alt="Odyssey - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/09/cover.jpg" class="aligncenter size-full wp-image-1298"></a>
+<p>地圖是很棒的視覺化敘事媒介，先前我們也介紹過像是 <a href="http://timemap.kuansim.com/">TimeMapper</a> 、 &nbsp;<a href="https://storymap.knightlab.com/">StorymapJS</a> 等地圖敘事工具，但這些工具搭配的地圖都是一般的靜態地圖；&nbsp;如果我們可以搭配&nbsp;CartoDB 製作的動態地圖來敘說故事不是很棒嗎？這次為大家介紹一款線上地圖敘事工具「Odyssey.js」，它本身即由 CartoDB 團隊開發，讓我們可以搭配 CartoDB 地圖製作各種報導與文章，一起來看看吧！</p>
+<p><span id="more-1284"></span></p>
+<p>我們先前介紹過的 <a href="http://blog.infographics.tw/2015/04/visualize-on-map-using-cartodb/">CartoDB 線上地圖製作工具</a> 可以讓我們很輕易的將資料在地圖上以各種不同的方式顯示出來，例如當時所分享的<a href="https://infographicstw.cartodb.com/viz/d565e630-e730-11e4-adb8-0e0c41326911/public_map">實價登錄地圖</a>、我們所製作的<a href="https://infographicstw.cartodb.com/viz/937dff1c-e7d7-11e4-b596-0e0c41326911/public_map">台灣歷年地震分布</a>等等，而除了一般的靜態地圖外， CartoDB 也可以做出各種動態的資料呈現效果，例如台大地理系製作的<a href="https://wenthung.cartodb.com/viz/56538bb2-4fe6-11e5-be9c-0e0c41326911/public_map">台南登格熱地圖</a>，搭配時間的演進利用熱圖將登格熱的疫情發展做很棒的呈現。</p>
+<p>然而，<a href="http://blog.infographics.tw/2015/06/three-keys-to-visualization/">資料的視覺呈現需要搭配敘事</a>，精彩的視覺化地圖仍需要有厲害的說書人來敘說，這時候 <a href="http://cartodb.github.io/odyssey.js/">Odyssey.js</a> 就派上用場了！進入 <a href="http://cartodb.github.io/odyssey.js/">http://cartodb.github.io/odyssey.js/</a>&nbsp;之後點擊 「Create Story」，進入選擇模式的畫面：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/choose-template.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/choose-template.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/choose-template-300x140.png 300w" height="420" width="900" alt="Choose template" src="http://blog.infographics.tw/wp-content/uploads/2015/09/choose-template.png" class="aligncenter size-full wp-image-1286"></a>
+<p>Odyssey.js 有三種不同模式的樣板，分別是「SLIDES」、「SCROLL」跟「TORQUE」：</p>
+<ul>
+<li>SLIDES: 類似投影片的方式，地圖與內容逐項的演進</li>
+<li>SCROLL: 類似瀏覽網頁的方式，內容隨著讀者捲動而演進</li>
+<li>TORQUE: 時間軸自動的演進，故事與地圖自動變化</li>
+</ul>
+<h2>建立投影片式故事地圖</h2>
+<p>以 「SLIDES」樣版為例，我們可以建立類似 StorymapJS 的故事地圖。在選擇樣版畫面點擊「SLIDES」後的畫面如下：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/slide-editor.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/slide-editor.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/slide-editor-300x148.png 300w" height="444" width="900" alt="Slide Editor" src="http://blog.infographics.tw/wp-content/uploads/2015/09/slide-editor.png" class="aligncenter size-full wp-image-1287"></a>
+<p>投影片模式編輯畫面主要分三個部份：底圖的地圖、左方的敘事窗，以及右方的敘事編輯器。整個故事地圖的內容完全就存在編輯器中，以 <a href="http://markdown.tw/">Markdown</a> 格式寫成，若你仔細看右方的編輯器中可以看到藍色的、以「#」號開頭的文字，那即是 Markdown 的語法，表示這是一個標題。</p>
+<p>Markdown 是一種排版語言，他使用一些簡單易理解的符號來標示各種不同的排版功能，例如：</p>
+<ul>
+<li>「#」開頭的行即為標題</li>
+<li>「##」開頭的行為副標題</li>
+<li>寫在兩個「*」號之間的文字 ( 例如 *這個字* ) 會以粗體呈現</li>
+<li>連結用方括號與圓括號來表現，比方說 [這個連結](http://blog.infographics.tw)</li>
+<li>可以用「*」放在行開頭製作列表清單，例如<br>
+* 第一項 ( 注意星號後需有空白 )<br>
+* 第二項<br>
+* 第三項</li>
+</ul>
+<p>比說下面這一段是一段簡單的 Markdown 排版文句：</p>
+<pre>  # 資料視覺化是什麼？
+  * 不知道可不可以吃？
+  * 聽說很好玩？
+  * 我想要知道更多: [由此去](http://blog.infographics.tw)</pre>
+<p>另外，在 Odyssey.js 中也使用三個單引號「“`」區隔座標設定：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/config.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/config.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/config-300x97.png 300w" height="290" width="900" alt="Configuration of Markers" src="http://blog.infographics.tw/wp-content/uploads/2015/09/config.png" class="aligncenter size-full wp-image-1288"></a>
+<p>可以看到上圖中紅框處即為設定的部份，裡面主要是儲存地圖座標點的資訊，其中 37.7620 與 -122.4316 為圖標的經緯度，「 zoom: 9」則是呈現時的地圖縮放等級。這個設定並不需要我們自己來寫，我們只將在底下的地圖中央的「＋」符號對準我們要放置圖標點的位置，然後點擊標題旁的「ADD」小按鈕，設定碼便會自動加入到我們的編輯器中。</p>
+<p>如下圖，將「2」中的「+」對準我們要放圖標的點之後，點擊「1」中的「ADD」，這時在「2」與「3」的地方便會出現圖標以及相對應的設定：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/add-marker.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/add-marker.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/add-marker-300x80.png 300w" height="240" width="900" alt="Add Marker" src="http://blog.infographics.tw/wp-content/uploads/2015/09/add-marker.png" class="aligncenter size-full wp-image-1289"></a>
+<p>在這個介面的修改都會即時反應在地圖跟左方的敘事框中，所以等於可以馬上看成果。編輯完成之後，我們可以點擊下方的紙飛機按鈕來取得分享連結或程式碼 ( 下圖 1 ) ，或者是利用下載按鈕 ( 下圖 2 ) 下載原始程式碼，進而在自己的電腦上修改。若是對地圖底圖不滿意，也可以直接點選下方的地圖按鈕 ( 下圖 3 ) 來切換到不同類型的地圖。&nbsp;<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/save.png"><img sizes="(max-width: 960px) 100vw, 960px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/save.png 960w, http://blog.infographics.tw/wp-content/uploads/2015/09/save-300x95.png 300w" height="305" width="960" alt="save" src="http://blog.infographics.tw/wp-content/uploads/2015/09/save.png" class="aligncenter size-full wp-image-1291"></a></p>
+<p>&nbsp;</p>
+<h2>建立捲軸式故事地圖</h2>
+<p>捲軸式故事地圖基本上與投影片式雷同，我們同樣的在地圖上標記圖標、利用 Markdown 語法撰寫文案並分段，唯一的差別在於讀者是用捲動的方式進行瀏覽，所以在瀏覽時，地圖會固定在網頁上方，而內容則在下方捲動：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/scroll.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/scroll.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/scroll-300x100.png 300w" height="298" width="900" alt="scroll" src="http://blog.infographics.tw/wp-content/uploads/2015/09/scroll.png" class="aligncenter size-full wp-image-1292"></a>
+<p>除了敘事與地圖分開顯示外，你能也會注意到畫面最上方多了一小條不同顏色的線，它用來提示讀者目前已經看了多少內容了。捲動模式的地圖較小，比較是輔助的性質，因此可以讓讀者更專注於內容而不用一直分心於地圖的變化，閱讀體驗也比較接近一般的網頁，可以說也是相當實用。</p>
+<h2>建立時間軸式敘事地圖</h2>
+<p>這可以說是 Odyssey.js 與其它工具最不同的地方，他可以搭配一個自動播放的動態式地圖建立敘事地圖。若你在選擇地圖樣板畫面點選了「Torque」式樣版，首先你會注意到的即是地圖下方的時間軸控制板：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/torque.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/torque.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/torque-300x117.png 300w" height="350" width="900" alt="torque time track" src="http://blog.infographics.tw/wp-content/uploads/2015/09/torque.png" class="aligncenter size-full wp-image-1293"></a>
+<p>上圖左下角的白色控制板即是時間軸控制板。這個時間軸它控制底圖的播放，與紅色的時間軸線垂直的每個灰線都代表了一個段落，自動由文章編輯器設定的時間來產生。為了設定每一個段落對應到的時間，我們在 Torque 樣板按下「ADD」時會多出幾個選項，可以讓我們將此段落設定在當前時間、強迫在進入段落時暫停等等：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/set-time.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/set-time.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/set-time-300x100.png 300w" height="300" width="900" alt="Set Paragraph Time" src="http://blog.infographics.tw/wp-content/uploads/2015/09/set-time.png" class="aligncenter size-full wp-image-1296"></a>
+<p>此外， Torque 樣板中必須要在編輯器開頭設定「vizjson」參數，以指定我們要使用的動態地圖。vizjson 參數是一個網址，我們可以從我們建立的 CartoDB 地圖中取得，只要在選定的地圖點擊 Publish 後， CartoDB.js 下方的網址即是 vizjson 需要的參數。</p>
+<p>下面這張地圖描述穆斯林節日時在推特上使用詞彙的分布狀況 ( <a href="http://bl.ocks.org/anonymous/raw/2f1e9a5a74ceeb88e977/">可以點此看實際效果</a> )：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/ramadan.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/ramadan.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/ramadan-300x133.png 300w" height="400" width="900" alt="ramadan" src="http://blog.infographics.tw/wp-content/uploads/2015/09/ramadan.png" class="aligncenter size-full wp-image-1297"></a>
+<p>&nbsp;</p>
+<p>下圖則是 Wimbledon 相關推特在世界各地的數量與對應的比賽訊息：</p>
+<p></p>
+<h2>結語</h2>
+<p>雖然類似的工具已經不少了，但是工具間多少都有些差異，而 Odyssey.js 搭配 CartoDB 可說是相當不錯的應用。雖然 Markdown 大家不一定有學過，但 Markdown 語法相當簡單，只要肯花十分鐘快速了解一下基本語法，相信大家都可以很快的上手。</p>
+<p>CartoDB 本身也提供了一些使用 Odyssey.js 做出來的成品範例，有興趣的朋友可以連去參考，了解一下用 Odyssey.js 還能做到什麼樣的效果：</p>
+<ul>
+<li>野生的 Odyssey.js 範例 — http://blog.cartodb.com/odyssey-js-examples-in-the-wild/</li>
+<li>更多 Odyssey.js 範例 —&nbsp;http://blog.cartodb.com/more-odyssey-examples/</li>
+</ul>
+<p>若你有使用 Odyssey.js 做出帥氣的故事地圖，也歡迎你在這裡留言分享給大家喔！ 🙂</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/cartodb/">cartodb</a>,<a rel="tag" href="http://blog.infographics.tw/tag/map/">map</a>,<a rel="tag" href="http://blog.infographics.tw/tag/markdown/">markdown</a>,<a rel="tag" href="http://blog.infographics.tw/tag/odyssey/">odyssey</a>,<a rel="tag" href="http://blog.infographics.tw/tag/scroll/">scroll</a>,<a rel="tag" href="http://blog.infographics.tw/tag/slide/">slide</a>,<a rel="tag" href="http://blog.infographics.tw/tag/torque/">torque</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e5%9c%b0%e5%9c%96/">地圖</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e6%95%85%e4%ba%8b/">故事</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e6%95%98%e4%ba%8b/">敘事</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e8%aa%aa%e6%9b%b8/">說書</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/09/blockspring/">別再爬了！用 Blockspring 將任何 API 接到你的試算表</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/09/openrefine-introduction/">史上最強大的資料整理工具 － Open Refine</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

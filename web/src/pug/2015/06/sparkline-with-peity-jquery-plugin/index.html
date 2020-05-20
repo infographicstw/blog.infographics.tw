@@ -1,0 +1,256 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">彈指間畫出迷你圖表 － jQuery Plugin 「Peity」 簡介</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-940 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-bar-chart tag-donut-chart tag-line-chart tag-peity tag-pie-chart tag-sparkline tag-svg" id="post-940">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-06-7" class="updated">7 6 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2015/06/cover1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/cover1.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/cover1-300x176.jpg 300w" height="527" width="900" alt="Peity - Cover" src="https://blog.infographics.tw/wp-content/uploads/2015/06/cover1.jpg" class="aligncenter size-full wp-image-947"></a>
+<p>想要有個圖表，但你的資料很簡單，不想搞得太複雜嗎？繪圖軟體、線上圖表工具通通丟掉，在你的網頁裡裝上這個 jQuery Plugin 吧！「 Peity 」讓你只要把資料填在網頁中，自動就幫你變成圓餅圖、長條圖、線圖等等的迷你圖表，而且還可以使用 CSS 增添樣式！小巧好用的工具，這次讓小編來幫大家介紹一下吧！</p>
+<p><span id="more-940"></span></p>
+<p>平常寫文章時偶而我們想要提供數據或資料的簡易資訊，卻不想打斷讀者的閱讀體驗，這時一種特殊的圖表類型「 Sparkline 」便派上用場。 Sparkline 是一種迷你線圖，通常缺乏軸線刻度資訊，而且跟一行文字一樣小，因此可以放到字裡行間中。右邊即是一個 Sparkline 的例子：<span class="line">5,3,2,-1,-3,-2,2,3,5,2</span></p>
+<p>雖然面積小，但前後文的描述使得圖表產生意義，這時線段的走勢雖然不帶刻度，仍可以提供讀者足夠程度的視覺線索來對資料做更深入的理解。</p>
+<p>Sparkline 最初由 Edward Tufte 教授命名，現在不光是線圖，一般面積小而可以置入行間的迷你圖也都可以稱為 Sparkline 了；這次要介紹的 jQuery Peity 即可以幫我們產生這樣的圖形。</p>
+<h2>前置作業</h2>
+<p>為了讓 Peity 幫我們產生迷你圖，首先我們在網頁中引入由專案網頁下載的 Peity 函式庫「 jquery.peity.min.js 」並透過 Peity 呼叫圓餅圖產生函式 Peity(“pie”):</p>
+<pre>&nbsp; &lt;script type="text/javascript" src="jquery.peity.min.js"&gt;&lt;/script&gt;
+&nbsp; &lt;script type="text/javascript"&gt;
+&nbsp; &nbsp; $(".pie").peity("pie");
+&nbsp; &lt;/script&gt;</pre>
+<p>接著，我們只要把帶有 pie 類別的標籤放在網頁中，並提供相對應的數值即可，舉例來說：</p>
+<pre>&lt;div class="pie"&gt;1,1&lt;/div&gt;</pre>
+<p>上例會畫出一個如右的對半切圓餅圖 「 <span class="pie">1,1</span>」。如果放大一點來看的話：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/06/ex1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/ex1.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/ex1-300x33.jpg 300w" height="100" width="900" alt="Peity Example" src="https://blog.infographics.tw/wp-content/uploads/2015/06/ex1.jpg" class="aligncenter size-full wp-image-945"></a>
+<p>div 裡面的數值單純就只是將我們的資料以逗號分隔的方式列出， Peity 會主動為我們解析成高度、比例等等的概念。下例則一次產生了十個這樣的圓餅圖，每個圓餅都有五個區塊：</p>
+<pre>&nbsp; &lt;span class="pie"&gt;4,2,2,7,8&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;5,0,2,8,9&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;1,3,1,9,6&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;1,4,0,2,9&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;6,6,1,6,0&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;0,7,8,7,0&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;1,8,5,8,8&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;6,6,8,5,0&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;1,4,2,3,1&lt;/span&gt;
+&nbsp; &lt;span class="pie"&gt;3,1,4,9,9&lt;/span&gt;</pre>
+<p>對應的結果如右：<span class="pie">4,2,2,7,8</span><span class="pie">5,0,2,8,9</span><span class="pie">1,3,1,9,6</span><span class="pie">1,4,0,2,9</span><span class="pie">6,6,1,6,0</span><span class="pie">0,7,8,7,0</span><span class="pie">1,8,5,8,8</span><span class="pie">6,6,8,5,0</span><span class="pie">1,4,2,3,1</span><span class="pie">3,1,4,9,9</span></p>
+<h2>其它圖表類型</h2>
+<p>不光只是圓餅圖， Peity 還可以繪製線圖、長條圖跟甜甜圈圖。要畫出各種不同的圖表，只要在前置作業的時候呼叫對應的 Peity 函式即可：</p>
+<pre>  &lt;script type="text/javascript"&gt;
+&nbsp; &nbsp; $(".pie").peity("pie");
+    $(".donut").peity("donut");
+    $(".line").peity("line");
+    $(".bar").peity("bar");
+&nbsp; &lt;/script&gt;</pre>
+<p>接著，製作圖的方式如出一轍：</p>
+<pre>&nbsp; &lt;span class="pie"&gt;1,2,3&lt;/span&gt;
+&nbsp; &lt;span class="donut"&gt;1,2,3&lt;/span&gt;
+&nbsp; &lt;span class="line"&gt;1,2,3&lt;/span&gt;
+&nbsp; &lt;span class="bar"&gt;1,2,3&lt;/span&gt;
+</pre>
+<p>結果如右： <span class="pie">1,2,3</span><span class="donut">1,2,3</span><span class="line">1,2,3</span><span class="bar">1,2,3</span></p>
+<h2>客製化</h2>
+<p>當然，光是畫出這樣的圖表不夠有意思， Peity 讓我們可以做一定程度的客製化。可以調整的參數包括「fill (填色)」、「stroke (外框色)」、「strokeWidth (框寬)」、「width / height (寬 / 高)」、「min / max (最小 / 最大值 )」、「delimiter (分隔符號)」等等，我們將參數編寫成 JSON 格式後，可以透過兩種方式來使用：</p>
+<ol>
+<li>直接標示在標籤內的「data-peity」屬性中：<br>
+&lt;span class=”pie” data-peity='{“fill”: [“#ff0000″,”#00ff00”]}’&gt;1,2&lt;/span&gt;</li>
+<li>在呼叫 Peity 初始化函式時當成第二個參數代入：<br>
+$(“.pie”).peity(“pie”, {“fill”:[“#ff0000″,”#00ff00”]});</li>
+</ol>
+<p>填色時我們可以一次提供多個顏色來幫圖表著上不同顏色，例如下例我們便為 Pie Chart 提供了五種顏色：</p>
+<pre>  &lt;span class="pie" data-peity='{"fill":["#1e0c0b","#5c1a12","#bb260d","#a58168","#71543b"]}'&gt;1,3,2,4,5&lt;/span&gt;</pre>
+<p>以這樣的顏色著色的圓餅圖會類似下圖 ( 放大版 )：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/06/ex2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/ex2.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/ex2-300x67.jpg 300w" height="200" width="900" alt="Example 2" src="https://blog.infographics.tw/wp-content/uploads/2015/06/ex2.jpg" class="aligncenter size-full wp-image-955"></a>
+<h3>設定樣式表</h3>
+<p>由於 Peity 的原理是在所有找到的設定標籤後面插入一個繪圖用的 SVG 標籤，所以我們其實也可以用 CSS 來為圖表做設定。比方說，我們可以增加一種特殊的長條圖「bar-full」，他自己獨立一行呈現並且放大到 900px x 200px ：</p>
+<pre>&lt;styl type="text/css"&gt;
+&nbsp; .bar-full + svg {
+&nbsp; &nbsp; display: block;
+&nbsp; &nbsp; width: 900px;
+&nbsp; &nbsp; height: 200px;
+&nbsp; &nbsp; margin: auto;
+&nbsp; }
+&lt;/style&gt;
+&lt;span class="bar-full"&gt;5,4,7,2,3,1,2&lt;/span&gt;</pre>
+<p>上例會得到類似下圖的結果：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/06/ex3.0.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/ex3.0.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/ex3.0-300x53.jpg 300w" height="158" width="900" alt="Example 3 ( 單色版 )" src="https://blog.infographics.tw/wp-content/uploads/2015/06/ex3.0.jpg" class="aligncenter size-full wp-image-958"></a>
+<p>更甚者，連 SVG 內的形狀我們都可以用 CSS 控制，下例為各個長條分別著色：</p>
+<p>.bar-full + svg &gt; rect:nth-of-type(n + 1) { fill:&nbsp;#71543b; }<br>
+.bar-full + svg &gt; rect:nth-of-type(n + 2) { fill: #ebd8bc; }<br>
+.bar-full + svg &gt; rect:nth-of-type(n + 3) { fill: #f0bc15; }<br>
+// 下略</p>
+<p>這段 CSS 設定會產生如下的效果：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/06/ex3.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/ex3.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/ex3-300x53.jpg 300w" height="158" width="900" alt="Example 3" src="https://blog.infographics.tw/wp-content/uploads/2015/06/ex3.jpg" class="aligncenter size-full wp-image-957"></a>
+<p>這代表了做動畫也是可以的，例如下面的設定：</p>
+<pre>&nbsp; @keyframes change {
+&nbsp; &nbsp; 0% {
+&nbsp; &nbsp; &nbsp; fill: #f00;
+&nbsp; &nbsp; }
+&nbsp; &nbsp; 100% {
+&nbsp; &nbsp; &nbsp; fill: #0f0;
+&nbsp; &nbsp; }
+&nbsp; }
+&nbsp; span.bar-animate + svg &gt; rect {
+&nbsp; &nbsp;&nbsp;animation: change 1s linear infinite;
+&nbsp; }</pre>
+<p>會讓我們的圖表顏色不斷變換喔：</p>
+<p></p>
+<p>你可以在<a href="https://github.com/infographicstw/example/tree/gh-pages/940/">這裡</a>找到上例的原始碼。</p>
+<hr>
+<h2>結語</h2>
+<p>Peity 是一個相當方便的輔助函式，我們只要填幾個簡單的值就可以自動產生圖表，除了基本的四種圖表外，還可以做簡單的客製化，有必要也可以用 CSS 追加額外的設定，可說是十分好用。</p>
+<p>當然，產生 Sparkline 原本的目的便是在有限的空間內做最有效率的利用，這裡展示放大 Sparkline 或動畫的效果僅是在說明這類型在網頁內直接插入的圖表我們便有更大的調整空間。Peity 大致上就介紹這邊，未來讀者們有需要插入這類迷你圖表時，別忘了考慮用用看 Peity 喔！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/bar-chart/">bar chart</a>,<a rel="tag" href="https://blog.infographics.tw/tag/donut-chart/">donut chart</a>,<a rel="tag" href="https://blog.infographics.tw/tag/line-chart/">line chart</a>,<a rel="tag" href="https://blog.infographics.tw/tag/peity/">peity</a>,<a rel="tag" href="https://blog.infographics.tw/tag/pie-chart/">pie chart</a>,<a rel="tag" href="https://blog.infographics.tw/tag/sparkline/">sparkline</a>,<a rel="tag" href="https://blog.infographics.tw/tag/svg/">svg</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/06/three-keys-to-visualization/">絕對別忽略的三個視覺化關鍵要素</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2015/06/introduction-to-x3dom/">視覺化的 3D 世界 － X3D 入門</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

@@ -1,0 +1,324 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">R 也能互動！用 Shiny 與 R 語言將你的數據變成互動圖表</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1784 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-ggplot2 tag-quantom tag-r tag-shiny" id="post-1784">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-04-12" class="updated">12 4 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1798" href="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-1.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-1-300x176.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-1-768x450.png 768w" height="527" width="900" alt="cover" src="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-1.png" class="aligncenter size-full wp-image-1798"></a>
+<p>會用 R 做圖表、但不懂網頁、不知道如何做互動視覺化嗎？讓 Shiny 來拯救你吧！Shiny 幫我們打包了網頁的製作細節、提供給我們單一的 R 語言介面，讓我們可以快速的基於 R 製作出互動資料視覺化，一起來看看怎麼使用吧！</p>
+<p><span id="more-1784"></span></p>
+<p>R 做為一個專為統計與圖表打造的軟體來說，相當適合做資料分析與處理；比方說，若我們要拆解資料的主要特徵，PCA ( Principal Component Analysis ) 是個不錯的演算法，而相較於一般需要自行撰寫該演算法的程式語言來說，「princomp」這個計算 PCA 的函式便已內建在 R 的環境之中。除了統計的應用外，也有像是 ggplot2 這類的強大圖表函式庫；下圖即為由 R Studio 製作的 ggplot2 指令速查表：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1785"><a rel="attachment wp-att-1785" href="https://blog.infographics.tw/wp-content/uploads/2016/04/ggplot2-cheat.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/ggplot2-cheat.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/ggplot2-cheat-300x180.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/ggplot2-cheat-768x461.png 768w" height="540" width="900" alt="ggplot2-cheat" src="https://blog.infographics.tw/wp-content/uploads/2016/04/ggplot2-cheat.png" class="wp-image-1785 size-full" aria-describedby="caption-attachment-1785"></a><p class="wp-caption-text" id="caption-attachment-1785">( ggplot2 cheat sheet by R Studio, CC-BY 4.0. source: &nbsp;https://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf)</p></div>
+<p>然而，R 為一個軟體與程式語言環境，他必須要安裝且執行在自己的電腦中，再加上他做為統計分析工具的本質，使得他在製作互動圖表的這點上相對比較弱；比起像是網路原生的 D3.js 、提供線上嵌入的 Tableau 或其它網路服務來說， R 的圖表不容易做即時更新，也不容易做到互動查詢。</p>
+<p>為了克服這幾個弱點， Shiny 出現了 — &nbsp;專為 R 打造的網路應用框架。</p>
+<h2>什麼是 Shiny？</h2>
+<p>雖然我們討論的是圖表，但 Shiny 並不是一個圖表函式庫。 簡單的說， Shiny 讓我們直接用 R 語言撰寫網頁的前後端，並提供圖表接口，讓我們能直接將 R 產生的圖表呈現在網頁上。最基本的 Shiny 專案包含了兩個部份：</p>
+<ul>
+<li>ui.R — 前端程式碼，描述我們的專案網頁要怎樣呈現與排版</li>
+<li>server.R — 後端程式碼，負責分析、計算與繪製圖表，並將結果傳遞給前端。</li>
+</ul>
+<p>Shiny 並不負責圖表的計算，但他為我們隱藏了網頁互動與設計的細節，並內建了各種表單元件，讓我們可以直接透過 R 的語法來設置元件並利用來達成互動效果。</p>
+<h3>基本建置</h3>
+<p>若你沒有用過 R ，那你必須要先安裝 R 。 R 可以在其官方網站「r-projection.org」找到下載連結，或是你也可以點入<a href="https://cloud.r-project.org/">此連結</a>下載。安裝完成後，執行 R 開啟 R 的開發環境，我們接下來主要會在 R 環境中操作，但由於這篇文章並非 R 的入門教學，我們會將重點放在 Shiny 的使用上。</p>
+<p>成功執行 R 以後，我們需要安裝 shiny 套件，並將套件載入到執行環境中，這可以透過執行下列兩行指令完成：</p>
+<pre>  install.packages("shiny")
+  library(shiny)</pre>
+<p>要確認是否順利將 Shiny 安裝，可以執行 Shiny 的範例程式看看結果是否正確：</p>
+<pre>&nbsp; runExample("01_hello")</pre>
+<p>範例程式將會自動開啟瀏覽器並顯示 Shiny 的互動圖表，結果如下：</p>
+<a rel="attachment wp-att-1787" href="https://blog.infographics.tw/wp-content/uploads/2016/04/example.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/example.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/example-300x136.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/example-768x349.png 768w" height="409" width="900" alt="example" src="https://blog.infographics.tw/wp-content/uploads/2016/04/example.png" class="aligncenter size-full wp-image-1787"></a>
+<p>大家可以玩玩看左方的 Slider ，拖動的同時、右方的圖表也會跟著改變。第一個互動圖表完成！</p>
+<p>當然我們不會只想要看看人家的範例程式就過癮囉，接下來就是動手做的時間了。為了要讓我們製作自己的互動圖表，我們要在剛剛我們執行 R 的工作目錄下再建立一個資料夾，並在裡面新增兩個檔案： ui.R 與 server.R 。兩者需要填入的最基本內容如下：</p>
+<p>server.R</p>
+<pre>  shinyServer(function(input, output) { })</pre>
+<p>ui.R</p>
+<pre>  library(shiny)
+  shinyUI(fluidPage())</pre>
+<p>接著，我們只要在 R 中執行「runApp(“資料夾名稱”) 」 ， Shiny 便會自動啟動瀏覽器並執行這個空白的互動圖表囉！只是空白的圖表並不是我們要的，接著就讓我們來看看&nbsp;ui.R 與 server.R&nbsp;要怎麼使用吧！</p>
+<h3>ui.R — 視覺化前端</h3>
+<p>ui.R 這隻檔案負責告訴 Shiny 我們的網頁前端要長什麼樣子。一般來說，設計網頁我們會利用 HTML 、 CSS 等技術來實現，但為了讓設計的門檻再降低，Shiny 預先包裝好了許多實用的表單與排版元素，讓我們可以很輕易的在圖表中加入各種控制項。</p>
+<p>一個 Shiny ui.R 最基本的程式碼如下：</p>
+<pre>  library(shiny)
+  shinyUI(fluidPage(
+  ))</pre>
+<p>其中 fluidPage 便是我們的互動網頁了，只是現在裡頭是空的。 Shiny 利用階層式的函式呼叫架構來製作版面配置，並預先定義好各種不同用途的版面函式，舉個例子來說，若我們想要呈現一個寫道「大家好」的標題，我們可以這樣寫：</p>
+<pre>  library(shiny)
+  shinyUI(fluidPage(
+&nbsp;   &nbsp;titlePanel("大家好")
+  ))</pre>
+<p>若要很多個標題：</p>
+<pre>  library(shiny)
+  shinyUI(fluidPage(
+  &nbsp; titlePanel("大家好"),
+    titlePanel("大家好"),
+    titlePanel("大家好")
+  ))</pre>
+<p>頁面則會如此呈現：</p>
+<a rel="attachment wp-att-1788" href="https://blog.infographics.tw/wp-content/uploads/2016/04/title.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/title.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/title-300x53.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/title-768x137.png 768w" height="160" width="900" alt="title" src="https://blog.infographics.tw/wp-content/uploads/2016/04/title.png" class="aligncenter size-full wp-image-1788"></a>
+<p>當然若要設計複雜的版面，只有「titlePanel」是做不了什麼事的。 Shiny 提供了各種不同的排版函式，比方說：</p>
+<ul>
+<li>sidebarLayout — 將頁面切成兩塊，包含主內容與 sidebar</li>
+<li>sidebarPanel — 在 sidebar 內使用的面版</li>
+<li>mainPanel — 主要呈現資料的面版</li>
+<li>navlistPanel — 導覽面板</li>
+<li>tabPanel — 頁籤面板</li>
+</ul>
+<p>此外，對於比較複雜的控制項， Shiny 也提供了包裝過後的函式，例如 Slide 或 Radio Button 可以由下列程式碼產生：</p>
+<pre>&nbsp; radioButtons("radio", label = "Choices", choices = list("Choice 1" = 1, "Choice 2" = 2)),
+&nbsp; sliderInput("slider1", label = "Slider", min = 0, max = 100, value = 50),</pre>
+<p>上列兩行程式可產生下圖的兩個控制項：</p>
+<a rel="attachment wp-att-1791" href="https://blog.infographics.tw/wp-content/uploads/2016/04/slider.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/slider.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/slider-300x76.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/slider-768x194.png 768w, https://blog.infographics.tw/wp-content/uploads/2016/04/slider-600x150.png 600w" height="227" width="900" alt="slider" src="https://blog.infographics.tw/wp-content/uploads/2016/04/slider.png" class="aligncenter size-full wp-image-1791"></a>
+<p>為了展示板面與控制項的組合運用，我們再示範一次搭配 siderLayout 的組合運用：<a rel="attachment wp-att-1789" href="https://blog.infographics.tw/wp-content/uploads/2016/04/sample-input.png"><br>
+</a></p>
+<pre>  library(shiny)
+  shinyUI(fluidPage(
+    titlePanel("大家好"),
+    sidebarLayout(
+      sidebarPanel(
+        radioButtons("radio", label = "Choices", choices = list("Choice 1" = 1, "Choice 2" = 2)),
+        sliderInput("slider1", label = "Slider", min = 0, max = 100, value = 50)
+      ),
+      mainPanel("逮給厚，哇喜逮頑歐郎")
+    )
+  ))</pre>
+<p>在上例中我們可以看到下列幾個元件：</p>
+<ol>
+<li>使用 titlePanel 設定標題</li>
+<li>sidebarLayout 將畫面左右切分</li>
+<li>sidebarPanel 設定左方的面板，內含 Radio 與 Slider 控制項</li>
+<li>mainPanel 裡面只寫上「逮給厚，哇喜逮頑歐郎」等字。</li>
+</ol>
+<p>這樣的設定呈現的結果如下：</p>
+<a rel="attachment wp-att-1792" href="https://blog.infographics.tw/wp-content/uploads/2016/04/layout-sample.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/layout-sample.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/layout-sample-300x100.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/layout-sample-768x253.png 768w" height="296" width="900" alt="layout-sample" src="https://blog.infographics.tw/wp-content/uploads/2016/04/layout-sample.png" class="aligncenter size-full wp-image-1792"></a>
+<p>Shiny 的控制項其實是基於另一個網路套件「 Bootstrap 」製作出來的，支援的元件數量不少，有興趣的讀者可以參考 <a href="https://shiny.rstudio.com/gallery/widget-gallery.html">Widget Gallery</a> 這個網頁了解更多。裡面除了列出支援的套件，也提供使用的語法，下圖為其中一部份元件範例的截圖：</p>
+<a rel="attachment wp-att-1794" href="https://blog.infographics.tw/wp-content/uploads/2016/04/sample-widgets.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/sample-widgets.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/sample-widgets-300x122.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/sample-widgets-768x312.png 768w" height="366" width="900" alt="sample-widgets" src="https://blog.infographics.tw/wp-content/uploads/2016/04/sample-widgets.png" class="aligncenter size-full wp-image-1794"></a>
+<p>到目前為止，我們都只操作到 UI 排版與元件的部份，那我們的圖表要怎麼樣顯示出來呢？</p>
+<h3>server.R — 計算與繪圖的後端</h3>
+<p>一般我們在 R 中做視覺化，輸出結果都是由彈出的 R 子視窗來顯示，而這也就是我們想要讓使用者在網頁上看到的部份。為了讓圖表能夠順利的傳到網頁前端， Shiny 提供了程式輸出入介面，我們只要將圖表存到適當的地方， Shiny 便會自動將圖表更新至前端。以下列程式碼為例， Shiny Server 利用函式中「input」與「output」兩個變數做為溝通的管道，而我們的程式則可以讀取 input 中的數值，並將圖表寫入至 output 中：</p>
+<pre>&nbsp; shinyServer(function(<strong>input</strong>, <strong>output</strong>) {
+    <strong>output$distPlot</strong> &lt;- renderPlot({
+&nbsp; &nbsp;   x &lt;- faithful[, 2] # Old Faithful Geyser data
+&nbsp; &nbsp;   bins &lt;- seq(min(x), max(x), length.out = 10)
+&nbsp; &nbsp;   hist(x, breaks = bins, col = 'blue', border = 'white')
+&nbsp;   })
+  })</pre>
+<p>在上例中，我們將 R 內建的「老實忠泉」資料利用「hist」函式製作直方圖，並透過 Shiny 的「renderPlot」函式將圖表回存至 「output$distPlot」 之中，而這個 output$distPlot 便能在 ui.R 之中利用 plotOutput(“distPlot”) 取得。因此，在上面的排版範例之中，我們只要將 mainPanel 修改成下例：</p>
+<pre>&nbsp; mainPanel(plotOutput("distPlot"))</pre>
+<p>重新執行以後我們便可以在網頁中看到直方圖出現了：</p>
+<p>&nbsp;</p>
+<a rel="attachment wp-att-1795" href="https://blog.infographics.tw/wp-content/uploads/2016/04/histogram.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/histogram.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/histogram-300x149.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/histogram-768x382.png 768w" height="448" width="900" alt="histogram" src="https://blog.infographics.tw/wp-content/uploads/2016/04/histogram.png" class="aligncenter size-full wp-image-1795"></a>
+<p>為了要「互動」，除了輸出圖表，輸入資料也是必須的；我們在網頁上的元件可以透過「input」變數來讀取其值，例如我們在前面用到的 Slider：</p>
+<pre>&nbsp; sliderInput("slider1", label = "Slider", min = 0, max = 100, value = 50)</pre>
+<p>透過其名稱、也就是第一個參數「slider1」，我們便能取得其值「input$slider」。我們稍稍修改老實忠泉裡設定 bins 數量的部份，改為使用 slider1 的輸入來設定：</p>
+<pre>&nbsp; bins &lt;- seq(min(x), max(x), length.out = <span style="color: #ff0000;"><strong>input$slider + 1</strong></span>)</pre>
+<p>完成以後重新執行我們的程式，可以看到圖表會隨著我們的輸入變化了！是不是很簡單呢？</p>
+<a rel="attachment wp-att-1796" href="https://blog.infographics.tw/wp-content/uploads/2016/04/adjust.gif"><img height="330" width="900" alt="adjust bins" src="https://blog.infographics.tw/wp-content/uploads/2016/04/adjust.gif" class="aligncenter size-full wp-image-1796"></a>
+<h2>小結</h2>
+<p>在上面的範例中，我們完全看不到 HTML 、 CSS 或 JavaScript 等傳統製作互動網頁圖表時最重要的元素，取而代之的是各式的模板、資料串連與原生的 R 圖表。這個設計邏輯其實簡單的說就是：</p>
+<p><strong>「你什麼都不用會，只要會 R ，就可以做互動圖表。」</strong></p>
+<p>當然其實在 Shiny UI 的部份，它仍提供了一些像是「h1」、「br」等常見的 HTML 對應元素，但這個主要是為了提高 Shiny UI 的彈性；大部份時候我們其實是可以直接利用現成模版快速兜出一個互動圖表的。</p>
+<p>其次，Shiny 本身並不包含圖表生成；上例的直方圖函式「hist」為 R 的內建函式，如果我們要製作其它不同類型的圖表，可以搭配其它套件如「ggplot2」、「quantom」等，這也大大的提升了 Shiny 的可用性，而不會受限於單一套件所支援的圖表類型。</p>
+<p>而為了進一步提升 R 圖表的傳播效率， RStudio 甚至架設了「shinyapps.io」網站提供主機服務，我們只要上傳自己的 Shiny app 檔案，就可以把自己的互動圖表分享給任何人看。是不是真的很方便呢？</p>
+<p>上述可說是 Shiny 的最大優點，然而缺點也不是沒有的：</p>
+<ul>
+<li>需要更複雜客製化的時候， R 語言包裝的 HTML 會是場災難。</li>
+<li>無法更即時的互動。圖片永遠由 server 端重新計算後產生。</li>
+<li>視覺呈現受制於 R 套件，仍無法利用 D3.js 等更強大的視覺函式庫。</li>
+</ul>
+<p>其實，參考 Shiny 的架構，我們也是可以自行開發套件、搭配 Apache 或 Nginx 之類的網頁伺服器將 R 的圖表甚至資料檔餵給前端的 D3.js 程式碼，這樣就可以更彈性的利用 D3.js 與 R 的強大之處；然而網頁前端視覺化還是有其門檻，像 Shiny 這樣將複雜的前端邏輯透過 R 語言包裝，對於不懂網頁的人來說，還是相當方便的！因此，如果下次你有需要透過 R 做資料視覺化，又不具備前端開發的技能時，不妨試試看 Shiny 吧！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/ggplot2/">ggplot2</a>,<a rel="tag" href="https://blog.infographics.tw/tag/quantom/">quantom</a>,<a rel="tag" href="https://blog.infographics.tw/tag/r/">r</a>,<a rel="tag" href="https://blog.infographics.tw/tag/shiny/">shiny</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/04/use-labella-for-timeline/">不用再拉半天！用 Labella.js 幫我們製作美麗的時間軸標籤</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>2</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-1452">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/1cc48f4584b7a6c3928096d7b9d0b745?s=40">
+                <cite class="fn">yangyang</cite>         <time datetime="2018-12-10"><a href="https://blog.infographics.tw/2016/04/interactive-r-with-shiny/#comment-1452">10 12 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>你好 , 你的範例程式碼有個地方有誤 , 跑出來會有Bug .<br>
+Bug在最後面的互動式圖表UI跟Server (如下的程式碼)</p>
+<p>  sliderInput(“slider1”, label = “Slider”, min = 0, max = 100, value = 50)<br>
+  bins &lt;- seq(min(x), max(x), length.out = input$slider + 1)</p>
+<p>變數名稱 "UI的slider1"跟"Server的slider" 不一致   , 這樣執行會有誤 !</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment odd alt thread-odd thread-alt depth-1 cf" id="comment-1455">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/70a29cf3eebf913c8986fe9b8f45ccf7?s=40">
+                <cite class="fn">openopen114</cite>         <time datetime="2018-12-13"><a href="https://blog.infographics.tw/2016/04/interactive-r-with-shiny/#comment-1455">13 12 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>bins &lt;- seq(min(x), max(x), length.out = input$slider + 1)<br>
+的 input$slider 似乎少 1 (input$slider1 ??)</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

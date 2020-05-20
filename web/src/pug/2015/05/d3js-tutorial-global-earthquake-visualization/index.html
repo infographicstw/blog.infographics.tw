@@ -1,0 +1,213 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">D3.js 視覺化教學 －全球即時地震視覺化</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-754 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-d3js tag-geojson tag-308 tag-223 tag-310 tag-298" id="post-754">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-05-1" class="updated">1 5 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2015/05/cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/05/cover.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/05/cover-300x176.png 300w" height="527" width="900" alt="Global Earthquake - Cover" src="https://blog.infographics.tw/wp-content/uploads/2015/05/cover.png" class="aligncenter size-full wp-image-762"></a>
+<p>最近地震頻繁，剛剛在巴布亞紐幾內亞又發生一個規模七的地震，讓我們利用這個機會教大家一起來做全球地震視覺化吧！</p>
+<p><span id="more-754"></span></p>
+<p>談到地震視覺化，我們在之前的文章「<a href="https://blog.infographics.tw/2015/04/d3js-with-world-globe-map/">D3.js 實戰 － 地表最速地球儀實作</a>」有介紹過 3D 立體地球儀的製作方式。想想看，在地球儀上顯示地震好像很酷！之前的文章中也同時有提供程式碼，所以我們現在唯一要做的就是追加將資料畫到地球上的程式碼。</p>
+<p>首先，我們要取得全球地震的即時資料，並確認能取得資料的使用授權。以個人或小型企業的力量很難搜集到這樣的資料，但是透過 Google 搜尋我們很快的在美國政府&nbsp;<a href="https://www.usgs.gov/">USGS 網站</a>&nbsp;找到了<a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/">全球地震的即時資料</a>；他提供包含 KML、ATOM、GEOJSON 等各式各樣的格式與不同的時間區間供下載；至於資料的使用授權則是 <a href="https://www.usgs.gov/visual-id/credit_usgs.html#copyright">Public Domain</a> ，代表我們可以自由的使用。</p>
+<p>取下來的 Geojson 檔內包含了一個個代表世界各地地震的座標點，值得注意的是每個座標點除了經緯度外還多了深度。比方說，五月一日下午五點多發生於阿拉斯加的地震其資料大概像下面這樣：</p>
+<pre>  {
+    "type":"Feature",
+  &nbsp; "properties":{"mag":2.7,"time":1430470821000," ... },
+  &nbsp; "geometry":{"type":"Point","coordinates":[<strong><span style="color: #800000;">-156.489</span></strong>,<span style="color: #008000;"><strong>57.3437</strong></span>,<span style="color: #000080;"><strong>11.5</strong></span>]},&nbsp;...&nbsp;
+  }</pre>
+<p>可以看到經緯度座標是 <span style="color: #800000;"><strong>-156.489</strong></span> ( 經度 ) 、 <span style="color: #008000;"><strong>57.3437</strong></span> ( 緯度 ) 、 深度則是 <span style="color: #000080;"><strong>11.5</strong></span> 公里。直接用 d3.json 讀取後做資料綁定，並設定 CSS ClassName 「quake」以便跟陸地版塊做區隔：</p>
+<pre>d3.json("quake.json", function(quake) {
+  var circles = d3.select("svg").selectAll("path.quake")
+    .data(quake.features).enter().append("path").attr("class", "quake");
+});</pre>
+<p>為了實際表現地震規模的威力，我們利用泡泡面積來呈現不同規模所對應的地震波振幅。地震規模每差一級，地震波產生的最大振幅則相差十倍，而泡泡的面積又與半徑平方成正比，所以規模每增一級，對應到的泡泡半徑約增加 3.162 倍 ( 10 的平方根 ) ，我們使用 Math.pow 函式將規模對應到適當的泡泡大小 ( 如下 ) ：</p>
+<pre>  function magmap(mag) {
+    return Math.pow(3.162, it) / 100;
+  }</pre>
+<p>產生的的「規模－泡泡對應」大致上則會如下圖：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_776"><a href="https://blog.infographics.tw/wp-content/uploads/2015/05/mag.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/05/mag.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/05/mag-300x67.png 300w" height="200" width="900" alt="Earthquake Magnitude" src="https://blog.infographics.tw/wp-content/uploads/2015/05/mag.png" class="wp-image-776 size-full" aria-describedby="caption-attachment-776"></a><p class="wp-caption-text" id="caption-attachment-776">地震規模對應到的圈圈大小，以面積表現地震波振幅</p></div>
+<p>&nbsp;</p>
+<p>接下來，我們要將各別的地震轉換成 SVG 物件，類似陸地版塊， D3.js 提供我們把單點繪製成圓圈的輔助函式，我們只要提供半徑計算函式就可以了。我們利用半徑來表示地震規模 ( 規模可以在地震資料中的 properties.mag 取得 ) ，並透過 magmap 轉換函式轉成適當的數值：</p>
+<pre>&nbsp; var pathQuake = d3.geo.path().projection(projection)
+    .pointRadius(function(it) { 
+      return magmap(parseFloat(it.properties.mag)); 
+  });</pre>
+<p>&nbsp;</p>
+<p>最後，記得利用 pathQuake 把剛剛綁定好的 path 標籤畫出來，為了方便隨著滑鼠移動而更新，我們將之寫成一個函式：</p>
+<pre>  function updateQuakeLocation() {
+    circles.attr({
+      d: pathQuake,
+      stroke: "red", // 畫紅圈
+      fill: "none"   // 紅圈不填滿
+    });
+  }</pre>
+<p>接著在原本地球儀的滑鼠事件處理函式中呼叫 updateQuakeLocation() ，我們的地震地球儀就完成了！小編順手加上了一個 Legend ，這樣可以清楚的對照每個泡泡的地震規模：</p>
+<p></p>
+<p>這裡使用的是近 30 日規模 2.5 以上的地震。用滑鼠拖動地球到亞洲的位置可以看到有個很大的圈圈，那就是最近剛發生大地震的尼泊爾。想要瞭解更多實作細節的話，可以參考：</p>
+<ul>
+<li>地震資訊網頁網址： <a href="https://data.infographics.tw/viz/global-earthquake/">https://data.infographics.tw/viz/global-earthquake/</a></li>
+<li>地震資訊原始碼： <a href="https://github.com/infographicstw/global-earthquake/">https://github.com/infographicstw/global-earthquake/</a></li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<h2>結語</h2>
+<p>事件的第一手資訊會獲得大量的關注，因此視覺化開發效率也變得相對重要，從資料截取、專案討論、程式開發與文案編輯，團隊間的默契也對花費時間有極大的影響。</p>
+<p>使用 d3.js 搭配各種資料提供網站，我們能很快的做出各種應用。以這次的專案來說，資料調查與程式碼撰寫在半小時內便完成，這樣的技術對即時新聞或即時行銷等與時間賽跑的課題來說都相當有幫助。</p>
+<p>回到視覺化本身，這次的視覺化在地球儀上以泡泡呈現資訊，讓人直觀的了解地震發生的位置與規模，但是無法同時看到全部的地震又需要透過滑鼠拖動，是否會造成閱讀障礙？同時，立體的資訊表現讓我們在製作視覺化比起平面圖又多了一個維度可以應用，讀者們可以想想看：如果是你，這個視覺化還有什麼可以改進的空間呢？ 🙂</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/geojson/">geojson</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%9c%b0%e7%90%83%e5%84%80/">地球儀</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%9c%b0%e9%9c%87/">地震</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%af%a6%e6%88%b0/">實戰</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e6%95%99%e5%ad%b8/">教學</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/04/6-tips-visualization-apply-to-data-journalism/">六個訣竅，讓你用視覺化看透資料玄機</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2015/05/free-vector-map/">免費地圖向量圖下載－Free Vector Map</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="https://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="https://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

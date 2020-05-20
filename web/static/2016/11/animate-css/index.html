@@ -1,0 +1,306 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">微動畫簡單做！使用 animate.css 五秒提升作品質感</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-2026 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-animation tag-css tag-d3 tag-transition tag-translate" id="post-2026">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-11-20" class="updated">20 11 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2016/11/cover.gif"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover.gif 900w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x176.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-768x450.gif 768w" height="527" width="900" alt="cover" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover.gif" class="aligncenter size-full wp-image-2031"></a>
+<p>用戶互動的過程中，一點動態效果能有效地提升整體的使用體驗，但程式製作動畫過程繁瑣，撰寫 CSS 也相當費時。這次要介紹的 Animate.css 為我們預建了 75 種不同的動態效果，讓我們簡單一個動作就為元件加上動畫！</p>
+<p><span id="more-2026"></span></p>
+<p>微動畫 ( micro animation ) 在 UX 至上的現在越來越流行，它為我們的作品加上互動的線索、引導讀者的視線，可說已經是一種不可或缺的要素。以 D3.js 的作品為例，通常在視覺化作品中加入動畫有兩種作法：</p>
+<ul>
+<li>使用 D3.js 的動畫函式 ( 可參考「<a href="http://blog.infographics.tw/2016/11/d3js-transition/">讓我的視覺化動起來！D3.js 動畫函式入門</a>」一文 )</li>
+<li>使用 CSS3 的 Animation 屬性</li>
+</ul>
+<p>然而，前者程式的方式雖然不難且頗具彈性，卻需要具備 D3.js 與 JavaScript 的背景知識；而後者 CSS3 的方法除了需要懂 CSS3 之外，自行維護也需要費一番功夫。如果有一組已經設計好的動畫效果可以讓我直接使用，那是不是很棒呢？</p>
+<p>Animate.css 由 Daniel Eden 開發，即是一個 CSS3 Animation 預設集大全，內含 75 個不同的動畫效果，我們只要透過設定 Class 的方式使用即可，例如：</p>
+<pre>  &lt;h2&gt; Hello World! &lt;/h2&gt;</pre>
+<p>上例為一常見的網頁標題，要讓他跳起來，我們只需要兩個動作，首先，引入 Animate.css 樣式檔：</p>
+<pre><strong><span style="color: #ff0000;">  &lt;link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/&gt;</span></strong>
+  &lt;h2&gt; Hello World! &lt;/h2&gt;</pre>
+<p>接著，為 h2 加上三個 CSS 類別：</p>
+<pre>  &lt;link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/&gt;
+  &lt;h2 <span style="color: #ff0000;"><strong>class="animated infinite bounce"</strong></span>&gt; Hello World! &lt;/h2&gt;</pre>
+<p>就這樣，你可以在自己的電腦上試試看，直接將上述兩行存成 index.html 放在電腦桌面後用滑鼠雙擊打開，你會看到類似這樣得效果：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/11/bounce.gif"><img height="104" width="286" alt="bounce" src="http://blog.infographics.tw/wp-content/uploads/2016/11/bounce.gif" class="aligncenter size-full wp-image-2027"></a>
+<p>當我們加入 CSS 類別時，「animated」代表的是動畫，「infinite」代表了無限循環，而「bounce」則代表了「彈跳」— 如果你想要不一樣的動畫類型，只要將第三個類別「bounce」改為其它的類別就可以了，animate.css 所提供的內建類別包含了 75 種，數量相當多，若你想知道完整的列表可以連至 <a href="https://github.com/daneden/animate.css/">animate.css 的專案庫</a>參考，我們在這裡也提供一個快速預覽的動畫圖給大家做快速對照：</p>
+<img height="522" width="800" alt="animate.css gallery" src="http://i.giphy.com/3oz8xIIMTgPT3zNzkk.gif" class="size-full">
+<h3>使用在 SVG 標籤上</h3>
+<p>由於做網頁視覺化時我們常會用到 SVG 系列的標籤，你可能會好奇這些動畫效果是否可以使用在 SVG 的標籤上，事實上上圖中的圓全都是 SVG 的 &lt;circle&gt; 標籤，這代表在 SVG 上使用是完全沒有問題的，唯一要注意的是我們是否使用到與動畫相衝突的 transform 屬性；若我們需要使用 transform 屬性來製作視覺化，建議可以在外面包一層 &lt;g&gt; 即可使用。</p>
+<h2>客製化</h2>
+<p>除了利用「infinite」類別控制重覆次數，若你不怕寫點 CSS 程式碼的話，可以利用 CSS3 的屬性來調整動畫的次數與速度，主要牽涉到兩個屬性：</p>
+<ul>
+<li>animation-duration – 控制單次動畫的時間長度</li>
+<li>animation-iteration-count – 控制動畫重播的次數</li>
+</ul>
+<p>具體來寫，大概會像是下面這段程式碼：</p>
+<pre>&nbsp; &lt;h2 class="animated bounce" <span style="color: #ff0000;">style="animation-duration: <strong>5s</strong>;animation-iteration-count:<strong>3</strong>"</span>&gt;
+&nbsp; &nbsp; Hello World!
+&nbsp; &lt;/h2&gt;</pre>
+<p>上面這個寫法會讓 Hello World! 以每次 5 秒的速度重覆彈跳 3 次。我們可以再進一步將他加到樣式檔中重覆使用，也可以搭配 animate.css 提供的 custom build 機制將會用到的動畫獨立產生新的樣式檔。因為這會再更複雜一些，細節可以直接參考 <a href="https://github.com/daneden/animate.css/">animate.css 的專案庫</a>，我們這裡不多做解釋。</p>
+<h2>結語</h2>
+<p>animate.css 是個小品專案，但他的確為我們省掉了不少時間，更重要的是動畫效果可以為我們的專案帶來更多的可用性。UNITiD 的「<a href="https://unitid.nl/english/why-use-micro-animations-in-your-design/">Why use micro-animations in your design?</a>」一文中說明了使用微動畫的好處，包括了：</p>
+<ul>
+<li>更直覺的介面</li>
+<li>互動、介面變化的前因後果更清楚</li>
+<li>吸引讀者的注意、製造資訊架構</li>
+<li>暗示元件的「可操作性」</li>
+<li>在觸控裝置上取代「hover」（ 滑鼠飄過的 ) 效果</li>
+<li>給予讀者正向回饋</li>
+<li>營造品牌印象</li>
+</ul>
+<p>看起來好處多多，但要注意凡事皆有一體兩面，適當使用強身、過度使用就傷身囉！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/animation/">animation</a>,<a rel="tag" href="http://blog.infographics.tw/tag/css/">css</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3/">d3</a>,<a rel="tag" href="http://blog.infographics.tw/tag/transition/">transition</a>,<a rel="tag" href="http://blog.infographics.tw/tag/translate/">translate</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="為所有人打造的資料視覺化服務 — PlotDB" rel="bookmark" href="http://blog.infographics.tw/2016/11/plotdb-the-data-visualization-service/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.png">																										<br>
+													為所有人打造的資料視覺化服務 — PlotDB												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>4</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-883">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/122a5aba55bea4e69d4793413ec97e8f?s=40">
+                <cite class="fn">david tseng</cite>         <time datetime="2017-04-17"><a href="http://blog.infographics.tw/2016/11/animate-css/#comment-883">17 4 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>loading.io 也發表了微動畫模組,  有些不同的動畫而且可以暫停跟倒帶, 在這邊: <a rel="nofollow ugc" href="http://loading.io/animation/">http://loading.io/animation/</a></p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-903">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2017-04-28"><a href="http://blog.infographics.tw/2016/11/animate-css/#comment-903">28 4 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>感謝分享，我們也許之後也來介紹一下！</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-1280">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/7c63f312e1e1ecc9d87bb0d7057660fc?s=40">
+                <cite class="fn">Jimmy</cite>         <time datetime="2018-06-1"><a href="http://blog.infographics.tw/2016/11/animate-css/#comment-1280">1 6 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>你好,最近開始使用wordpress架站也需要用到相關特效,請問文章內的</p>
+<p>是要放在index.php裡面嗎還是放在css.style內 ?<br>
+一直苦無找不到應該放在哪裡才能生效,懇請解答謝謝 !</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment odd alt thread-even depth-1 cf" id="comment-1281">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/7c63f312e1e1ecc9d87bb0d7057660fc?s=40">
+                <cite class="fn">Jimmy</cite>         <time datetime="2018-06-1"><a href="http://blog.infographics.tw/2016/11/animate-css/#comment-1281">1 6 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>你好,最近開始用Wordpress架站也想嘗試此特效<br>
+請問這行<br>
+應該是放入index.php內嗎 還是 css.style 內 ?<br>
+還懇請回答,謝謝 !</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a aria-current="page" href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

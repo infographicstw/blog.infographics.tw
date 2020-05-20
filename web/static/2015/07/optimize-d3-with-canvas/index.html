@@ -1,0 +1,273 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">D3.js 實戰 － Canvas 把我的視覺化變「快」了！</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1127 post type-post status-publish format-standard has-post-thumbnail hentry category-19 category-18 tag-canvas tag-d3js tag-nodejs tag-optimization tag-rasterization tag-svg tag-vector tag-440" id="post-1127">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-07-15" class="updated">15 7 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>, <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/07/cover1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/07/cover1.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/07/cover1-300x176.jpg 300w" height="527" width="900" alt="D3 + Canvas : Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/07/cover1.jpg" class="aligncenter size-full wp-image-1135"></a>
+<p>「我的視覺化好慢！」使用 D3.js 作網頁視覺化最常與 SVG 一起運用，但向量化的本質讓 SVG 實用上有些許限制，最大的問題就出在效能上。因此，我們在這篇文章簡單的介紹如何運用 Canvas 來提升你的視覺化效率。</p>
+<p><span id="more-1127"></span></p>
+<blockquote><p>編按：這篇文章談到 D3.js 與 SVG，屬進階議題，尚未接觸過 D3.js 與 SVG 的讀者請參考下列兩篇文章：</p>
+<ul>
+<li><a href="http://blog.infographics.tw/2015/03/d3js-the-introduction/">網頁視覺化利器 － D3.js 簡介</a></li>
+<li><a href="http://blog.infographics.tw/2015/06/introduction-to-svg-graphics-on-web/">網頁視覺化必備 － 可縮放向量圖 SVG 入門</a></li>
+</ul>
+<p>非技術背景的讀者請斟酌閱讀。</p></blockquote>
+<p>&nbsp;</p>
+<p>D3.js 雖然是個相當強大的視覺化函式庫，但其實很大一部份我們看得到的元素都是靠 SVG 在表現。 SVG 做為一個向量圖形語言，與 D3.js 合作無間 － D3.js 負責計算、SVG 負責繪圖。一個常見的 SVG 圖形如下：</p>
+<pre>  &lt;svg&gt;&lt;circle cx="10" cy="10" r="10" fill="red"/&gt;&lt;/svg&gt;</pre>
+<p>上例畫出了一個紅色的圓。D3.js 幫助我們將資料與 SVG 綁定，一筆資料綁定一個圓，十筆資料綁定十個圓，那麼問題就來了：一萬筆資料時，我們會有一萬個圓，若搭配 Force Layout 等版面繪製動畫時，你會明顯的感覺到速度很慢。</p>
+<h2>Canvas 簡介</h2>
+<p>接著談談 Canvas 吧， HTML5 的 Canvas 元素是一個 HTML 標籤：</p>
+<pre>&nbsp; &lt;canvas id="myCanvas" width="800" height="600"/&gt;</pre>
+<p>他的特點在於一組附帶的 JavaScript API ，讓我們可以在上面利用程式繪圖，比方說這段程式碼可以畫個圓：</p>
+<pre>&nbsp; var ctx = document.getElementById("myCanvas").getContext("2d"); // 取得 Canvas Context
+&nbsp; ctx.beginPath(); // 「我要開始畫囉！」
+&nbsp; ctx.arc(100,100,10,0,6.28);  // 畫一個圓弧，圓心在 (100,100) 且半徑是 10, 繞 360 度
+&nbsp; ctx.stroke(); // 替圓弧的邊著色！</pre>
+<p>相對於 SVG 「宣告式」的繪圖 ( 我宣告 (100,100) 的位置有個圓 … ) ， Canvas 則是「指令式」的繪圖 ( 你給我以 (100,100) 為圓心畫個圓 ) 。指令式繪圖的速度跟繪圖的面積有關，但通常使用 Canvas 會比 SVG 快上相當多。考慮畫上一萬個圓， Canvas 只要加上一個迴圈：</p>
+<pre>&nbsp; var ctx = document.getElementById("myCanvas").getContext("2d"); // 取得 Canvas Context
+&nbsp; for(var i=0; i&lt;10000; i++) {
+&nbsp; &nbsp; ctx.beginPath(); // 「我要開始畫囉！」
+&nbsp; &nbsp; ctx.arc(100,100,10,0,6.28); // 畫一個圓弧，圓心在 (100,100) 且半徑是 10, 繞 360 度
+&nbsp; &nbsp; ctx.stroke(); // 替圓弧的邊著色！
+&nbsp; }</pre>
+<p>SVG 的一萬個 &lt;circle&gt; &nbsp;顯然是比上例使用 Canvas 的繪製多出了許多負擔。</p>
+<h2><strong>D3.js 與 Canvas</strong></h2>
+<p>既然 D3.js 的本質是元素與資料的綁定，那要怎麼與沒有元素的 Canvas 結合呢？以下介紹三個可能的手法。</p>
+<h3>1. D3.js 原生的 Canvas 支援</h3>
+<p>有些 D3.js 函式提供直接將圖形畫到 Canvas 上的選項，通常這些函式處理的圖形也比較複雜。例如地圖的多邊形圖案：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1131"><a href="http://blog.infographics.tw/wp-content/uploads/2015/07/map.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/07/map.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/07/map-300x157.png 300w" height="470" width="900" alt="Render Map with Canvas" src="http://blog.infographics.tw/wp-content/uploads/2015/07/map.png" class="wp-image-1131 size-full" aria-describedby="caption-attachment-1131"></a><p class="wp-caption-text" id="caption-attachment-1131">from http://bl.ocks.org/mbostock/3783604</p></div>
+<p>d3.geo.path 函式組提供了 context 函式，一但我們利用他設定了 Canvas ，接下來呼叫該 path 函式時他便會幫我們將圖形畫到 Canvas 上：</p>
+<pre>&nbsp; var projection = d3.geo.mercator();&nbsp; // 設定地圖繪製時使用的投影法
+&nbsp; var canvas = document.getElementById("myCanvas"); // 取得 canvas
+&nbsp; var path = d3.geo.path().projection(projection).context(canvas.getContext("2d"));
+&nbsp; path(topjson.feature(geodata, geodata.objects[...])); // 將 geodata 畫在 Canvas 上
+&nbsp; context.stroke(); // 替邊著色</pre>
+<p>上面那張圖 (來自 Mike Bostock 的 Gist ) 即是利用 d3.geo.path 與 canvas 繪製的，有興趣的朋友可以參考看看他的<a href="http://bl.ocks.org/mbostock/3783604">原始碼</a>。</p>
+<h3>2. 不使用資料綁定，單純使用 D3.js 的函式計算</h3>
+<p>舉例來說，我想要利用 Force Layout (可參考 <a href="http://blog.infographics.tw/2015/05/d3js-tutorial-force-layout/">D3.js 入門系列 － Force Layout 教學</a> 一文) 來畫圓，我不一定要利用 SVG，也可以直接利用 Force Layout 的計算結果來畫到 Canvas 上：</p>
+<pre>&nbsp; var data = {children: [{r: 10}, {r: 20}, {r: 30}, .... ]} // 這裡有若干個物件，其中的「r」代表圓的半徑
+&nbsp; var force = d3.layout.force().nodes(data).size([800,600])
+      .on("tick", tick).start(); // 設定 Force Layout</pre>
+<pre>&nbsp; function tick() {
+&nbsp; &nbsp; for(i = 0; i &lt; data.length ; i++) { // 幫 data 內每個物件畫個圓
+&nbsp; &nbsp; &nbsp; ctx.beginPath();
+&nbsp; &nbsp; &nbsp; ctx.arc( data[i].x, data[i].y, data[i].r, 0, 6.28 );
+&nbsp; &nbsp; &nbsp; ctx.stroke();
+&nbsp; }}</pre>
+<p>這樣一方面可以利用到強大的 D3.js 函式庫，也可以有 Canvas 的效能，不失為一種組合運用的好例子。缺點則在於無法利用 D3.js 核心的資料綁定功能，資料與繪製的程式邏輯沒辦法切得很開。</p>
+<h3>3. 建立虛擬的 DOM 元件，並實作元件繪製函式</h3>
+<p>我們也可以自己定義標籤，然後自己實作標籤的繪製函式。比方說，我們自行定義一個特殊標籤 &lt;custom:circle&gt; 來代表圓圈以及 &lt;custom:root&gt; 做為頂層容器，這些標籤瀏覽器不認得，我們也不打算讓瀏覽器看到。下面是將資料綁定到這組標籤的範例程式：</p>
+<pre>&nbsp; var ctx = document.getElementById("myCanvas").getContext("2d");
+&nbsp; // 利用 infographics.tw 的網址做為 custom 的命名空間，並於其下建立 root 元素
+&nbsp; var root = document.createElementNS("http://infographics.tw/custom", "root")
+&nbsp; d3.ns.prefix.custom = "http://infographics.tw/custom" // 也把 &nbsp;custom 標籤的命名空間告訴 D3.js
+&nbsp; root.selectAll("circle").data(myData).enter().append("custom:circle") //綁定 custom:circle 與 myData
+&nbsp; &nbsp; .attr({ cx: ..., cy: ..., r: ... }); // 並設定圓心 (cx, cy) 與半徑 r&nbsp;
+
+  // 這裡負責把 custom:circle 畫出來
+&nbsp; d3.timer(function() {
+&nbsp; &nbsp; root.selectAll("circle").each(function() {
+&nbsp; &nbsp; &nbsp; ctx.beginPath();
+&nbsp; &nbsp; &nbsp; ctx.arc(this.getAttribute("cx"), this.getAttribute("cy"), this.getAttribute("r"), 0, 6.28);
+&nbsp; &nbsp; &nbsp; ctx.stroke();
+&nbsp; &nbsp; });
+&nbsp; });</pre>
+<p>這個方式雖然仍然建立了一個文件模型，實作上仍然比 &nbsp;SVG 快了近兩倍。下例是 SVG 與 custom:circle + Canvas 各別畫 2000 個圓的速度比較，左邊是 SVG，右邊是 Canvas，可以按下方的 Toggle 按鈕切換：</p>
+<p></p>
+<h2>結語</h2>
+<p>D3.js 與 Canvas 的結合運用可說是相當進階的議題，而且比起視覺化來說更接近於程式設計或網頁開發的議題。然而這也是很現實無法逃避的問題：當你需要視覺呈現上萬個座標點的時候，你該怎麼辦？視覺化心法如果是內功，那視覺化技術就是外功。</p>
+<p>SVG 與 Canvas 的議題其實還可以繼續延伸下去：作品需不需要考慮 RWD ？ 是否要提供使用者圖檔下載？互動性的操作時 Canvas 要怎麼處理？這篇文章只是個引言，後續的議題將來若有機會，再逐一與大家討論。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/canvas/">canvas</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="http://blog.infographics.tw/tag/nodejs/">nodejs</a>,<a rel="tag" href="http://blog.infographics.tw/tag/optimization/">optimization</a>,<a rel="tag" href="http://blog.infographics.tw/tag/rasterization/">rasterization</a>,<a rel="tag" href="http://blog.infographics.tw/tag/svg/">svg</a>,<a rel="tag" href="http://blog.infographics.tw/tag/vector/">vector</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e6%9c%80%e4%bd%b3%e5%8c%96/">最佳化</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/07/introduction-to-road-kill/">「路殺」生態資料視覺化</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/07/timing-when-number-or-chart/">我該用數字還是圖表？視覺化中四種數字的使用時機</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

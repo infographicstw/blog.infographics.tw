@@ -1,0 +1,334 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1801 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-bokeh tag-chart tag-python tag-visualization" id="post-1801">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-04-22" class="updated">22 4 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2016/04/cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/cover.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-300x176.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-768x450.jpg 768w" height="527" width="900" alt="cover" src="https://blog.infographics.tw/wp-content/uploads/2016/04/cover.jpg" class="aligncenter size-full wp-image-1814"></a>
+<p>老師叫我學 Python ，學完才發現沒辦法做互動視覺化，怎麼辦？不要緊，讓 Bokeh 解救你！Bokeh 為一個 Python 套件，他提供了 Python 與 D3.js 之間的橋梁，卻又不需要親自下海寫 JavaScript，一起來看看 Bokeh 怎麼做到的吧！</p>
+<p><span id="more-1801"></span></p>
+<p>網際網路 ( Internet ) 與全球資訊網 ( WWW ) 為我們提供了很棒的互動資訊傳播介面，然而這個介面有他獨特的編碼與規範，例如我們使用 HTML 做文件排版、 JavaScript 做互動設計… 隨著科技發展，網頁技術越來越發達，我們已經可以用 HTML + JavaScript 做到很複雜的互動視覺化了，而這也為其它程式語言設下了一個門檻 — 能跑在網頁裡的程式，目前只有 JavaScript ！<span style="color: #ff0000;"><strong>*</strong></span></p>
+<p>不過，這不代表我們就非得學會 JavaScript 才能做到互動圖表，比方說上禮拜我們介紹過的 Shiny &nbsp;( 請參考「<a href="https://blog.infographics.tw/2016/04/interactive-r-with-shiny/">R 也能互動！用 Shiny 與 R 語言將你的數據變成互動圖表</a>」一文 ) 便能夠讓我們直接以 R 來開發網頁前端視覺化。</p>
+<p>在 Python 中若要做到類似的效果，則有 Bokeh 這個套件可以幫我們完成。 Bokeh 為一個 Python 函式庫，提供了各式各樣的視覺化必須的輔助函式，同時也將網頁前端的技術細節包裝成一個個的 Python 函式與參數供我們呼叫，讓我們不再需要編輯 HTML 與 JavaScript 便能製作網頁前端視覺化。</p>
+<p>( <span style="color: #ff0000;"><strong>*</strong></span> 編按： Java 、 ActionScript 與 Basic / C 可以透過 Applet 、 Flash 與 ActiveX 等方式在瀏覽器中執行程式，但這些方式都已經逐漸被淘汰了。其它還有一些透過即時直譯的方式讓 ES6 、 Coffeescript 與 LiveScript 可以在瀏覽器中執行的方式，但都得要翻譯成 JavaScript 才能執行 )</p>
+<h2>安裝 Bokeh</h2>
+<p>( 若你尚未安裝 Python 、甚至正想學但還不會 Python — 我建議你可以先跳過安裝步驟，先將文章讀完，對 Bokeh 有個概略性的了解，再回頭來自我評估是否要投資時間在 Python 上。 )</p>
+<p>若要安裝與使用 Bokeh ，我們必須要有 Python 執行環境以及 Python 套件管理程式 pip，並搭配虛擬環境管理工具 virtualenv 。我們會預設讀者們皆已準備好基本的開發環境，若你尚未有一個 python 的開發環境，可以參考下列資源來建立：</p>
+<ul>
+<li>安裝 Python — https://www.python.org/downloads/</li>
+<li>安裝 PIP —&nbsp;https://pip.pypa.io/en/stable/installing/</li>
+<li>安裝與使用 virtualenv —&nbsp;https://virtualenv.pypa.io/en/latest/installation.html</li>
+</ul>
+<p>安裝完成並進入 virtualenv 以後，執行下列程式碼來安裝所需套件：</p>
+<pre>  pip install NumPy Jinja2 Six Requests Tornado PyYaml Pandas bokeh DateUtil</pre>
+<p>接著讓我們來測試看看 bokeh 是否順利安裝。新增一個 Python 檔案 test.py 並複製貼上下列程式碼：</p>
+<pre>  from bokeh.plotting import figure, output_file, show
+  output_file("out.html")
+  p = figure()
+  p.line([1,2,3,4,5],[5,4,3,2,1])
+  show(p)</pre>
+<p>執行 test.py 後，瀏覽器會自動開啟並顯示類似下圖的一張折線圖：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/test.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/test.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/test-300x190.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/test-768x486.png 768w" height="569" width="900" alt="test" src="https://blog.infographics.tw/wp-content/uploads/2016/04/test.png" class="aligncenter size-full wp-image-1804"></a>
+<h2>使用 Bokeh</h2>
+<p>上例是一個最簡單的 Bokeh 圖表程式。在 Bokeh 中，我們直接利用其提供的各種函式來繪製圖表。繪製完成後， Bokeh 則會依據我們的程式產生一對對應的 HTML 與 JavaScript 碼，並利用 Bokeh 在網頁上的函式庫「BokehJS」來產生圖表。因此以前面的程式碼為例，一個 Bokeh 程式的基本運作如下：</p>
+<ol>
+<li>設定資料與輸出檔案
+<ul>
+<li><strong><span style="color: #800000;">output_file(“out.html”)</span></strong></li>
+</ul>
+</li>
+<li>利用 Bokeh 繪製圖表
+<ul>
+<li><span style="color: #800000;"><strong>p = figure()</strong></span></li>
+<li><span style="color: #800000;"><strong>p.line([1,2,3,4,5], [5,4,3,2,1])</strong></span></li>
+</ul>
+</li>
+<li>開啟產生的 HTML 檔 ( HTML + JavaScript ，自動生成 )
+<ol>
+<li><span style="color: #800000;"><strong>show(p)</strong></span></li>
+</ol>
+</li>
+</ol>
+<p>為了讓我們可以輕鬆又有彈性的製作各式圖表， Bokeh 將函式庫大略分成三組：</p>
+<ol>
+<li>bokeh.model — 製作圖表的基本元素，例如軸線、形狀等等。用來打造各種元件。</li>
+<li>bokeh.plotting — 為我們處理掉一些基本細節 ( 例如格點與軸線 ) ，但保留客製化的彈性。</li>
+<li>bokeh.charts — 直接使用各種完整圖表，例如長條圖、盒鬚圖等等。</li>
+</ol>
+<h3>Bokeh.charts</h3>
+<p>如果想快速掌握 bokeh 的運作，我們可以直接從 bokeh.plotting 來操作，不過 bokeh.charts 也提供了一些預先建置好的圖表供我們使用，下列為其中幾個範例：</p>
+<ul>
+<li>bokeh.charts.Bar — 製作長條圖</li>
+<li>bokeh.charts.BoxPlot — 製作盒鬚圖</li>
+<li>bokeh.charts.HeatMap — 製作熱圖</li>
+<li>bokeh.charts.Donut — 製作甜甜圈圖</li>
+</ul>
+<p>使用也相當簡單，以甜甜圈圖為例，下列程式碼即為一個畫出甜甜圈圖的例子 ( 摘自 Bokeh User Guide )：</p>
+<pre>  from bokeh.charts import Donut, output_file, show
+  output_file('donut.html')
+  donut = Donut([[2., 5., 3.], [4., 1., 4.], [6., 4., 3.]], ['cpu1', 'cpu2', 'cpu3'])
+  show(donut)</pre>
+<p>可以看到我們同樣要指定輸出檔以及呼叫「show」函式，但甜甜圈的細節則包裹在「Donut」函式之中，我們只要提供資料即可。下圖為上例的執行結果：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/donut.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/donut.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/donut-300x229.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/donut-768x586.png 768w" height="687" width="900" alt="donut" src="https://blog.infographics.tw/wp-content/uploads/2016/04/donut.png" class="aligncenter size-full wp-image-1805"></a>
+<p>Bokeh.charts 提供了十來種的預建圖表，而且大多有一些共通的設定項，如果想要了解更多的話，可以直接參考 Bokeh 「<a href="https://bokeh.pydata.org/en/0.9.3/docs/user_guide/charts.html#area-line-and-step-charts">Using High-Level Charts</a> 」的說明，這裡就不再贅述。</p>
+<h3>Bokeh.plotting</h3>
+<p>相較於 bokeh.charts 直接產生圖表又快又簡單的作法， bokeh.plotting 則是讓我們可以更自由的繪製圖表，但仍抽象化了一些細節；比方說，前例所見到的「figure」函式讓我們可以直接在圖表上做畫，但同時又幫我們設定好基本的格點與刻度。</p>
+<p>「figure」本身已帶有許多輔助性的成員函式，用這些函式我們可以快速的製作一些最簡單的圖表，例如泡泡圖：</p>
+<pre>&nbsp; from bokeh.plotting import figure, output_file, show
+  p = figure(width=800,height=300)
+  p.circle([1,2,3],[2,5,3],size=[10,20,30],color=["pink","olive","gold"])
+&nbsp; show(p)</pre>
+<p>這個例子使用「p.circle」來繪製圓圈，其中前兩個參數分別為 x 與 y 軸的座標點，後面則另外指定圓的大小及顏色。結果如下：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/scatter.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/scatter.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/scatter-300x88.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/scatter-768x226.png 768w" height="265" width="900" alt="scatter" src="https://blog.infographics.tw/wp-content/uploads/2016/04/scatter.png" class="aligncenter size-full wp-image-1806"></a>
+<p>除了 circle 以外，figure 還提供各種不同的基本形狀讓我們畫圖，比方說下例使用了甜甜圈、十字、星星等形狀：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/shapes.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/shapes.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/shapes-300x88.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/shapes-768x226.png 768w" height="265" width="900" alt="shapes" src="https://blog.infographics.tw/wp-content/uploads/2016/04/shapes.png" class="aligncenter size-full wp-image-1807"></a>
+<p>當然，除了簡單的形狀外，我們也可以繪制任意線條、區域等等， plotting 也提供像是圓餅或甜甜圈的快速繪製，所以其實利用 plotting 可以做到的不會只是簡單的散布圖，但若要做出比較進階的圖表，就需要撰寫更複雜的 Python 程式。</p>
+<p>Bokeh &nbsp;也為 plotting 提供各種樣式的設定，比方說線段的寬度、顏色、虛線樣式或端點的表現等等，若需要更進一步的樣式設定，可以參考「<a href="https://bokeh.pydata.org/en/0.11.0/docs/user_guide/styling.html">Styling Visual Attributes</a>」一節了解更深入的設定方式。</p>
+<h2>網頁元件與互動圖表</h2>
+<p>如果只是畫畫基本圖表，那似乎沒有理由要使用 Bokeh。事實上，Bokeh 標榜的重點之一就是製作互動圖表的能力！Bokeh 提供了類似 Shiny 那樣的網頁元件及排版方式讓我們可以很輕鬆的利用 Python 程式碼來做出網頁上的互動元件，不同的是 Bokeh 還提供了 Custom JS 的前端接口，讓我們可以直接在 Python 中撰寫 JavaScript 來操縱前端元件，除了可以讓圖表有更快的反應之外，也節省了主機計算與網路頻寬的資源。下例為一個簡單的 CustomJS 片段：</p>
+<pre>  from bokeh.models.widgets import Slider
+  callback = CustomJS(args=dict(source=source), code="""
+    var data = source.get('data');
+    var f = cb_obj.get('value');
+    var x = data['x'],&nbsp;y = data['y'];
+    for (i = 0; i &lt; x.length; i++)&nbsp;y[i] = Math.pow(x[i], f);
+    source.trigger('change');
+  """)
+  slider = Slider(start=0.1, end=4, value=1, step=.1, title="power", callback=callback)</pre>
+<p>在上例中可以看到，當使用者更動了 Slider 的數值， 以「CustomJS」定義的 callback 函式便會被執行，其中會依據資料的 X 值與 Slider 的當前值 ( cb_obj.get(“value”) ) 重新計算 Y 的值，然後觸發資料變更事件 ( source.trigger(‘change’) ) ，讓 BokehJS 重新繪製圖表。</p>
+<p>這些函式與 API 屬於 BokehJS 的範疇，雖然 Bokeh 與 BokehJS 是一套的，但其實 BokehJS 也可以用在 R 、 Julia 或 Ruby 等語言上，我們在這裡不深入去討論。</p>
+<h3>利用表單元件</h3>
+<p>上例中的 Slider 為我們提供了網頁的 Slider 元件，它長這個樣子：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/slider-1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/slider-1.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/slider-1-300x27.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/slider-1-768x69.png 768w" height="81" width="900" alt="slider" src="https://blog.infographics.tw/wp-content/uploads/2016/04/slider-1.png" class="aligncenter size-full wp-image-1808"></a>
+<p>由於 Python 並沒有在網頁上執行的能力，這個其實是透過 HTML + Bootstrap 兜起來的元件。如同 Shiny ， Bokeh 也提供了相當數量的表單元件，並且都可以讓我們用程式控制，下圖為其中幾種元件的截圖：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/widget.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/widget.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/widget-300x59.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/widget-768x151.png 768w" height="177" width="900" alt="widget" src="https://blog.infographics.tw/wp-content/uploads/2016/04/widget.png" class="aligncenter size-full wp-image-1810"></a>
+<p>這些元件都位於 bokeh.models.widgets 下，可以透過 import 語法將其匯入。</p>
+<h3>頁面排版</h3>
+<p>為了要排版這些元件與圖表， Bokeh 也提供了排版專用的工具，其中包含了下列幾種：</p>
+<ul>
+<li>Horiontal Layout / 水平式版面 ( hplot )</li>
+<li>Vertical Layout / 垂直式版面 ( vplot )</li>
+<li>Grid Layout / 格式排版 ( gridplot )</li>
+<li>Form Layout / 表單排版 (formplot )</li>
+</ul>
+<p>使用的方式也相當簡單，我們只要把想要繪製的圖表或元件做為排版函式的參數即可，例如下例將 Slider 與線圖做水平排版：</p>
+<pre>  from bokeh.plotting import figure, output_file, show, hplot
+  from bokeh.models.widgets import Slider
+  output_file('layout.html')
+  p = figure(width=400,height=200) # 建立圖表
+  p.line([1,2,3,4,5],[5,4,3,2,1])
+  slide = Slider()                 # 建立 Slider
+  layout = hplot(p,slide)          # 將圖表與 Slider 利用 hplot 排版
+  show(layout)</pre>
+<p>上述程式碼中的「hplot」即是做水平排版的函式，「 hplot(p, slide) 」幫我們將圖表與 Slider 放置在網頁的左右方，結果如下圖：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/hplot.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/hplot.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/hplot-300x75.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/hplot-768x191.png 768w, https://blog.infographics.tw/wp-content/uploads/2016/04/hplot-600x150.png 600w" height="224" width="900" alt="hplot" src="https://blog.infographics.tw/wp-content/uploads/2016/04/hplot.png" class="aligncenter size-full wp-image-1812"></a>
+<p>除了 hplot 之外，我們還可以用 gridplot 或 vplot 來做不同方向的排版，不過這幾個函式主要都是用在圖表，若要如上圖般安插表單元件，Bokeh 規定必須要再包一層「vform」這個函式，否則像上面這個例子中的 Slider 就只有裝飾的用途了。</p>
+<h3>互動圖表</h3>
+<p>透過表單元件與 CustomJS ，我們已經可以做到不少互動效果了，不過 Bokeh 還提供了一些直接透過設定的方式來實作互動效果。比方說，在設定圖表範圍時，若為多個圖表設定同一個範圍物件，那麼在使用者操作圖表時，所有圖表都會跟著移動；在下列程式碼中，我們利用第一個圖表 ( s1 ) 的 x_range 來設定後面兩張圖表的範圍：</p>
+<pre>  from bokeh.plotting import figure, gridplot, output_file, show
+
+  s1 = figure(width=250,height=250)
+  s1.circle([1,2,3,4], [1,2,3,4], size=10)
+
+  s2 = figure(width=250, height=250, <strong><span style="color: #ff0000;">x_range=s1.x_range</span></strong>)
+  s2.triangle([1,2,3,4],[4,3,2,1], size=10)
+
+  s3 = figure(width=250, height=250, <span style="color: #ff0000;"><strong>x_range=s1.x_range</strong></span>)
+  s3.square([1,2,3,4],[4,2,1,3], size=10)
+
+  p = gridplot([[s1, s2, s3]], toolbar_location=None)
+  output_file("panning.html")
+  show(p)</pre>
+<p>而因為他們共享了同一個範圍，在拉動任何一張圖表時，其它的圖表也會跟著動起來。下圖為上列程式碼產生的圖表，讀者可以自己動手拖動看看：</p>
+<p></p>
+<p>除了透過物件共享達成的互動以外， Bokeh 也提供了不少預先定義的行為供我們做設定，比方說在利用 plotting 繪圖時，我們可以設定「selection_color」指定資料點被選中時的顏色：</p>
+<pre>&nbsp; p.circle([1,2,3,4,5],[5,4,3,2,1],selection_color="red")</pre>
+<p>這類的設定通常都會搭配一些使用者行為來定義，例如上例便是在使用者「選取」了資料後才會套用的屬性。Bokeh 預設提供了許多不同的「工具 ( tools ) 」讓我們建立起與使用者溝通的橋粱，比方說點選工具、圈選工具、平移縮放等等的工具；以 selection_color 為例，我們可以搭配「tap」工具來讓使用者可以點選，只要在 figure 函式中設定「tools」參數的值即可：</p>
+<pre>  from bokeh.plotting import figure, output_file, show
+  output_file("out.html")
+  p = figure(<span style="color: #ff0000;"><strong>tools="tap"</strong></span>)
+  p.circle([1,2,3,4,5],[5,4,3,2,1],selection_color="red")
+  show(p)</pre>
+<p>上列程式碼的執行結果如下，我們可以注意到其選單只剩下 tap 一個按鈕，而圖表無法拖動、但點選資料時該點會變成紅色：<br>
+</p>
+<p>Bokeh &nbsp;提供若干種的互動工具，包含了套索選取工具、縮放平移工具與多邊形選取工具等等，就一般的使用情境下應該足夠使用了，我們在此不一一列舉出來，若你有興趣的話，可以參考 Bokeh 針對 Tools 所提供的<a href="https://bokeh.pydata.org/en/0.10.0/docs/reference/models/tools.html">說明文件</a>。</p>
+<h2>結語</h2>
+<p>由於能在前端網頁執行的程式語言種類不多，但網頁又是一個極佳的互動呈現介面，因此像是 Bokeh 、 Shiny 這類的前端互動輔助套件對於各種不同的語言來說幫助可說是很大，而為了包裝前端的細節，最後這些套件的架構都會很類似，至於誰比較優異就端看其設計細節了。</p>
+<p>Bokeh 將大部份的細節保留在 bokeh.models 中，然後透過 bokeh.plotting 與 bokeh.charts 抽象化的方式讓我們得以很容易的上手，這個設計算是相當不錯的，不過很多細節變成是我們必須要完整讀過他的說明文件才能知道究竟我們還有什麼東西可以使用或設定，整體來說略嫌繁瑣；完全透過 Python 程式碼製作圖表與排版這點也讓視覺化的製作無法過於複雜。即便如此，若使用上手又沒有太大的客製化需求， Bokeh 仍可以讓我們很快產出一些有趣的圖表，再加上他本身的視覺設計就相當體面、不太需要調整，相信他對使用 Python 做資料分析與呈現的人來說仍是一個視覺化與圖表製作的好幫手。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/bokeh/">bokeh</a>,<a rel="tag" href="https://blog.infographics.tw/tag/chart/">chart</a>,<a rel="tag" href="https://blog.infographics.tw/tag/python/">python</a>,<a rel="tag" href="https://blog.infographics.tw/tag/visualization/">visualization</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/04/interactive-r-with-shiny/">R 也能互動！用 Shiny 與 R 語言將你的數據變成互動圖表</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/04/visualize-with-nodebox/">NodeBox – 用視覺的方式快速製作資料視覺化</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>1</span> Comment</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-1622">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/89786bb8ec873ea7d4669ac0a10a02da?s=40">
+                <cite class="fn">戴領袖</cite>         <time datetime="2019-05-6"><a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">6 5 月, 2019 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>我想訊問互動式教學網的製作。謝謝</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

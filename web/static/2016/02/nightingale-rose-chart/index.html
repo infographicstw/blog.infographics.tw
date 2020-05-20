@@ -1,0 +1,286 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">《圖表101》 拯救生命的圖表 — 南丁格爾玫瑰圖</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1634 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-bar-chart tag-brushable-radial-chart tag-chart tag-coxcomb tag-nightingale-rose tag-polar-area tag-radial tag-rose tag-wind-rose" id="post-1634">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-02-12" class="updated">12 2 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1642" href="http://blog.infographics.tw/wp-content/uploads/2016/02/cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/02/cover.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/02/cover-300x176.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/02/cover-768x450.jpg 768w" height="527" width="900" alt="cover" src="http://blog.infographics.tw/wp-content/uploads/2016/02/cover.jpg" class="aligncenter size-full wp-image-1642"></a>
+<p>長得很像圓餅圖，但概念更接近直方圖 ( Histogram ) — 這樣的極區圖又被稱做南丁格爾玫瑰圖，他與南丁格爾有什麼關係呢？今天的《圖表101》就來為大家介紹這個曾被譽為世界上三個最偉大圖表之一的南丁格爾玫瑰圖，是怎麼被設計出來的。</p>
+<p><span id="more-1634"></span></p>
+<p>「極座標餅圖」、「南丁格爾玫瑰圖」、「Wind Rose Chart」、「Nightingale’s Coxcomb」、「Circular Histogram」 — 做為一種與圓餅圖極相似的統計圖表，極區圖 ( Polar Chart ) 有著許多的別稱。其中，大家最有印象的應該就是「提燈的天使」南丁格爾這個名字。 1820 年出生於義大利的英國人弗羅倫斯．南丁格爾 ( Florence Nightingale ) 畢生致力於推動護理制度的發展與改革，因此被人們視做護士的精神代名詞，甚至連國際護士理事會也為了紀念南丁格爾所付出的貢獻而以其生日訂為國際護士節。</p>
+<p>然而，一般人比較不知道的，南丁格爾除了是位護士，其實也是一位統計學家，也是英國皇家統計學會的第一位女性會員。「<a href="http://www.uoguelph.ca/~cwfn/publications/index.htm">The Collected Works of Florence Nightingale</a>」這個網站中保留了許多南丁格爾的原始著作與書信 ( 例如 <a href="http://www.uoguelph.ca/~cwfn/archival/index.htm">Archival Material</a> ) ，從其著作中我們可以看到，南丁格爾除了對護理制度的改革貢獻了極大的心力以外，對社會改革、女權運動與統計等領域也都相當有貢獻，而她在統計學界最著名的貢獻，便是今天的主題 — 「南丁格爾玫瑰圖」。</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1640"><a rel="attachment wp-att-1640" href="http://blog.infographics.tw/wp-content/uploads/2016/02/florence-nightingale.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/02/florence-nightingale.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/02/florence-nightingale-300x176.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/02/florence-nightingale-768x450.jpg 768w" height="527" width="900" alt="Florence Nightingale" src="http://blog.infographics.tw/wp-content/uploads/2016/02/florence-nightingale.jpg" class="wp-image-1640 size-full" aria-describedby="caption-attachment-1640"></a><p class="wp-caption-text" id="caption-attachment-1640">佛羅倫絲．南丁格爾。 adopted from wikipedia</p></div>
+<p>適逢 1854 年的克里米亞戰爭，南丁格爾與其它 38 位女性志願者的身份來到英軍位於俄國克李米亞半島的野戰醫院；當時的野戰醫院衛生條件極差，甚至連乾淨的水源與廁所都沒有，讓 1854 年冬天的傷士死亡率高達 23%，直到 1855 年&nbsp;John Sutherland 博士等土木、水利工程專家所帶領的衛生委員會來到醫院改善整體的衛生環境後，才將死亡率戲劇性的降至 2.5% 。當時的南丁格爾注意到這件事，並認為政府應該要改善戰地醫院的品質來拯救更多年輕的生命。從她於 1857 年所寫的一封書信中我們看出他對政府所表現的不滿：</p>
+<pre>Our government is quite determined to do nothing. Of that, everyone is now persuaded—nothing, I mean, to prevent another army, under the same circumstances, being destroyed as the last was. Everyone is well aware that, if war were to break out tomorrow, we should have the whole scene of ’54 over again.</pre>
+<p>戰後，南丁格爾寫了一本堪稱其一生最長著作、厚近 900 頁的報告書：「Notes on matters affecting the health, efficiency and hospital administration of the British Army」， 指出衛生條件等原因造成了戰地醫院的高死亡率，並使用了極區圖來說明這件事情，下圖即為當時所使用的圖表：</p>
+<a rel="attachment wp-att-1636" href="http://blog.infographics.tw/wp-content/uploads/2016/02/mortality.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/02/mortality.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/02/mortality-300x188.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/02/mortality-768x482.png 768w" height="565" width="900" alt="Polar Area Diagram - mortality in hospital in Crimea War" src="http://blog.infographics.tw/wp-content/uploads/2016/02/mortality.png" class="aligncenter size-full wp-image-1636"></a>
+<p>這張圖用來說明與比較戰地醫院傷患各種死亡原因的人數，每塊扇形代表著各個月份中的死亡人數，面積越大代表越多死者。圖表的說明簡譯如下：</p>
+<ul>
+<li>各色塊圓餅區均由圓心往外的面積來表現數字 ( 也就是色塊互相重疊 )</li>
+<li>藍色區域：死於原本可避免的感染的士兵數</li>
+<li>紅色區域：因受傷過重而死亡的士兵數</li>
+<li>黑色區域：死於其它原因的士兵數</li>
+<li>1854 年 10 月、1855 年 4 月的紅黑區域恰好相等</li>
+<li>1856 年 1 月與 2 月的藍、黑區域恰好相等</li>
+<li>1854 年 11 月紅色區域中的黑線指出該月的黑色區域大小。</li>
+</ul>
+<p>這張圖中，左右兩塊圖表各包含了一年份 12 個月的資料，右圖為 1854 年 4 月至 1955 年 3 月，左圖則為 1855 年 4 月至 1856 年 3 月。南丁格爾刻意以 1855 年 4 月做為分界，將 24 個月的資料切分為左右兩張圖再用黑色線條連結，是因為這大約便是衛生委員會來改善環境時的日期，也因此我們可以比較兩個年度的死亡人數與其原因的概略比例。</p>
+<p>在這裡我們可以觀察到一些有趣的特點：</p>
+<ol>
+<li>一般圓餅圖利用餅塊的夾角大小來表現資料，但極區圖中各餅塊的角度卻是固定的，資料則利用面積來表現。很多人可能會以為是使用餅塊的長度，這其實是錯的，因為面積同樣會受長度影響，但表現出來的數值卻是平方倍，容易讓讀者誤以為資料的差異比想像中的還劇烈而產生誤解。</li>
+<li>直覺看來我們可能會以為各個色塊是堆積在一起，而非互相重疊，不過若圖表是將色塊互相堆積，那麼便不容易比較各組數字間的大小，尤其是在扇形圖表中。</li>
+</ol>
+<p>此處的資料為 24 組 3 個數值的資料，12組一個周期，有些人可能會問這樣的資料不是用長條圖或折線圖可以表現得更好嗎？英格蘭杜倫大學教授 Hugh Small 在 2010 年發表的文章「<a href="http://www.florence-nightingale-avenging-angel.co.uk/?p=861">Did Nightingale’s ‘Rose Diagram’ or ‘Coxcomb’ save millions of lives?</a>」裡面即探討了這個問題，裡面提到了幾個值得思考的論點：</p>
+<ul>
+<li>圖表希望呈現的是兩年間的對比，將所有資料拉成一個長條圖會減弱跨年與跨季的對比效果</li>
+<li>1854 年冬天的數據比起其它時間來說相當的大，容易讓人誤解成「冬天造成死亡率提高」；相較之下，使用楔形區塊以面積表現資料，可以減低極端值的影響。</li>
+</ul>
+<p>下圖為將原始數據中的「感染死亡人數」繪製成簡單長條圖的樣子，是否有感到冬季因為長條而被突顯了呢？</p>
+<a rel="attachment wp-att-1648" href="http://blog.infographics.tw/wp-content/uploads/2016/02/bar.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/02/bar.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/02/bar-300x115.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/02/bar-768x295.png 768w" height="346" width="900" alt="Data in Bar Chart" src="http://blog.infographics.tw/wp-content/uploads/2016/02/bar.png" class="aligncenter size-full wp-image-1648"></a>
+<p>此外在表現週期性資料的時候，單純的長條或折線圖未必會是最好的方式；例如，若網站的流量總是在週末下降，我們便可能會想要以星期為單位來觀察週間每天的流量變化。所幸現在已是 21 世紀，我們有不少新式武器可以使用，例如 2008 年 Robbins 博士所提出的 Cycle Plot ( 循環圖 ) 將周期性資料拆開各別化成線圖 ( 如下圖 ) ，我們便可以同時比較一週內各天的數據，以及各週內同一天的走勢：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1638"><a rel="attachment wp-att-1638" href="http://blog.infographics.tw/wp-content/uploads/2016/02/cycleplot.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/02/cycleplot.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/02/cycleplot-300x167.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/02/cycleplot-768x427.png 768w" height="500" width="900" alt="Cycle Plot" src="http://blog.infographics.tw/wp-content/uploads/2016/02/cycleplot.png" class="wp-image-1638 size-full" aria-describedby="caption-attachment-1638"></a><p class="wp-caption-text" id="caption-attachment-1638">Cycle Plot Example, adopted from “Introduction to Cycle Plots”, Naomi B. Robbins, Visual Business Intelligence Newsletter, Jan., 2008</p></div>
+<p>或者雷達圖 ( 與其變形 &nbsp;Radial Chart ) 也是表現週期性資料的好方式。下圖為&nbsp;Elijah Meeks 利用 d3.js 製作的 Brushable Radial Chart，即用來表現紐約市的歷史溫度：</p>
+<a rel="attachment wp-att-1637" href="http://blog.infographics.tw/wp-content/uploads/2016/02/brushableRadialChart.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/02/brushableRadialChart.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/02/brushableRadialChart-300x178.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/02/brushableRadialChart-768x456.png 768w" height="534" width="900" alt="Brushable Radial Chart" src="http://blog.infographics.tw/wp-content/uploads/2016/02/brushableRadialChart.png" class="aligncenter size-full wp-image-1637"></a>
+<p>這些都是較晚期才出現的圖表形式，在兩百年前統計圖表還正在發展，在當時南丁格爾的極區圖可說已經將資料做了相當好的詮釋了。這樣的圖表將複雜的統計資料以容易閱讀的形式遞到了不善於閱讀統計資料的國會議員面前，這正是資料視覺化所希望做到的 — 降低資訊解讀的門檻、提升訊息傳播的效率。</p>
+<h2>結語</h2>
+<p>此後，南丁格爾在印度花了四十年的時間，持續關心與改善從英軍到印度人民的公共衛生、健康與饑荒的狀況。南丁格爾玫瑰圖比起南丁格爾一生所做的奉獻的一切來說，真的是微不足道，但我們仍從圖表中看到了她的故事。這個圖表以現代的眼光來看，也許不是那麼美觀、有效，然而他卻成功的傳達了作者想要訴說的故事，在充斥著圖表糟粕的現代，我們應該要好好思考，什麼樣才算是好的圖表。</p>
+<p>最後，雖然 Hugh Small 教授替我們解釋這張圖表的設計理念，仍然有些人對南丁格爾玫瑰圖抱持反面的看法，若你有興趣的話，在視覺化大師 Edward Tufte 教授的網站上也有<a href="http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=00007o">關於這張圖的討論</a>，很值得一讀，可別錯過囉！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/bar-chart/">bar chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/brushable-radial-chart/">brushable radial chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/chart/">chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/coxcomb/">coxcomb</a>,<a rel="tag" href="http://blog.infographics.tw/tag/nightingale-rose/">nightingale rose</a>,<a rel="tag" href="http://blog.infographics.tw/tag/polar-area/">polar area</a>,<a rel="tag" href="http://blog.infographics.tw/tag/radial/">radial</a>,<a rel="tag" href="http://blog.infographics.tw/tag/rose/">rose</a>,<a rel="tag" href="http://blog.infographics.tw/tag/wind-rose/">wind rose</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2016/01/auto-chart-with-popily/">不用再自己畫圖表！自動視覺化服務 Popily</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2016/02/data-restructure-with-d3js/">總整理！你不可錯過的 d3.js 資料轉換技巧</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>3</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-293">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/17f786d56ea59d386e1479ce3333d8a1?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://dasanlin888.pixnet.net/blog/post/443811905-%e6%95%b8%e6%93%9a%e8%a9%b1%e7%ac%ac2%e9%9b%86~%e5%8d%97%e4%b8%81%e6%a0%bc%e7%88%be%e5%b9%b9%e4%ba%86%e4%bb%80%e9%ba%bc%3f">Jeff</a></cite>         <time datetime="2016-02-16"><a href="http://blog.infographics.tw/2016/02/nightingale-rose-chart/#comment-293">16 2 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>好的统計是可以讓大家都懂的。</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment odd alt thread-odd thread-alt depth-1 cf" id="comment-331">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/f4190a8743ee09bdb8f2eb8e3b844686?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://無">翁滋培</a></cite>         <time datetime="2016-05-27"><a href="http://blog.infographics.tw/2016/02/nightingale-rose-chart/#comment-331">27 5 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>好強!</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment even thread-even depth-1 cf" id="comment-1444">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/8f8831444a8188b99abd0b5433f7eb76?s=40">
+                <cite class="fn">Pierrot</cite>         <time datetime="2018-12-3"><a href="http://blog.infographics.tw/2016/02/nightingale-rose-chart/#comment-1444">3 12 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>這段的年份似乎有誤：<br>
+這張圖中，左右兩塊圖表各包含了一年份 12 個月的資料，”右圖為 1854 年 4 月至 1955 年 3 月”，左圖則為 1855 年 4 月至 1856 年 3 月。南丁格爾刻意以 1855 年 4 月做為分界，將 24 個月的資料切分為左右兩張圖再用黑色線條連結，是因為這大約便是衛生委員會來改善環境時的日期，也因此我們可以比較兩個年度的死亡人數與其原因的概略比例。</p>
+<p>應該是”右圖為 1854 年 4 月至 1855 年 3 月”</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">Hyperlapse.js － 利用 Google 街景製作動態縮時效果</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1332 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-google tag-google-maps tag-hyperlapse tag-motion-blur tag-panorama tag-threejs tag-timelapse" id="post-1332">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-09-21" class="updated">21 9 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/09/cover2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/cover2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/cover2-300x176.jpg 300w" height="527" width="900" alt="Hyperlapse.js - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/09/cover2.jpg" class="aligncenter size-full wp-image-1335"></a>
+<p>縮時攝影 ( Timelapse ) 的製作礦日費時，動態縮時 ( Hyperlapse ) 的製作更是麻煩，但是現在只要坐在家裡動動滑鼠就能做出不錯的 Hyperlapse 影片囉！這次為大家介紹 Hyperlapse.js ，一個利用 Google Street View 製作 Hyperlapse 效果的 JS 函式庫。</p>
+<p><span id="more-1332"></span></p>
+<p>「Informotion」一詞在台灣還沒有流行起來，然而在國外早有這樣的作品，動態的資訊圖表 — 最著名的例子為 2007 年由&nbsp;Röyksopp 所發表的「<a href="https://www.youtube.com/watch?v=1Xhdy9zBEws">Remind Me</a>」短片，整部影片穿插了許多的資訊圖表片段，同時也包含了大量的動畫運用。</p>
+<p>不光是資訊圖表，資料視覺化也與動畫脫不了關係；同樣在 2007 年、 <a href="http://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen?language=zh-tw">Hans Rosling 著名的 TED 演講</a>展示了動態的泡泡圖如何用來解讀生育率、平均壽命與國家開發程度的關係。動畫永遠都是一個很值得思考、運用的傳播形式。</p>
+<p>試想這個情境：我安排了家族的沖繩旅遊，決定要在當地租用休旅車做為移動手段；但日本的交通規則與台灣不同，右駕、靠左、不同的標誌等等，使我想要在出發前先了解當地的路況，以免到時手忙腳亂；我知道我的出發地與目的地，我會使用 Google Street View，但我發現在 Google Street View 上長距離移動相當的費力。為何沒有一個自動規畫行程的預覽服務？</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/japan.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/japan.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/japan-300x167.jpg 300w" height="500" width="900" alt="japan" src="http://blog.infographics.tw/wp-content/uploads/2015/09/japan.jpg" class="aligncenter size-full wp-image-1336"></a>
+<p>Hyperlapse.js 做的就是這件事。我們提供兩個座標點， Hyperlapse.js 藉由 Google Maps API 計算導航路徑、快取路徑上的街景圖、然後依序播放出來。參考 Hyperlapse.js 網站上的範例程式碼，我們逐行做說明：</p>
+<ul>
+<li>首先我們建立 Hyperlapse 物件，稍後會用來產生 Hyperlapse &nbsp;效果</li>
+</ul>
+<pre><span class="pl-k">  // 建立 Hyperlapse 效果
+  var</span> hyperlapse <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Hyperlapse</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>pano<span class="pl-pds">'</span></span>), {
+      lookat<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">google.maps</span>.LatLng(<span class="pl-c1">37.81409525128964</span>,<span class="pl-k">-</span><span class="pl-c1">122.4775045005249</span>),
+      zoom<span class="pl-k">:</span> <span class="pl-c1">1</span>,
+      use_lookat<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+      elevation<span class="pl-k">:</span> <span class="pl-c1">50</span>
+  });
+  // 一但讀取完成便立刻啟動
+<span class="pl-c1">  hyperlapse</span>.<span class="pl-en">onRouteComplete</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">e</span>) { hyperlapse.<span class="pl-c1">load</span>(); };
+<span class="pl-c1">  hyperlapse</span>.<span class="pl-en">onLoadComplete</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">e</span>)  { hyperlapse.play(); };
+</pre>
+<ul>
+<li>接著我們由 Google Maps API 取得一條路徑，傳給 Hyperlapse 物件</li>
+</ul>
+<pre><span class="pl-k">  var</span> route <span class="pl-k">=</span> { request<span class="pl-k">: </span>{
+    origin<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">google.maps</span>.LatLng(<span class="pl-c1">37.816480000000006</span>,<span class="pl-k">-</span><span class="pl-c1">122.47825</span>,<span class="pl-c1">37</span>),  // 出發點
+    destination<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">google.maps</span>.LatLng(<span class="pl-c1">37.81195</span>,<span class="pl-k">-</span><span class="pl-c1">122.47773000000001</span>), // 目的地 
+    travelMode<span class="pl-k">:</span> google.maps.DirectionsTravelMode.DRIVING
+  }};
+
+  // 計算路徑
+<span class="pl-k">  (</span><span class="pl-k">new</span> <span class="pl-en">google.maps</span>.DirectionsService()).route(route.request, <span class="pl-k">function</span>(<span class="pl-smi">res</span>, <span class="pl-smi">status</span>) {
+    hyperlapse.generate( {route<span class="pl-k">:res</span>} );
+  });</pre>
+<p>上述程式碼 <span style="color: #ff0000;"><strong>*</strong></span> 可以產生類似下圖的結果： ( 動態網頁截取成縮小後的 GIF 檔 )</p>
+<img alt="" src="http://i.imgur.com/S8Wmj6c.gif">
+<h2>使用即時線上編輯介面</h2>
+<p>雖然看起來效果不錯，但 Hyperlapse.js 畢竟是 JS 函式庫，需要寫到程式對一般人就是多了點門檻。沒關係，另一個衍生專案 — HyperlapseMB，Hyperlapse 的 Motion Blur 版 — 除了追加了動態模糊的效果之外，他也製作了一個<a href="http://tobiashaeussler.bplaced.net/demo/hyperlapse/hyperlapse.html">視覺化的編輯器</a>，我們不僅可以透過拖拉圖標來決定路徑起迄點，也可以很容易的設定移動速度、視線角度等等的參數。</p>
+<p>下圖為透過該展示介面規劃從北投到汐止的路線，可以看到當前位置在國道一號高速公路上，也可以看到動態模糊的效果：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/highway.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/highway.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/highway-300x156.jpg 300w" height="467" width="900" alt="Hyperlapse.js - highway" src="http://blog.infographics.tw/wp-content/uploads/2015/09/highway.jpg" class="aligncenter size-full wp-image-1334"></a>
+<p>上圖左方的小地圖可以讓我們透過拖動圖標來即時設定導航的起迄點，而右方的黑色儀表板則可以設定各種參數，包含：</p>
+<ul>
+<li>distance_between – 每個 frame 之間的距離</li>
+<li>fov – 視野 ( Field of View )</li>
+<li>millis – 移動速度</li>
+<li>offset &amp; position – 視角</li>
+</ul>
+<p>在下方也可以控制畫面的播放跟製作，產生 Hyperlapse 的方式也很簡單，當我們在左方的地圖決定好軌跡的起迄點之後，到右下方的控制板按下「generate」，接著等待中央資訊欄中的數字跑到結束，Hyperlapse 便會自動播放了。產生的結果可以透過連結分享給別人，有興趣的話可以點<a href="http://tobiashaeussler.bplaced.net/demo/hyperlapse/hyperlapse.html?address=taipei#25.131770000000003,121.49913000000001,25.0261583,121.54270930000007,25.064300000000003,121.65251,36.7048666676219">這個連結</a>來看看結果如何；若開啟時只有一片黑，記得先點擊右方的「Play」鈕。若單純只想開啟編輯器自行製作，可以利用<a href="http://tobiashaeussler.bplaced.net/demo/hyperlapse/hyperlapse.html">這個連結</a>來開啟。</p>
+<h2>結語</h2>
+<p>託科技進步的福，越來越多不同的網路服務出現供我們使用，也有許多人前仆後繼的開發各種混搭使用的軟體、套件。當視覺化不光只是簡單的圖表元素與靜態的呈現時，動畫形式的作品也就變成一種值得認真衡量效果的做法。</p>
+<p>舉例來說，當我們要製作交通狀況的視覺化時，像 Hyperlapse 這樣的產出也許可以做為全幅滿版的動態背景、亦或是即時反饋的街景預覽；對不同路段的數據做視覺化時，我們也可以搭配 Hyperlapse 在不同位置呈現不同的數據。</p>
+<p>如果還不容易想像 Hyperlapse.js 所能做到的事，可以參考這個官方的示範影片，除了基本的動態縮時外，還可以看到各種不同的視覺效果：</p>
+<p><br>
+當表現媒介開始充滿彈性，各種傳遞資訊的方式我們都應當可以考慮；像是動態的資訊圖表、資料視覺化，也就不是無法想像的事情了。像是 Hyperlapse.js 這樣的工具，你還能想到什麼方式搭配視覺化來運用嗎？</p>
+<p>&nbsp;</p>
+<p><span style="color: #ff0000;"><strong>*</strong></span> 編按: 原始的 Hyperlapse.js 範例有兩個地方要注意；首先，我們要載入 GSVPano.js 、 Hyperlapse.js 、 three.js 與 Google Maps API ；其次，GSVPano.js 有一些地方需要修正，請參考<a href="https://github.com/TeehanLax/Hyperlapse.js/issues/21">這個網址</a>中提到的改法。</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/google/">google</a>,<a rel="tag" href="http://blog.infographics.tw/tag/google-maps/">google maps</a>,<a rel="tag" href="http://blog.infographics.tw/tag/hyperlapse/">hyperlapse</a>,<a rel="tag" href="http://blog.infographics.tw/tag/motion-blur/">motion blur</a>,<a rel="tag" href="http://blog.infographics.tw/tag/panorama/">panorama</a>,<a rel="tag" href="http://blog.infographics.tw/tag/threejs/">threeJS</a>,<a rel="tag" href="http://blog.infographics.tw/tag/timelapse/">timelapse</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/09/openrefine-introduction/">史上最強大的資料整理工具 － Open Refine</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/10/d3js-fill-with-texture/">D3.js 實戰 － 上色落伍了，來點圖樣吧！</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

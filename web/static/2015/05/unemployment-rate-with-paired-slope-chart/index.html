@@ -1,0 +1,225 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">台北走下坡？用坡度圖看五都失業率走勢</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-566 post type-post status-publish format-standard has-post-thumbnail hentry category-5 tag-d3js tag-paired-bar-chart tag-raw tag-slope tag-slope-chart tag-unemployment-rate tag-210 tag-208" id="post-566">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-05-10" class="updated">10 5 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/04/cover2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/cover2.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/cover2-300x176.png 300w" height="527" width="900" alt="Paired Slope Chart - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/04/cover2.png" class="alignnone size-full wp-image-567"></a>
+<p>大家往往說台北工作好找，就業機會多，所以要上台北打拼… 事實上台北比各地的失業率狀況，你知道是如何嗎？這次我們就來利用政府釋出的歷年縣市失業率數據來做個簡單的視覺化。</p>
+<p><span id="more-566"></span></p>
+<p>從失業率數據我們可以觀察到近年分別有兩次失業率大幅上升，一次是在 2001 年，大致上是在達康泡沫化之後；另一次則是在 2009 年，次貸風暴引發的金融海嘯之後，當時很多企業開始放起無薪假，相信大家印象都還很深刻。</p>
+<p>將五都的統計數字以長條圖繪製出來可以看到兩個明顯的山峰：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/all-rate.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/all-rate.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/all-rate-300x163.png 300w" height="489" width="900" alt="Unemployment Rate" src="http://blog.infographics.tw/wp-content/uploads/2015/04/all-rate.png" class="alignnone size-full wp-image-569"></a>
+<p>分組的長條圖很適合看個趨勢，然而由於資料量多，讀取細節變得相對困難。假設今天我們比較關心台北與台南，於是我們只留下這兩者來觀察：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/two-rate.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/two-rate.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/two-rate-300x160.png 300w" height="481" width="900" alt="Taipei vs Tainan" src="http://blog.infographics.tw/wp-content/uploads/2015/04/two-rate.png" class="alignnone size-full wp-image-570"></a>
+<p>可以觀察到台北在九零年代末、兩千年初期的失業率比起台南一直都是較低的，但差距逐漸縮小，直到 2010 年後終於被逆轉追過。這樣的觀察有一點吃力，由於長條圖呈現的是絕對數字，讀者在閱讀時必須在心中自己做相減的動作來得到兩者間的差距狀況。</p>
+<p>Andy Cotgreave 的這篇文章「<a href="http://gravyanecdote.com/uncategorized/killing-the-paired-bar-chart/" title="Killing the Paired Bar Chart">Killing the paired bar chart</a>」展示了如何利用坡度圖更好的表現一組數字間的比較；他將長條移除只留下端點，接著連結每組端點形成一個坡度；讀者在觀察數據之間的變化時，就只要注意線段的斜率就好。</p>
+<p>為了繪出坡度圖，我們在 raw.infographics.tw 平台實作了一個坡度圖產生器，並匯入五都失業率數據做樣本，產生的坡度圖橫軸為時間，縱軸為失業率，以台北 v.s. 新北做例子：</p>
+<h3><a href="http://blog.infographics.tw/wp-content/uploads/2015/04/1-2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/1-2.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/1-2-300x171.png 300w" height="514" width="900" alt="Taipei vs Xinbei" src="http://blog.infographics.tw/wp-content/uploads/2015/04/1-2.png" class="alignnone size-full wp-image-576"></a></h3>
+<p>其它縣市的圖則依序顯示如下：</p>
+<h3>台北 v.s. 台中</h3>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/1-3.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/1-3.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/1-3-300x171.png 300w" height="514" width="900" alt="Taipei vs Taichung" src="http://blog.infographics.tw/wp-content/uploads/2015/04/1-3.png" class="alignnone size-full wp-image-572"></a>
+<h3>台北 v.s. 台南</h3>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/1-4.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/1-4.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/1-4-300x171.png 300w" height="514" width="900" alt="Taipei vs Tainan" src="http://blog.infographics.tw/wp-content/uploads/2015/04/1-4.png" class="alignnone size-full wp-image-573"></a>
+<h3>台北 v.s. 高雄</h3>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/1-5.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/1-5.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/1-5-300x171.png 300w" height="514" width="900" alt="Taipei vs kaohsiung" src="http://blog.infographics.tw/wp-content/uploads/2015/04/1-5.png" class="alignnone size-full wp-image-574"></a>
+<p>從這些圖表中可以發現，雖然到了 2013 年幾乎所有縣市的失業率都降至了 4.1 ~ 4.2% 左右，但以歷年變化來看，新北、台中、台南、高雄的失業率都從原本遠高於台北，逐漸的拉近到甚至逆轉勝的走勢，其中可以說台南的表現最佳。</p>
+<p>未來的失業率走勢又會是如何，我們沒有辦法預測，不過從這些圖看來，往台北去也已經不再代表著高就業率了。</p>
+<hr>
+<h2>&nbsp;製作坡度圖表</h2>
+<p>繪製這類圖表的工具不常見，於是我們在 <a href="http://raw.infographics.tw" title="Raw">http://raw.infographics.tw</a> 平台製作了一個，有需要的朋友可以直接使用 raw.infographics.tw 來製作。這裡我們簡單的說明一下使用的流程。</p>
+<h3>1. 填入資料</h3>
+<p>首先進入該網址，我們會看到一個輸入框，只需要在裡面填入逗號分隔的數字即可。如果手邊沒有現成的資料，可以選擇「先玩一下示範資料」，裡面即有這次我們使用的五都失業率資料：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/input.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/input.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/input-300x143.png 300w" height="430" width="900" alt="Input data into Raw" src="http://blog.infographics.tw/wp-content/uploads/2015/04/input.png" class="alignnone size-full wp-image-579"></a>
+<h3>2. 選取「Paired Slope Chart」圖表型態</h3>
+<p>輸入資料看到「xx條資料處理完成」的字樣後，下方便會出現選取圖表的介面，請往下拉到「others」區選取「Paired Slope Chart」：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/choose-chart.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/choose-chart.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/choose-chart-300x170.png 300w" height="510" width="900" alt="Choose Paired Slope Chart" src="http://blog.infographics.tw/wp-content/uploads/2015/04/choose-chart.png" class="alignnone size-full wp-image-580"></a>
+<p>Raw 提供相當多預設的圖表類型，而且大多是一般網站、軟體沒有提供的圖表類型，有機會大家可以玩玩看其它的圖表類型。</p>
+<h3>3. 建立資料與圖表對應</h3>
+<p>我們需要告訴 Raw 我們的資料各別對應到圖表中的哪些欄位；透過拖拉的方式江左方資料的欄位丟到右方圖表欄位即可，Date 代表的是橫軸的時間， Value A 與 Value B 則各對應到圖表中的 A 圈圈 ( 斜坡的左端點 ) 與 B 圈圈 ( 斜坡的右端點 ) ，我們可以在 Value A 與 Value B 中 任意放入五都的資料來比較任兩個城市的失業率差異：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/drag-and-drop.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/drag-and-drop.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/drag-and-drop-300x120.png 300w" height="361" width="900" alt="Drag Data to Chart Mapping" src="http://blog.infographics.tw/wp-content/uploads/2015/04/drag-and-drop.png" class="alignnone size-full wp-image-581"></a>
+<h3>&nbsp;4. 圖表微調</h3>
+<p>建立好對應的同時圖表也會產生出來，我們可以在左下方的輸入框微調圖表的色彩，可以調的有兩個圈圈的顏色 (「A 組顏色」與「B 組顏色」) 與連接線的顏色 ( 「線段顏色」)。</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/chart-customize.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/chart-customize.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/chart-customize-300x118.png 300w" height="354" width="900" alt="Customize the Chart" src="http://blog.infographics.tw/wp-content/uploads/2015/04/chart-customize.png" class="alignnone size-full wp-image-582"></a>
+<h3>5. 產生結果</h3>
+<p>調整完以後，在網頁的最下方應該也有 SVG 同步產生了，我們可以儲存該段 SVG 碼運用在不同的地方。比方說下圖是以 Illustrator 開啟編輯的例子：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/illustrator.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/illustrator.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/illustrator-300x157.png 300w" height="472" width="900" alt="Open with Adobe Illustrator" src="http://blog.infographics.tw/wp-content/uploads/2015/04/illustrator.png" class="alignnone size-full wp-image-584"></a>
+<hr>
+<h2>結語</h2>
+<p>資料呈現方式百百種，不同手法表現出來的面向各有不同。不光是活用各種技術，從各種角度切入也很有幫助。未來有需要做兩兩資料的比對，別忘了 raw.infographics.tw 有提供方便的坡度圖可以快速套用。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="http://blog.infographics.tw/tag/paired-bar-chart/">paired bar chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/raw/">raw</a>,<a rel="tag" href="http://blog.infographics.tw/tag/slope/">slope</a>,<a rel="tag" href="http://blog.infographics.tw/tag/slope-chart/">slope chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/unemployment-rate/">unemployment rate</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e4%ba%94%e9%83%bd/">五都</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e5%a4%b1%e6%a5%ad%e7%8e%87/">失業率</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/05/three-steps-to-build-a-timeline-over-map/">三個步驟教你做地圖式時間軸 － 開源套件「時間地圖」介紹</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/05/build-gif-loader-with-loading-io/">只要十秒鐘，使用 Loading.io 製作 Loading 圖示</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="台灣歷年地震多嚴重？地震視覺化告訴你" rel="bookmark" href="http://blog.infographics.tw/2015/04/geoevent-earthquake-visualization/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/cover2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/04/cover2-300x176.jpg 300w" alt="Earthquake visualization with Geoevent - cover" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2015/04/cover2.jpg">																										<br>
+													台灣歷年地震多嚴重？地震視覺化告訴你												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="歷年台灣航空事故圖表" rel="bookmark" href="http://blog.infographics.tw/2015/02/historical-taiwan-aircraft-accident-visualized/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/02/aircraft.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/02/aircraft-300x176.jpg 300w" alt="0media geoevent toolkit" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2015/02/aircraft.jpg">																										<br>
+													歷年台灣航空事故圖表												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

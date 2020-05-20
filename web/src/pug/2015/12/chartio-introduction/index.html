@@ -1,0 +1,219 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">用圖表為你的資料建立儀表板 — Chartio</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1496 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-business tag-chart tag-chartio tag-dashboard tag-database tag-datasource tag-integration tag-tool tag-visualization tag-web-service" id="post-1496">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-12-31" class="updated">31 12 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1541" href="https://blog.infographics.tw/wp-content/uploads/2015/12/cover-3.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/cover-3.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/cover-3-300x176.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/cover-3-768x450.jpg 768w" height="527" width="900" alt="Cover" src="https://blog.infographics.tw/wp-content/uploads/2015/12/cover-3.jpg" class="aligncenter size-full wp-image-1541"></a>
+<p>每天監測流量、用戶互動、銷售跟伺服器狀態，一堆視窗真是蠟燭兩頭燒！ Chartio 讓你建立視覺化的資料儀表版，將各大服務整合於一處，就一個 Dashboard 把你要的資訊一次看夠夠！</p>
+<p><span id="more-1496"></span></p>
+<p>視覺化在商業應用上其實是非常重要的，各式各樣的報表、財務狀況、市佔率… 往往都是用許多圖表推砌而成。一個典型的網站可能有以下的報表資料：</p>
+<ul>
+<li>主機使用率、回應速度、記憶體 / 硬碟使用狀況等數據</li>
+<li>網站流量、訪客來源、訪客地區、搜尋關鍵字、點擊區域等數據</li>
+<li>產品銷售量、營業額、毛利、營收等數據</li>
+<li>貼文觸及數、社群活躍度、客戶產品評比</li>
+</ul>
+<p>也就如各位所能想像的，網路服務發達的今天這些資訊通通都有公司在為我們提供。主機使用 Linode 或 AWS 、流量透過 Google Analytics 或 CrazyEgg 觀察、臉書的洞察報告告訴你最近的貼文觸及跟轉換的狀況，而他們全都有提供圖表 … 很好！但他們散在網路各處，東一塊西一塊，為了進一步分析匯整還得個別將資料匯出，相當麻煩。</p>
+<p>「You don’t have to build customized report tool」Chart.io 為我們搞定了這件事。 Chart.io 可以說由三個面向組成：</p>
+<ul>
+<li>資料 ( Data Source ) — 可以是 Google Analytics 、 Salesforce 等服務或 Amazon RDS 、 MySQL 等資料庫。</li>
+<li>圖表 ( Chart ) — 常見的商用圖表如折線、面積、散佈跟餅圖皆可做。</li>
+<li>儀表板 ( Dashboard ) — 圖表匯整於一處監看頁面，讓我們可以全覽我們所需的所有圖表。</li>
+</ul>
+<p>而在三者之間的連結也相當的有意思。</p>
+<p>登入 Chartio.com 之後它會先帶我們走一遍範例流程，若尚沒有可以使用的資料，Chartio 也提供了示範用的「Chartio Demo Source」讓我們嘗鮮。在一般的使用流程中，我們需要先有資料，這時可以先從帳號首頁的「+Add Data Source」來選擇適當的資料來源：</p>
+<a rel="attachment wp-att-1531" href="https://blog.infographics.tw/wp-content/uploads/2015/12/datasource.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/datasource.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/datasource-300x149.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/datasource-768x381.jpg 768w" height="446" width="900" alt="datasource" src="https://blog.infographics.tw/wp-content/uploads/2015/12/datasource.jpg" class="aligncenter size-full wp-image-1531"></a>
+<p>選擇不同的資料來源可能會需要填入不同的資訊，而若我們點選的是服務 ( 如 Google Analytics ) ，則會跳出授權視窗要求我們提供授權。建立完成後，可以從右上角選單的「Settings → Data Sources」項目進入，點擊想要的資料來源來做進一步的設定。</p>
+<p>下圖是設定以 Amazon RDS 做為資料來源所需要填寫的表格。由於在這裡我們只是示範意圖，所以假設我們點選了「Chartio Example Data Source」與「Google Analytics」，這兩者沒有很複雜的設定，很容易就可以建立完成。</p>
+<a rel="attachment wp-att-1532" href="https://blog.infographics.tw/wp-content/uploads/2015/12/rds.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/rds.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/rds-300x165.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/rds-768x422.jpg 768w" height="494" width="900" alt="Amazon RDS as Data Source" src="https://blog.infographics.tw/wp-content/uploads/2015/12/rds.jpg" class="aligncenter size-full wp-image-1532"></a>
+<p>完成了資料來源的選定，再來要建立儀表板 ( Dashboard ) — 從帳號首頁的「+ Add Dashboard」進入建立新儀表板，填妥儀表板所需資訊之後會來到儀表板的編輯畫面 ( 如下圖 )。最初儀表板中沒有任何圖表，所以下圖是空的；我們可以透過右方灰色區域的選單來做儀表板編輯，其中包含了新增圖表、排列圖表、增加文字連結等等。</p>
+<a rel="attachment wp-att-1533" href="https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard1.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard1-300x140.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard1-768x358.jpg 768w" height="420" width="900" alt="Dashboard ( Empty )" src="https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard1.jpg" class="aligncenter size-full wp-image-1533"></a>
+<p>首先讓我們從建立圖表開始吧。點擊「Add Chart」，進到如下圖的編輯畫面。左邊為資料設定，右邊則讓我們選擇及預覽圖表：</p>
+<ul>
+<li>在 A 處我們可以選擇要使用的資料來源。選擇資料來源之後，內容便會帶入到這個網頁中供我們使用。</li>
+<li>資料來源中的數據會以列表方式呈現在 B 處，我們展開選單後可以將選定的資料項拖放至 C 處。</li>
+<li>C 處代表資料與圖表的連結，分為 Measure 、 Dimension 與 Filter 。幾種名詞乍看可能不懂，簡單用類比來說明：
+<ul>
+<li>Measure ： 數值資料，比方說 5 人 、 13 秒、 120 元等。在線圖中通常是 Y 軸</li>
+<li>Dimension ： 非數值資料，像是 2015/05/12 、 「葡萄」、「IE11」等。在線圖中通常是 X 軸。</li>
+<li>Filter ：過濾條件。比方說「人數 5 以上」「瀏覽器是 IE8」等等。</li>
+</ul>
+</li>
+<li>有些數據在 C 處可以進一步設定，這時只要點擊該數據便會出現下拉式選單。</li>
+<li>接著，到 D 處選擇圖表類型。與目前資料不搭的圖表將以灰色表示，可以將滑鼠移上去看原因。</li>
+<li>點擊「Refresh Chart」後，結果將在 E 處呈現。</li>
+</ul>
+<a rel="attachment wp-att-1534" href="https://blog.infographics.tw/wp-content/uploads/2015/12/chart1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/chart1.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/chart1-300x197.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/chart1-768x503.jpg 768w" height="590" width="900" alt="Add Chart ( 1 )" src="https://blog.infographics.tw/wp-content/uploads/2015/12/chart1.jpg" class="aligncenter size-full wp-image-1534"></a>
+<p>下圖是將GA 中瀏覽人數逐日呈現後的折線圖。資料依日期排序，沒有其它的過濾條件：</p>
+<a rel="attachment wp-att-1535" href="https://blog.infographics.tw/wp-content/uploads/2015/12/chart2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/chart2.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/chart2-300x122.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/chart2-768x312.jpg 768w" height="366" width="900" alt="Chart with Pageview" src="https://blog.infographics.tw/wp-content/uploads/2015/12/chart2.jpg" class="aligncenter size-full wp-image-1535"></a>
+<p>我們也可以將資料拖至「Filters」框中設定額外的過濾條件，例如若我們只要來自美國的流量，那就將 GA 中的「Country」值拖入 &nbsp;Filters ，並設定要與美國相等即可。</p>
+<p>在編輯器的左下方可以看到一個寫著「Add Step」的按鈕，他讓我們可以將資料做轉換後再來呈現。舉例來說，點擊「Add Step → Add Column」，我們可以為資料再增加一個新的欄位。例如下圖我們要增加一個新的欄位「My Column」，他是透過將 ga:pageviews ( 瀏覽量 ) 資料通通加 10 而來，而這個改動也就即時反應在右方的圖表上 ( 多了一條橘色的線 )：</p>
+<a rel="attachment wp-att-1538" href="https://blog.infographics.tw/wp-content/uploads/2015/12/addstep2-ka.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/addstep2-ka.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/addstep2-ka-300x83.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/addstep2-ka-768x213.jpg 768w" height="250" width="900" alt="Add Column" src="https://blog.infographics.tw/wp-content/uploads/2015/12/addstep2-ka.jpg" class="aligncenter size-full wp-image-1538"></a>
+<p>圖表完成後，我們便可以點擊編輯器右上角的「Save to Dashboard」將圖表選擇至我們要的儀表板中。下圖便是結果的儀表板。我們將時間 / 流量曲線與修改過的流量曲線同時顯示在這個Dashboard 上，如果需要更新資料，可以按右下的「Refresh Data」即可。</p>
+<a rel="attachment wp-att-1539" href="https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard2.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard2-300x170.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard2-768x434.jpg 768w" height="509" width="900" alt="Dashboard with a Chart" src="https://blog.infographics.tw/wp-content/uploads/2015/12/dashboard2.jpg" class="aligncenter size-full wp-image-1539"></a>
+<p>你可能會發現這個儀表板好像還多了點其它東西；儀表板除了可以增加圖表外，還可以插入一些控制性的元素，例如上圖中我們插入了一條分隔線、一個文字塊 ( 寫著「Country」 )，一個輸入框 ( 內含預設值「10」)。類似這樣輸入框的控制項還有日曆、下拉式選單等等，他們的主要用途在於提供我們即時設定圖表過濾條件的變數。</p>
+<p>比方說，上圖的輸入框我們命名為「COUNTRY」，那麼在新增圖表時的 Filters 設定就會多出一個「{COUNTRY}」變數可以勾選，這時可以搭配像 Google Analytics 提供的訪客國籍來做進一步的過濾：</p>
+<a rel="attachment wp-att-1540" href="https://blog.infographics.tw/wp-content/uploads/2015/12/filter-vars.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/12/filter-vars.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/12/filter-vars-300x113.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2015/12/filter-vars-768x290.jpg 768w" height="340" width="900" alt="Filter with Variables" src="https://blog.infographics.tw/wp-content/uploads/2015/12/filter-vars.jpg" class="aligncenter size-full wp-image-1540"></a>
+<p>儀表板完成後，我們就可以分享給我們的夥伴，或是直接產生一張截圖再寄給大家。當然，儀表板還是要看即時資訊才有意思囉！</p>
+<h2>結語</h2>
+<p>商業應用的資料視覺化我們過往比較少談到，而 Chartio 組合了許多網路資料庫與服務來源，搭配方便的圖表與資料介面，提供一個很容易使用的儀表板讓我們隨時監控我們的數據，真的是相當方便！</p>
+<p>同時，他不光是只能應用在商業領域，像是環境監測、新聞圖表也都是可以使用的；不過我想他的強項還是在於即時的資料匯整與視覺化，感覺用來觀測資料比起製作圖表更為適合。總而言之，是一套很不錯的資料視覺化整合服務，若你有資料匯整上的困擾，相信你一定會想試試看囉！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/business/">business</a>,<a rel="tag" href="https://blog.infographics.tw/tag/chart/">chart</a>,<a rel="tag" href="https://blog.infographics.tw/tag/chartio/">chartio</a>,<a rel="tag" href="https://blog.infographics.tw/tag/dashboard/">dashboard</a>,<a rel="tag" href="https://blog.infographics.tw/tag/database/">database</a>,<a rel="tag" href="https://blog.infographics.tw/tag/datasource/">datasource</a>,<a rel="tag" href="https://blog.infographics.tw/tag/integration/">integration</a>,<a rel="tag" href="https://blog.infographics.tw/tag/tool/">tool</a>,<a rel="tag" href="https://blog.infographics.tw/tag/visualization/">visualization</a>,<a rel="tag" href="https://blog.infographics.tw/tag/web-service/">web service</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/12/accessibility-of-visualization/">當網路無障礙碰上資料 — 八個秘訣，打造無障礙視覺化</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/01/timesheetjs-introduction/">超簡單的甘特圖套件 — timesheet.js</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

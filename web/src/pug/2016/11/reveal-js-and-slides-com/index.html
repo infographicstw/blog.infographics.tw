@@ -1,0 +1,248 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">Reveal.js + slides.com 製作令人驚豔的互動式簡報</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1970 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-keynote tag-lecture tag-powerpoint tag-presentation tag-reveal tag-slide tag-talk" id="post-1970">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-11-17" class="updated">17 11 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x176.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-768x450.png 768w" height="527" width="900" alt="Revealjs - Cover Image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1.png" class="aligncenter size-full wp-image-1988"></a>
+<p>做了超讚視覺化作品想要在簡報中與大家分享，卻總是受限於簡報軟體而無法自由發揮嗎？瀏覽器原生簡報工具 Reveal.js 讓你直接把整個作品搬到投影片中，從此不管是 D3.js 視覺化還是 WebGL 與 VR 體驗，一份簡報就搞定！</p>
+<p><span id="more-1970"></span></p>
+<p>問題是這樣的：套裝簡報軟體給我們很方便的編輯介面 — 我們可以拖拉方塊、設定動畫、甚至自定樣版，然而我們從此就活在這些軟體的世界中，當我們需要展示我們的網頁成果或動態作品、當我們想表達的內容牽涉到互動概念、整個表現體驗瞬間就降至零分 — 我們這時不但得不斷的切換簡報與作品，甚至連軟體載入與網頁開啟的時間都讓讀者感到不耐 — 畢竟，很少有簡報軟體會幫我們預載所有將用到的網頁或程式的。</p>
+<p>因此，若能使用開放的格式如 HTML + JavaScript 來製作投影片，我們可以任意在裡面實作我們想像的效果，隨意嵌入我們需要的內容，同時在開啟時都一併載入完成，那不是很棒嗎？</p>
+<p>於是，Web 2.0 興起之時，相當多的網頁原生簡報套件誕生了 — Eric + Meyer 的 <a href="https://meyerweb.com/eric/tools/s5/">S5</a> 、 來自台大的 <a href="https://www.csie.ntu.edu.tw/~b88039/slide/">TKSLIDE</a> … 可惜的是，缺乏視覺編輯介面這點永遠在這些套件與使用者之間束起了一道高牆。</p>
+<p>Reveal.js 由&nbsp; Hakim El Hattab 主導開發，是一個完全基於 HTML 的開源簡報框架，他實作了許多簡報的核心要件、並使用 HTML / CSS 建立樣式與樣板，更重要的是為了讓 reveal.js 更易於使用， Hakim 同時創辦了一個線上圖形介面的簡報製作服務 — slides.com ！</p>
+<p>首先連至 &nbsp;<a href="https://slides.com">https://slides.com</a> 註冊帳號並登入，然後點擊下圖中的「Create a deck」建立新簡報：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/create.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/create.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/create-300x150.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/create-768x384.png 768w" height="450" width="900" alt="Create a Slide" src="https://blog.infographics.tw/wp-content/uploads/2016/10/create.png" class="aligncenter size-full wp-image-1971"></a>
+<p>若你是剛開始使用 Slides.com， Slides.com 在編輯介面會提供一個簡單的教學，隨後便直接開始進行編輯。 Slides.com 的編輯介面設計得相當簡明，三層式的功能列分別提供<strong>簡報</strong>、<strong>頁面</strong>與<strong>物件</strong>的操作與設定。在下圖中，我們可以利用：</p>
+<ul>
+<li>箭頭 1 處的選單調整簡報樣式、編輯投影片順序與匯入 / 匯出檔案</li>
+<li>箭頭 2 處的選單調整 / 插入物件，包含各式的形狀、顏色或字型、透明度等等</li>
+<li>箭頭 3 處的選單控制單張投影片的設定，比如背景色、註解或簡單的動畫</li>
+<li>最後在畫面右方與下方 ( 例如箭頭 4 ) ，我們可以快速新增新的投影片。</li>
+</ul>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/editor-1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/editor-1.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/editor-1-300x163.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/editor-1-768x418.png 768w" height="490" width="900" alt="slides.com Editor" src="https://blog.infographics.tw/wp-content/uploads/2016/10/editor-1.png" class="aligncenter size-full wp-image-1972"></a>
+<p>投影片的基本編輯功能與大部份的簡報編輯軟體相似，我們可以群組選取、調整前後順序、縮放、刪除等等，使用起來相當直覺；除了支援常見的快速鍵 ( 如複製 / 貼上、按住 Shift 以等比例縮放 等 ) ，在調整物件位置時也有智慧型參考線，也提供了自動對齊的功能。</p>
+<p>下圖為三分鐘內利用基本形狀簡單繪製的多拉 A 夢，全選起來便可在箭頭處看到對齊的功能出現：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/align.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/align.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/align-300x173.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/align-768x444.png 768w" height="520" width="900" alt="Sample Doraemon" src="https://blog.infographics.tw/wp-content/uploads/2016/10/align.png" class="aligncenter size-full wp-image-1973"></a>
+<p>此外， Slides.com 還支援 iframe 置入、表格、程式碼與 LaText 格式的數學式編排，相當方便！而且插入這些元件的方式都相當簡單，我們只需點擊元件、設定列便會自動彈出，屬性的編輯也都相當直覺。</p>
+<p>Slides.com 所提供的這些元件讓我們可以在同一個簡報中很輕易的談到視覺化的幾個基本要件：資料 ( 表格 )、分析 ( 公式 ) 與呈現 ( 圖表 ) ，例如在下例中，除了資料與公式外，我們並利用先前談過的 <a href="https://plotb.com">PlotDB 圖表工具</a>&nbsp;( 可參考「<a href="https://blog.infographics.tw/plotdb-the-data-visualization-service">為所有人打造的資料視覺化服務 — PlotDB</a>」一文 )&nbsp;直接嵌入響應式圖表，可以即時在簡報中做出動態效果：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/embed-move.gif"><img height="477" width="900" alt="Embedded animation" src="https://blog.infographics.tw/wp-content/uploads/2016/10/embed-move.gif" class="aligncenter size-full wp-image-1975"></a>
+<p>光是寫到這裡我就已經準備掏錢升級了，感覺相當好用！</p>
+<h2>非線性的簡報體驗</h2>
+<p>我們看到 Slides.com 可以做很不錯的物件編輯了，但他其實還有一個相當強大的設計概念 — 非線性簡報。什麼意思呢？通常我們製作簡報前、進行資訊設計時，會將我們的資料編排並做出層次；同一個主題下分成很多個部份、再切分成不同的論點討論。這些主題可以模組化、有時也可以交換或省略；然而簡報軟體通常在簡報操做或設計的階端都只提供我們線性的編排方法，頂多就是提供一個「子投影片」的概念，在播放時還是線性的體驗。</p>
+<p>然而 Slides.com 使用的「Reveal.js」套件從設計之初就將非線性的概念置入；當我們做簡報時，可以按「下」選擇進入一個章節、或是直接按右略過整個章節。在下圖中，箭頭 1 處的按鈕讓我們新增一般的投影片，箭頭 2 處的按鈕則讓我們新增子章節的投影片；在播放時，箭頭 3 處的控制鈕 ( 對應到鍵盤的方向鍵 ) 則提供我們從不同方向切換投影片的可能性。簡單的說，再也不需要狂按下一頁來跳過一整個章節了。</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/add-slide.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/add-slide.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/add-slide-300x163.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/add-slide-768x418.png 768w" height="490" width="900" alt="Add Slide" src="https://blog.infographics.tw/wp-content/uploads/2016/10/add-slide.png" class="aligncenter size-full wp-image-1976"></a>
+<p>值得一提的是 Reveal.js 在轉場上也製作了相當具有質感的動畫效果，而且提供了眾多形式可以挑選；下圖為轉場的設定與其效果範例：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/transition.gif"><img height="415" width="900" alt="transition effect" src="https://blog.infographics.tw/wp-content/uploads/2016/10/transition.gif" class="aligncenter size-full wp-image-1977"></a>
+<h2>Reveal.js 加持的開發者模式</h2>
+<p>光是到上個階段我們還是只能說這是一個不賴的簡報軟體，而真正讓它搖身一變成為視覺化專用簡報器的則是所謂的「開發者模式」！</p>
+<p>開發者模式提供我們使用 HTML 編輯投影片的可能，也因此我們可以有相當多樣性的創意投入其中；不過，很遺憾的是 Slides.com 不支援包含 &lt;script&gt; 在內的一些 HTML 標籤 ( 因為一些安全性的理由 ) ，讓整個效果大打折扣；幸好，他仍然提供 HTML 匯出的功能，因此我們可以另外製作一份 JavaScript 檔來撰寫互動功能，並在簡報製作完成後將之下載，與 &nbsp;JavaScript 來串連使用，</p>
+<p>如同先前我們所談到 Reveal.js 為基於 HTML 的簡報框架，基於 Reveal.js 的 Slides.com 自然也不能不提供「開發者模式」，讓我們使用 HTML 親手刻畫簡報的原始碼！</p>
+<p>不過很遺憾的是，Slides.com 因為安全性的問題不能讓我們直接插入 &lt;script&gt; 標籤，但我們仍可以直接將做好的簡報下載為 HTML 格式，然後再進行編輯。首先，在簡報工具列點選「Export」，接著按下「Download HTML」：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/download.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/download.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/download-300x163.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/download-768x418.png 768w" height="490" width="900" alt="download" src="https://blog.infographics.tw/wp-content/uploads/2016/10/download.png" class="aligncenter size-full wp-image-1980"></a>
+<p>在下載好的 HTML 檔末追加兩行 HTML 碼後存檔：</p>
+<pre>  &lt;script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="index.js"&gt;&lt;/script&gt;</pre>
+<p>接著在同個目錄下，建立 index.js 檔並填入下列內容：</p>
+<pre>  svg = d3.select("section:nth-child(1)").append("svg").attr({
+    viewBox: "0 0 800 600", width: 800, height: 600 /* 建立 SVG 元素 */
+  });
+  var nodes = d3.range(100).map(function(d,i) { return {}; }); /* 隨機產生資料 */
+  svg.selectAll("circle").data(nodes).enter().append("circle"); /* 資料綁定至圓 */
+  tick = function() {
+    nodes.map(function(it) { /* 讓圓旋轉 */
+      var dx = it.y - 300, dy = 400 - it.x;
+      var len = Math.sqrt(dx * dx + dy * dy);
+      it.x += (dx / len), it.y += (dy / len); /* 加上法向量 */
+    });
+    svg.selectAll("circle").attr({
+      cx: function(it) { return it.x; },
+      cy: function(it) { return it.y; },
+      r: 10, fill: "#f00"
+    });
+  };
+  var force = d3.layout.force() /* 彈力圖 */
+    .size([400,300])
+    .nodes(nodes)
+    .on("tick", tick)
+    .start()</pre>
+<p>結果便會即時在我們剛剛畫的笑臉上做出旋轉泡泡圖：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/smiley.gif"><img height="320" width="900" alt="Rotate Bubbles in Slide" src="https://blog.infographics.tw/wp-content/uploads/2016/10/smiley.gif" class="aligncenter size-full wp-image-1981"></a>
+<p>當然這樣會變成每次需要調整內容，我們就得回到 Slides.com 編輯、重新下載並重新插入 &lt;script&gt; 標籤，所以也許直接使用 iframe 引入本地的 HTML 檔或許會是更好的做法喔！</p>
+<p><a href="https://newton.cx/~peter/d3pohack/#/demo">這個使用 Reveal.js 製作的投影片</a>在簡報中實作了 D3.js 的互動圖表，你可以直接翻到第三頁後點點圖表看效果，像這樣的概念很適合用在簡報分享上，一方面演講時直接使用 D3.js 生成的圖表作圖、另一方面聽眾回去打開投影片即刻就有會動的程式範本，不需要另外再上傳程式碼，是不是很方便呢？</p>
+<h2>小結</h2>
+<p>其實 Reveal.js 與 Slides.com 還有很多有意思的功能，比方說 reveal.js 就提供了：</p>
+<ul>
+<li>投影片內連結</li>
+<li>局部縮放</li>
+<li>Markdown 語法擴充</li>
+<li>列印模式</li>
+<li>逐步顯示</li>
+<li>背景動畫與轉場</li>
+<li>講者模式 ( 下張簡報預覽 + 計時 )</li>
+<li>事件驅動程式接口</li>
+<li>暫停模式</li>
+<li>視差捲動</li>
+<li>自訂操作熱鍵</li>
+<li>自動翻頁</li>
+<li><a href="https://github.com/hakimel/reveal.js#postmessage-api">嵌入式程式介面</a></li>
+<li>搖控聽眾遠端開啟的簡報，同步閱讀</li>
+</ul>
+<p>再說，光就開放格式這點，就已經讓我們有無盡的想像了。想讓台下所有聽眾一起出現在簡報上嗎？沒問題！想讓讀者即時提問直接彈出在螢幕中嗎？那有什麼難的！想在簡報中直播簡報中的自己的簡報畫面中的簡報直播嗎？好…好繞口，可是當然行！</p>
+<p>不過， Slides.com 雖然設計精良，無法置入客製的 &lt;script&gt; 可說是一大弱點。當然我們仍然可以用 &lt;iframe&gt; 來取代內置程式，但若要讓投影片中的元件進行通訊，就會變得比較複雜。即便如此，他仍然為不會 HTML / JS 的使用者提供了一個相當棒的簡報製作體驗與環境。講到這邊，你是不是也想到了下次簡報的無限可能性呢？現在就開始嘗試製作 Reveal.js 風格簡報吧！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/keynote/">keynote</a>,<a rel="tag" href="https://blog.infographics.tw/tag/lecture/">lecture</a>,<a rel="tag" href="https://blog.infographics.tw/tag/powerpoint/">powerpoint</a>,<a rel="tag" href="https://blog.infographics.tw/tag/presentation/">presentation</a>,<a rel="tag" href="https://blog.infographics.tw/tag/reveal/">reveal</a>,<a rel="tag" href="https://blog.infographics.tw/tag/slide/">slide</a>,<a rel="tag" href="https://blog.infographics.tw/tag/talk/">talk</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/11/plotdb-the-data-visualization-service/">為所有人打造的資料視覺化服務 — PlotDB</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="為所有人打造的資料視覺化服務 — PlotDB" rel="bookmark" href="https://blog.infographics.tw/2016/11/plotdb-the-data-visualization-service/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.png">																										<br>
+													為所有人打造的資料視覺化服務 — PlotDB												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a aria-current="page" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

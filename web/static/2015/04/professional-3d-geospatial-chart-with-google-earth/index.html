@@ -1,0 +1,276 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">六個步驟，教你十分鐘內用 Google Earth 做出專業 3D 地圖</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-557 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-3d tag-earthquake tag-geospatial tag-google-earth tag-journalism" id="post-557">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-04-26" class="updated">26 4 月, 2015</time> by <span class="author">Mimi Chen</span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <p>&nbsp;</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/未命名.png"><img sizes="(max-width: 931px) 100vw, 931px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/未命名.png 931w, http://blog.infographics.tw/wp-content/uploads/2015/04/未命名-300x207.png 300w" height="641" width="931" alt="未命名" src="http://blog.infographics.tw/wp-content/uploads/2015/04/未命名.png" class="aligncenter size-full wp-image-708"></a>
+<p>是否常在新聞報導中看到3D 地形剖面圖？像這樣剖析許多重大新聞事件的圖表，你也可以輕鬆做到，只要運用 Google Earth Pro 加上簡單的 Adobe Illustrator 技巧，就可以製作出等比例大小3D圖層。那就讓我們來看看這要怎麼做吧！</p>
+<p><span id="more-557"></span></p>
+<p>這次我們要分享的技巧是&nbsp;<a href="http://www.nytimes.com">紐約時報</a>&nbsp;在製作&nbsp;<a href="http://www.nytimes.com/interactive/2015/03/24/world/europe/germanwings-plane-crash-map.html">法國空難的報導</a>&nbsp;時，為了讓讀者更能知道飛機墜落的過程，結合運用 Adobe Illustrator 和 Google Earth Pro 讓當地的狀況更能栩栩如生的表現在螢幕上。紐約時報資深圖表記者 <a href="https://twitter.com/archietse">Archie Tse</a> 前陣子來台分享時談到了這個技巧，那就讓我們來看看要怎麼做到這樣的圖表吧！</p>
+<h3><strong>步驟一：下載 Google Earth 專業版</strong></h3>
+<p>要注意「專業版」Google Earth 是必須的，若不是專業版的會無法匯入資料，這樣就很難正確掌握我們欲繪圖的位置。幸好前陣子 Google 宣布<a href="http://google-latlong.blogspot.tw/2015/01/google-earth-pro-is-now-free.html">開放免費下載 Google Earth Pro</a> ，現在我們可以無償的使用到這款超讚的地圖軟體囉！下載&nbsp;<a href="http://www.google.com/earth/download/gep/agree.html">Google Earth Pro</a>&nbsp;後，會出現一個視窗請你輸入使用者名稱和授權碼，名稱自訂，授權碼只要輸入<b>「GEPFREE」</b>就可以使用了。</p>
+<h3><strong>步驟二：匯入資料</strong></h3>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/1.png"><img sizes="(max-width: 1358px) 100vw, 1358px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/1.png 1358w, http://blog.infographics.tw/wp-content/uploads/2015/04/1-300x153.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/1-1024x523.png 1024w" height="694" width="1358" alt="1" src="http://blog.infographics.tw/wp-content/uploads/2015/04/1.png" class="aligncenter wp-image-558 size-full"></a>
+<p>Google Earth 可以支援許多格式的檔案，現在就以最普遍的 CSV 檔來作例子做匯入。資料基本上要有「經度」和「緯度」，程式才能辨識出地點。我們以地震當例子，試著標出震央在哪；點擊選單中的「檔案→匯入」選取欲使用的檔案後可見到如下的畫面： ( 我們使用的範例資料<a href="https://docs.google.com/spreadsheets/d/1nAljjnD8iDjIOENc2KXmqx4-4iC2zWOuByN6tCURv1g/edit#gid=0">在此</a>&nbsp;)</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/12.png"><img sizes="(max-width: 1175px) 100vw, 1175px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/12.png 1175w, http://blog.infographics.tw/wp-content/uploads/2015/04/12-300x151.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/12-1024x517.png 1024w" height="593" width="1175" alt="1" src="http://blog.infographics.tw/wp-content/uploads/2015/04/12.png" class="aligncenter wp-image-655 size-full"></a>
+<p>接著我們可以任意選擇要使用的名稱、色彩、圖示。接著以規模作為名稱欄位，按下確定後，程式會問我們要不要存成 KST 檔，直接按下確定後後就會出現台灣各地的地震震央以及強度了：</p>
+<p><a href="http://blog.infographics.tw/wp-content/uploads/2015/04/22.png"><img sizes="(max-width: 1245px) 100vw, 1245px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/22.png 1245w, http://blog.infographics.tw/wp-content/uploads/2015/04/22-300x150.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/22-1024x511.png 1024w" height="621" width="1245" alt="2" src="http://blog.infographics.tw/wp-content/uploads/2015/04/22.png" class="aligncenter wp-image-657 size-full"></a>這時按住 shift 可以利用滑鼠從不同角度看整個地圖。我們挑一個震央作為練習，試著做出震央 3D 圖。</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/32.png"><img sizes="(max-width: 1076px) 100vw, 1076px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/32.png 1076w, http://blog.infographics.tw/wp-content/uploads/2015/04/32-300x151.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/32-1024x515.png 1024w" height="541" width="1076" alt="3" src="http://blog.infographics.tw/wp-content/uploads/2015/04/32.png" class="aligncenter wp-image-658 size-full"></a>
+<p>假設我們現在想要標出震央範圍，就要出動 Adobe Illustrator 這個工具了。接下來我們要進入最關鍵的部分囉！</p>
+<h3><strong>步驟三: 運用illustrator畫出3D圖輪廓</strong></h3>
+<p>首先要在 Illustrator 上畫出一個空心長方形 ( 可用大小兩個長方形疊加，接著<strong>按「路徑」中的製作「複合路徑」&nbsp;</strong>)；接著按<strong>「檔案」</strong>中的<strong>「另存成網頁」</strong>( 記得要選 PNG-8 )<strong>&nbsp;</strong>就大功告成了。</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/6.png"><img sizes="(max-width: 1360px) 100vw, 1360px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/6.png 1360w, http://blog.infographics.tw/wp-content/uploads/2015/04/6-300x159.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/6-1024x543.png 1024w" height="721" width="1360" alt="6" src="http://blog.infographics.tw/wp-content/uploads/2015/04/6.png" class="aligncenter wp-image-589 size-full"></a>
+<h3><strong>步驟四：將圖層匯入Google Earth Pro</strong></h3>
+<p>Google Earth Pro 是由一個一個圖層組成的，所以我們要將剛剛做的圖層匯進去，他才會顯示在上面。點選上方工具列的<strong>「圖像疊加層」，</strong>將剛剛的圖層匯進去，就會發現有個中空的框出現在地圖上，這時我們可以拖曳、選取大小到你覺得想要的地方&nbsp;<strong>( 要注意不要將圖像疊加層的視窗關掉，不然框框會被定型 ) </strong>：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/41.png"><img sizes="(max-width: 1059px) 100vw, 1059px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/41.png 1059w, http://blog.infographics.tw/wp-content/uploads/2015/04/41-300x185.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/41-1024x632.png 1024w" height="654" width="1059" alt="4" src="http://blog.infographics.tw/wp-content/uploads/2015/04/41.png" class="aligncenter wp-image-659 size-full"></a>
+<h3><strong>步驟五：開始繪製 3D 圖</strong></h3>
+<p>要製作 3D 圖需要三個圖層，可用 Print Screen 或儲存圖片的方式匯出。第一個是 3D 全景圖 ( 包含震央、地形起伏、框框，<strong>左邊的視窗可以勾選圖層&nbsp;</strong>) ：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/51.png"><img sizes="(max-width: 1136px) 100vw, 1136px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/51.png 1136w, http://blog.infographics.tw/wp-content/uploads/2015/04/51-300x146.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/51-1024x499.png 1024w" height="554" width="1136" alt="5" src="http://blog.infographics.tw/wp-content/uploads/2015/04/51.png" class="aligncenter wp-image-660 size-full"></a>
+<p>第二個是 3D 地形圖(包含地形起伏、框框)</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/61.png"><img sizes="(max-width: 1137px) 100vw, 1137px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/61.png 1137w, http://blog.infographics.tw/wp-content/uploads/2015/04/61-300x143.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/61-1024x488.png 1024w" height="542" width="1137" alt="6" src="http://blog.infographics.tw/wp-content/uploads/2015/04/61.png" class="aligncenter wp-image-661 size-full"></a>
+<p>第三個是 2D 地形圖(只有框框，只要把左邊項目列的<strong>地形</strong>勾勾取消即可)</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/04/71.png"><img sizes="(max-width: 1137px) 100vw, 1137px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/71.png 1137w, http://blog.infographics.tw/wp-content/uploads/2015/04/71-300x150.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/71-1024x511.png 1024w" height="567" width="1137" alt="7" src="http://blog.infographics.tw/wp-content/uploads/2015/04/71.png" class="aligncenter wp-image-662 size-full"></a>
+<p>完成後，又可以回到Illustrator上，將這三個圖層疊加在一起 (&nbsp;<strong>由上而下順序：3D全景圖、3D地形圖、2D地形圖 </strong>)<strong>&nbsp;</strong></p>
+<p>置入在同一個地方後，在框框內沿著3D地形描邊緣，畫好後刪除3D全景圖。</p>
+<p style="text-align: center;"><a href="http://blog.infographics.tw/wp-content/uploads/2015/04/81.png"><img sizes="(max-width: 1188px) 100vw, 1188px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/81.png 1188w, http://blog.infographics.tw/wp-content/uploads/2015/04/81-300x146.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/81-1024x499.png 1024w" height="579" width="1188" alt="8" src="http://blog.infographics.tw/wp-content/uploads/2015/04/81.png" class="aligncenter wp-image-663 size-full"></a></p>
+<p style="text-align: left;">此時按住Shift選取地形框和下層的 3D 地形圖，接著按<strong>「剪裁遮色片」</strong>就會出現 3D 圖與最下層的 2D 地形圖。因為要製作 3D 的感覺，因此最後要沿著框框下面的那條直線，在描出一條直線。</p>
+<p style="text-align: left;"><a href="http://blog.infographics.tw/wp-content/uploads/2015/04/91.png"><img sizes="(max-width: 1201px) 100vw, 1201px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/91.png 1201w, http://blog.infographics.tw/wp-content/uploads/2015/04/91-300x141.png 300w, http://blog.infographics.tw/wp-content/uploads/2015/04/91-1024x482.png 1024w" height="565" width="1201" alt="9" src="http://blog.infographics.tw/wp-content/uploads/2015/04/91.png" class="aligncenter wp-image-664 size-full"></a></p>
+<p style="text-align: left;">描好直線後，選取工具列的<strong>「直接選取工具」</strong>，選取剛剛描好的地形框，複製它的外框貼上，並將3D圖先移到上面。</p>
+<p style="text-align: left;"><a href="http://blog.infographics.tw/wp-content/uploads/2015/04/102.png"><img sizes="(max-width: 895px) 100vw, 895px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/102.png 895w, http://blog.infographics.tw/wp-content/uploads/2015/04/102-300x158.png 300w" height="471" width="895" alt="10" src="http://blog.infographics.tw/wp-content/uploads/2015/04/102.png" class="aligncenter wp-image-667 size-full"></a></p>
+<p style="text-align: left;">接著一樣用<strong>「直接選取工具」</strong>，將<strong>除了地形框下面那條線的點都刪除，</strong>並點選兩條線邊緣的點，按下<strong>「合併」。</strong></p>
+<p style="text-align: left;"><a href="http://blog.infographics.tw/wp-content/uploads/2015/04/111.png"><img sizes="(max-width: 899px) 100vw, 899px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/111.png 899w, http://blog.infographics.tw/wp-content/uploads/2015/04/111-300x156.png 300w" height="466" width="899" alt="11" src="http://blog.infographics.tw/wp-content/uploads/2015/04/111.png" class="aligncenter size-full wp-image-666"></a></p>
+<p style="text-align: left;">合併後就會出現下層類似土層的圖，在與上方的3D地形圖結合，填上顏色，就大功告成囉。</p>
+<p style="text-align: left;"><a href="http://blog.infographics.tw/wp-content/uploads/2015/04/121.png"><img sizes="(max-width: 891px) 100vw, 891px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/121.png 891w, http://blog.infographics.tw/wp-content/uploads/2015/04/121-300x155.png 300w" height="459" width="891" alt="12" src="http://blog.infographics.tw/wp-content/uploads/2015/04/121.png" class="aligncenter size-full wp-image-668"></a></p>
+<h3 style="text-align: left;"><strong>步驟六：利用成果製作圖表</strong></h3>
+<p style="text-align: left;">製作完畢後，可以加上點文字，編製出不輸專業的新聞圖表。</p>
+<p style="text-align: left;"><a href="http://blog.infographics.tw/wp-content/uploads/2015/04/未命名.png"><img sizes="(max-width: 931px) 100vw, 931px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/04/未命名.png 931w, http://blog.infographics.tw/wp-content/uploads/2015/04/未命名-300x207.png 300w" height="641" width="931" alt="未命名" src="http://blog.infographics.tw/wp-content/uploads/2015/04/未命名.png" class="aligncenter size-full wp-image-708"></a></p>
+<hr>
+<h2 style="text-align: left;"><strong>結語</strong></h2>
+<p style="text-align: left;">利用 Google Earth Pro 搭配不同的地理數據，由於相當容易且快速，其實很適合做出即時的災難新聞圖表。可以用等比例標出災難的地點以及範圍，讀者們可以利用現有資訊，試著做做看不同的事件。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/3d/">3D</a>,<a rel="tag" href="http://blog.infographics.tw/tag/earthquake/">earthquake</a>,<a rel="tag" href="http://blog.infographics.tw/tag/geospatial/">geospatial</a>,<a rel="tag" href="http://blog.infographics.tw/tag/google-earth/">google earth</a>,<a rel="tag" href="http://blog.infographics.tw/tag/journalism/">journalism</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/04/case-study-of-annual-software-piracy/">視覺化不及格，點擊率卻排第一？軟體盜版金額統計案例剖析</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/04/6-tips-visualization-apply-to-data-journalism/">六個訣竅，讓你用視覺化看透資料玄機</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/b7c24c1deb711a58571df341b8290499?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/b7c24c1deb711a58571df341b8290499?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> Mimi Chen</p>
+									<p class="author-desc"> 喜歡圖像大於文字，所以論文還卡在產房的菸酒生 </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>2</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-342">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/9d3db0f82316fb3af43fae67d3ac0bf6?s=40">
+                <cite class="fn">朱文章</cite>         <time datetime="2016-07-8"><a href="http://blog.infographics.tw/2015/04/professional-3d-geospatial-chart-with-google-earth/#comment-342">8 7 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>想用google earth 來用在教學上（左傳）不知道哪裡有在教這門課的？</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment odd alt thread-odd thread-alt depth-1 cf" id="comment-1143">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/33b340adc4355693fbea37aefa34f2de?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://blog.chemchen.tk/">之益</a></cite>         <time datetime="2017-11-29"><a href="http://blog.infographics.tw/2015/04/professional-3d-geospatial-chart-with-google-earth/#comment-1143">29 11 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>好Cool哦，謝謝分享</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

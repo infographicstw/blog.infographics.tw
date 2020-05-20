@@ -1,0 +1,316 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">D3.JS 入門系列 － Voronoi Diagram 教學</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-984 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-d3js tag-geom tag-geometrics tag-poi tag-polygon tag-voronoi tag-416 tag-422 tag-418" id="post-984">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-06-25" class="updated">25 6 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2015/06/cover5.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/cover5.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/cover5-300x176.jpg 300w" height="527" width="900" alt="Voronoi Cover" src="https://blog.infographics.tw/wp-content/uploads/2015/06/cover5.jpg" class="aligncenter size-full wp-image-1069"></a>
+<p>發生災害時，如何用地圖快速呈現各地區最近的救護站？在做地理資料視覺化時，常有這樣的需求：依據站點將地圖切分成許多塊，每一塊都有專屬最方便的站點；想要做到這樣的效果，我們可以使用「Voronoi Diagram」，至於要怎麼實作，我們就在這篇文章中簡短介紹。</p>
+<p><span id="more-984"></span></p>
+<p>走在路上，如果想要找間便利商店，我們會打開電子地圖搜尋商店，然後挑一間看起來最近的商店朝著他走去。看似簡單的動作由電腦來做卻不容易；最簡單的做法，是先將所有的便利商店列出來，逐一用當前位置算距離，再取出距離最短的一個。</p>
+<p>聽起來簡單，但這個做法一次只能算一個點，當我們想要製作一份地圖用分區的方式告訴每個讀者距離他們最近的便利商店，我們必須算過地圖上所有點，相當的費時。</p>
+<p>不過 &nbsp;D3.js 幫我們解決了這個困擾，它實作了「Voronoi 演算法」－ 將平面根據多個點切分成許多小塊，每一塊對應到一個這一帶最「方便」的點。D3.js &nbsp;的實作概念並不複雜：</p>
+<ol>
+<li>我們準備好多個點，餵給 d3.geom.voronoi 物件</li>
+<li>d3.geom.voronoi 傳回一組多邊形，各對應到每個點，代表在該多邊形範圍內最近的點。</li>
+</ol>
+<p>如果對 D3.js 不熟悉，可以先讀一下我們先前的專文「<a href="https://blog.infographics.tw/2015/03/d3js-the-introduction/">網頁視覺化利器 － D3.JS 簡介</a>」。下面為使用 voronoi 的範例，我們在 data 變數中準備了三個點，並利用 voronoi 製作了三個多邊形放到 polygons 變數中：</p>
+<pre>&nbsp; var data = [[0,0], [100,100], [200,200]];
+&nbsp; var voronoi = d3.geom.voronoi();
+&nbsp; var polygons = voronoi(data);</pre>
+<p>產生的多邊形陣列 polygons 可以用 Array.join 函式組成 SVG &lt;path&gt; 所需要的屬性：</p>
+<pre>&nbsp; var d = "M" + polygons[0].join("L") + "Z";</pre>
+<p>搭配 D3.js 核心的資料綁定函式集，一個隨機產生 Voronoi 的完整程式碼如下：</p>
+<pre>&nbsp; for(var i=0,data = []; i &lt;100;i ++) data.push([Math.random()*800,Math.random()*600]);
+&nbsp; var voronoi = d3.geom.voronoi();
+&nbsp; var path = d3.select("svg").selectAll("path").data(voronoi(data)).enter().append("path");
+&nbsp; path.attr({
+&nbsp; &nbsp; d: function(it) { return "M" + it.join("L") + "Z"; },
+&nbsp; &nbsp; fill: "none",
+&nbsp; &nbsp; stroke: "black"
+&nbsp; });</pre>
+<p>上述程式碼的執行結果類似下圖：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/06/ex1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/ex1.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/ex1-300x133.png 300w" height="400" width="900" alt="Voronoi Example 1" src="https://blog.infographics.tw/wp-content/uploads/2015/06/ex1.png" class="aligncenter size-full wp-image-985"></a>
+<h3>範圍限定</h3>
+<p>最常應用 &nbsp;Voronoi Diagram 的地方可說就是地圖了，不過由於台灣是個海島，單純應用 Voronoi Diagram 在台灣上的話，你會看到多邊形也包含到海洋、其它國家等等地方，有時候並不全然是我們要的效果。這時候，我們可以利用 d3.js 提供的另一組「d3.geom.polygon」函式來搭配使用，將產出的多邊形調整成我們期望中的形狀。</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1065"><a href="https://blog.infographics.tw/wp-content/uploads/2015/06/taiwanstat.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/taiwanstat.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/taiwanstat-300x167.jpg 300w" height="500" width="900" alt="用數據看台灣 / 空氣品質地圖" src="https://blog.infographics.tw/wp-content/uploads/2015/06/taiwanstat.jpg" class="wp-image-1065 size-full" aria-describedby="caption-attachment-1065"></a><p class="wp-caption-text" id="caption-attachment-1065">Voronoi Diagram 應用範例：<a href="https://real.taiwanstat.com/air-map/">用數據看台灣 / 空氣品質地圖</a></p></div>
+<p>當我們準備好多邊形座標點陣列以後， d3.geom.polygon 提供了三個方便的函式讓我們針對座標點陣列做操作，包含了：</p>
+<ul>
+<li>centroid: 計算多邊形中心</li>
+<li>area: 計算多邊形面積與方向 ( 順時針或逆時針 )</li>
+<li>clip: 計算多邊形交集</li>
+</ul>
+<p>其中的 clip 即是我們這次要使用的工具函式，有了 clip ，我們可以事先準備一個特殊的形狀 ( 例如，台灣本島外形 ) ，然後將前面計算出來的 voronoi 多邊形與台灣做交集，最後產生的結果自然就不會跨到台灣本島之外了。</p>
+<p>要使用 d3.geom.polygon ，我們先將準備好的多邊形陣列用 d3.geom.polygon 包裝，：</p>
+<pre>  polygon1 = d3.geom.polygon(polygon1);
+  polygon2 = d3.geom.polygon(polygon2);</pre>
+<p>接著，便可以直接對包裝過後的多邊形呼叫上面三個輔助函式：</p>
+<pre>  polygon1.clip(polygon2);</pre>
+<p>比方說，我們先建立一個接近圓形的多邊形，圓心在 (400,300) 的位置，半徑為 100：</p>
+<pre>  var circle = [];
+  for(var i = 0; i &lt; 360; i++) circle.push([
+    400 + 100 * Math.cos(i * 3.14 / 180), 
+    300 + 100 * Math.sin(i * 3.14 / 180)
+  ]);
+  circle = d3.geom.polygon(circle);</pre>
+<p>接著在繪製 voronoi 多邊形前，將這個圓形拿來計算交集：</p>
+<pre>  d3.select("svg").selectAll("path").data(
+    voronoi(data).map(function(v) { circle.clip(d3.geom.polygon(v)); })
+  );</pre>
+<p>&nbsp;</p>
+<p>我們會得到類似下圖的效果：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/06/circle.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/circle.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/circle-300x133.png 300w" height="400" width="900" alt="Voronoi in Circle" src="https://blog.infographics.tw/wp-content/uploads/2015/06/circle.png" class="aligncenter size-full wp-image-1066"></a>
+<p>像這樣的效果也可以應用在表現地標一定距離內的區域，比方說買房子時我只關心 500 公尺內有便利商店的區域，那就以每間便利商店為圓心建立許多 500 公尺的圓取Voronoi Diagram 交集就可以了。</p>
+<p>如果搭配 Force Layout 讓點動起來，還可以做到類似 agar.io 單細胞遊戲的效果；比方說，下面這個例子的細胞會彼此聚在一起，滑鼠移上時則會彈開：</p>
+<p></p>
+<h3>結合線上地圖</h3>
+<p>正如先前提到的， Voronoi Diagram 常見到在地圖上的應用，因為「距離最近」這個概念常用在我們搜尋地點上。其實我們的確可將 D3.js 與 Google Maps 、 OpenStreetMap 等等的線上地圖相結合，做出更有趣的應用，不過由於篇幅關係，這次我們先不談如何整合應用地圖與視覺化，留待未來另行專文介紹，有興趣的朋友再請繼續關注資料視覺化網站囉！ 🙂</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/06/螢幕快照-2015-06-11-下午11.45.42.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/螢幕快照-2015-06-11-下午11.45.42.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/螢幕快照-2015-06-11-下午11.45.42-300x144.png 300w" height="433" width="900" alt="Leaflet" src="https://blog.infographics.tw/wp-content/uploads/2015/06/螢幕快照-2015-06-11-下午11.45.42.png" class="aligncenter size-full wp-image-988"></a>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/geom/">geom</a>,<a rel="tag" href="https://blog.infographics.tw/tag/geometrics/">geometrics</a>,<a rel="tag" href="https://blog.infographics.tw/tag/poi/">poi</a>,<a rel="tag" href="https://blog.infographics.tw/tag/polygon/">polygon</a>,<a rel="tag" href="https://blog.infographics.tw/tag/voronoi/">voronoi</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%9c%b0%e5%9c%96%e8%a6%96%e8%a6%ba%e5%8c%96/">地圖視覺化</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%9c%b0%e6%a8%99/">地標</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%9c%b0%e7%90%86%e8%b3%87%e8%a8%8a/">地理資訊</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/06/introduction-to-ai2html/">AI 變 HTML！ai2html 讓你用 Adobe Illustrator 做網頁</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2015/06/extract-table-from-pdf-by-tabula/">不知道怎樣把 PDF 表格轉資料嗎？ 讓 Tabula 解救你！</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="https://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="https://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>6</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-75">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/da92a29e8e26dd3994988fdf9dea3a02?s=40">
+                <cite class="fn">路人</cite>         <time datetime="2015-10-26"><a href="https://blog.infographics.tw/2015/06/voronoi-with-d3js/#comment-75">26 10 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>想請教一下上面跟圓做交集的Voronoi diagram的做法是不是還有其他要注意的小細節<br>
+我依照上面做了一個類似的程式，不過程式結果不如預期(沒有跟圓有交集)，不知道是不是哪邊有沒注意到的 🙂<br>
+附上我的程式碼~<br>
+<a rel="nofollow ugc" href="https://gist.github.com/anonymous/b902f3a61e9b2663bad6">https://gist.github.com/anonymous/b902f3a61e9b2663bad6</a></p>
+<p>謝謝！</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-77">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-10-26"><a href="https://blog.infographics.tw/2015/06/voronoi-with-d3js/#comment-77">26 10 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>路人你好， geom.polygon 的 clip 函式會受到順、逆時針的影響而產生不同的效果<br>
+你可以試著把產生圓該段的 400 + 100 * Math.cos(i * 3.14 / 180) 裡面的「+」改為「-」<br>
+另外在產生裁切多邊形時你好像多放了一段函式進去，我貼上正確的寫法給你看：<br>
+voronoi_map.selectAll “path” .data(voronoi(data).map (v) -&gt; circle.clip d3.geom.polygon v)</p>
+<p>這是我改過的程式碼，你可以參考看看：<br>
+<a rel="nofollow ugc" href="https://gist.github.com/infographicstw/c10902e24dc5a60a4f31">https://gist.github.com/infographicstw/c10902e24dc5a60a4f31</a></p>
+      </section>
+          </article>
+    <div class="comment even depth-3 cf" id="comment-78">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/da92a29e8e26dd3994988fdf9dea3a02?s=40">
+                <cite class="fn">路人</cite>         <time datetime="2015-10-27"><a href="https://blog.infographics.tw/2015/06/voronoi-with-d3js/#comment-78">27 10 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>感謝您的協助，程式很正確的跑起來了，謝謝您！！</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-4 cf" id="comment-79">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-10-27"><a href="https://blog.infographics.tw/2015/06/voronoi-with-d3js/#comment-79">27 10 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>不客氣，有需要可以再提問 🙂</p>
+      </section>
+          </article>
+  </div>
+</div>
+</div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-801">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/0f9029703998ecc920d187b75a5c9a6b?s=40">
+                <cite class="fn">Dan</cite>         <time datetime="2017-02-25"><a href="https://blog.infographics.tw/2015/06/voronoi-with-d3js/#comment-801">25 2 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>请问有没有那个圆形的源码</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment odd alt thread-even depth-1 cf" id="comment-802">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/0f9029703998ecc920d187b75a5c9a6b?s=40">
+                <cite class="fn">Dan</cite>         <time datetime="2017-02-25"><a href="https://blog.infographics.tw/2015/06/voronoi-with-d3js/#comment-802">25 2 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>做完交集总是有这个错误：<br>
+Uncaught TypeError: Cannot read property ‘join’ of undefined</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

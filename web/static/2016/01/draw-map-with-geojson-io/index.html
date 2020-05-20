@@ -1,0 +1,255 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">地理區塊自己畫 – 使用 geojson.io</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1573 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-arcgis tag-cartodb tag-cartogram tag-choropleth tag-esri tag-geojson tag-geometry tag-kml tag-map tag-mapbox tag-qgis tag-shp tag-topojson" id="post-1573">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-01-13" class="updated">13 1 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1583" href="http://blog.infographics.tw/wp-content/uploads/2016/01/cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/01/cover.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/01/cover-300x176.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/01/cover-768x450.jpg 768w" height="527" width="900" alt="Cover" src="http://blog.infographics.tw/wp-content/uploads/2016/01/cover.jpg" class="aligncenter size-full wp-image-1583"></a>
+<p>想自製地理區塊範圍做視覺化，但現有的製圖軟體 QGIS、ArcGIS 等又好複雜！地圖視覺化總是讓人煩惱，有沒有比較好用的工具呢？有！ geojson.io 直接讓我們在線上製圖，即刻產生 geojson 檔，連下載軟體都省了！</p>
+<p><span id="more-1573"></span></p>
+<p>面量圖 ( Choropleth ) 是一種很常見的視覺化手法，它將地理範圍分成許多塊，再分別以各種顏色為每一個區塊上色來呈現數據。下圖是一個台灣鄉鎮區塊面量圖範例，以灰階著色，數值為隨機產生：</p>
+<a rel="attachment wp-att-1574" href="http://blog.infographics.tw/wp-content/uploads/2016/01/choropleth.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/01/choropleth.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/01/choropleth-300x172.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/01/choropleth-768x441.jpg 768w" height="517" width="900" alt="choropleth" src="http://blog.infographics.tw/wp-content/uploads/2016/01/choropleth.jpg" class="aligncenter size-full wp-image-1574"></a>
+<p>我想大家在看這些圖的時候一定會有些疑問：這些範圍是怎麼畫出來的？顏色是怎麼對應的？我要怎麼呈現？先前我們的文章「<a href="http://blog.infographics.tw/2015/04/visualize-geographics-with-d3js/">視覺化實戰 － D3.js 地理區塊視覺化</a>」已經解釋了一部份疑惑，文中提到我們可以將來自政府的地理邊界資料利用 D3.js 在網頁上呈現，不過我們還不知道，如果今天我們想要調整這個範圍，該怎麼做比較好呢？舉幾個可能的實用例子：</p>
+<ul>
+<li>想要標示燒毀古蹟的面積與位置</li>
+<li>想要標示任何政黨黨產的分布範圍</li>
+<li>想要標示具容積獎勵的建案其開放空間的範圍</li>
+<li>當我們手上有的圖檔較舊，而已知邊界有發生過調整</li>
+</ul>
+<p>很顯然，我們需要的是地圖編輯的功能。一直以來都有不少軟體提供地圖編輯的功能，然而往往不是很容易使用，要嘛介面設計有缺陷、要嘛過於專業、或者是訂價格讓業餘玩家難以下手。很幸運的，專業的線上地圖服務&nbsp;Mapbox 在 2013 年發布了一個新的網路服務「geojson.io」，標榜著「Simple、Fast Map Data Editing」，讓我們不光是下載軟體，連登入都不需要便可以直接製作地理區塊檔。</p>
+<h3>基本編輯</h3>
+<p>連接至 <a href="http://geojson.io">geojson.io</a> 網站後我們立刻會看到類似下方的編輯畫面：<a rel="attachment wp-att-1575" href="http://blog.infographics.tw/wp-content/uploads/2016/01/editor.jpg"><br>
+</a></p>
+<a rel="attachment wp-att-1576" href="http://blog.infographics.tw/wp-content/uploads/2016/01/editor.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/01/editor.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/01/editor-300x147.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/01/editor-768x375.jpg 768w" height="440" width="900" alt="Editor Screen" src="http://blog.infographics.tw/wp-content/uploads/2016/01/editor.jpg" class="aligncenter size-full wp-image-1576"></a>
+<p>可以看到畫面很清楚的分成兩半，左邊是地圖編輯區，右邊是對應的 Geojson 碼。要在地圖上畫任何的區塊，只要點擊上圖紅色箭頭處所指的幾個按鈕，便可以繪製包含單點、線條、多邊形等幾何區塊；一但完成繪製，區塊對應的 Geojson 會即刻產生在右方面板上，如藍色箭頭的位置。</p>
+<p>編輯也相當簡單，就如常見的繪圖軟體一般，下圖為描繪臺大範圍的結果，黑色部份為完成的多邊形，粉紅色則為正在編輯的部份：</p>
+<a rel="attachment wp-att-1578" href="http://blog.infographics.tw/wp-content/uploads/2016/01/editing.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/01/editing.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/01/editing-300x160.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/01/editing-768x409.jpg 768w" height="479" width="900" alt="editing" src="http://blog.infographics.tw/wp-content/uploads/2016/01/editing.jpg" class="aligncenter size-full wp-image-1578"></a>
+<p>點擊個別區塊我們可以調整基本樣式，或是為區塊加上數值。下圖的台大區塊已被調整為綠色，同時還加上了「test」屬性，值為 123：</p>
+<a rel="attachment wp-att-1580" href="http://blog.infographics.tw/wp-content/uploads/2016/01/popup.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/01/popup.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/01/popup-300x180.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/01/popup-768x461.jpg 768w" height="540" width="900" alt="Popup over Polygon" src="http://blog.infographics.tw/wp-content/uploads/2016/01/popup.jpg" class="aligncenter size-full wp-image-1580"></a>
+<p>不過，若要為區塊鍵入對應數值，更好的方式是透過右方面板的「Table」頁籤來編輯；上圖的右方面板呈現的即是 Table 頁籤，我們可以看到他將地理區塊的參數視為一個表格，每一列 ( row ) 對應到一個區塊，而每一行 ( column ) 則對應到一個屬性。一次將多邊形繪制完成後，便可以在 Table 頁籤快速的鍵入各個屬性。</p>
+<h3>資料存取</h3>
+<p>當我們編輯完成後想保留檔案，除了自己手動將右方的 geojson 碼複製下來之外，也可以將滑鼠移至畫面左上方的「Save」按鈕，在這裡 geojson 提供我們不同格式的資料下載，包含 Geojson 、 Topojson 、 SHP 、 KML 、 CSV、 WKT 等檔案格式。</p>
+<p>有趣的是， geojson.io 甚至直接與 Github 做結合，我們可以將檔案直接存至 Github 的匿名 Gist 中：</p>
+<a rel="attachment wp-att-1581" href="http://blog.infographics.tw/wp-content/uploads/2016/01/gist.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/01/gist.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/01/gist-300x207.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/01/gist-768x529.jpg 768w" height="620" width="900" alt="Geojson in Gist" src="http://blog.infographics.tw/wp-content/uploads/2016/01/gist.jpg" class="aligncenter size-full wp-image-1581"></a>
+<p>上圖即為我們將台大區塊儲存至 Github Gist 的結果， Github 也提供線上即時預覽 Geojson 的功能，所以我們可以即時看到地圖的結果。你若對這個結果有興趣，可以<a href="https://gist.github.com/anonymous/23146511b2ddba35ec62">點擊這裡</a>來瀏覽。然而，匿名 Gist 產生以後，並沒有辦法再進行編輯，如果我們需要未來繼續編輯的話，可以點擊右上方的「login」按鈕將 geojson.io 與我們的 Github 帳號做連結，便可以利用我們個人的 Github 帳號來管理地圖檔囉！</p>
+<h2>結語</h2>
+<p>直接在線上編輯地理區塊是相當方便的功能，尤其是 geojson.io 還提供各種不同格式的檔案匯出與線上儲存功能，可說是非常實用。不過，geojson.io 還是有些缺點，我在這邊簡單的列一些出來：</p>
+<ul>
+<li>無法編輯複合區塊，比方說將多個多邊形視為同一組區塊</li>
+<li>編輯功能可以再更強，例如繪圖軟體的手繪模式</li>
+<li>若需呈現 geojson 檔仍需使用其它工具，geojson.io 本身的分享功能並不提供樣式呈現。</li>
+</ul>
+<p>事實上，一旦我們製作好 geojson 檔，我們便可以將之匯入到 MapBox 中來調整細部樣式， Mapbox 提供 iOS 、 Android 、 Web 版本的 JavaScript API 讓我們可以在不同裝置上應用我們製作的 geojson 檔，有興趣的朋友可以試試看。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/arcgis/">arcgis</a>,<a rel="tag" href="http://blog.infographics.tw/tag/cartodb/">cartodb</a>,<a rel="tag" href="http://blog.infographics.tw/tag/cartogram/">cartogram</a>,<a rel="tag" href="http://blog.infographics.tw/tag/choropleth/">choropleth</a>,<a rel="tag" href="http://blog.infographics.tw/tag/esri/">esri</a>,<a rel="tag" href="http://blog.infographics.tw/tag/geojson/">geojson</a>,<a rel="tag" href="http://blog.infographics.tw/tag/geometry/">geometry</a>,<a rel="tag" href="http://blog.infographics.tw/tag/kml/">kml</a>,<a rel="tag" href="http://blog.infographics.tw/tag/map/">map</a>,<a rel="tag" href="http://blog.infographics.tw/tag/mapbox/">mapbox</a>,<a rel="tag" href="http://blog.infographics.tw/tag/qgis/">qgis</a>,<a rel="tag" href="http://blog.infographics.tw/tag/shp/">shp</a>,<a rel="tag" href="http://blog.infographics.tw/tag/topojson/">topojson</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2016/01/timesheetjs-introduction/">超簡單的甘特圖套件 — timesheet.js</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2016/01/databasic-review/">DataBasic – 為初學者打造的資料探索器</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>1</span> Comment</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-872">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/23a1dbd73e9ddee420da57577a57bc57?s=40">
+                <cite class="fn">hidoos</cite>         <time datetime="2017-04-12"><a href="http://blog.infographics.tw/2016/01/draw-map-with-geojson-io/#comment-872">12 4 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>謝謝分享！正好要用到這樣的軟體！</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

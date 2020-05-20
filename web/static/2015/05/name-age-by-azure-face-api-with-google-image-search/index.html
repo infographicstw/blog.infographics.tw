@@ -1,0 +1,297 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">怡君 vs 雅婷！用年紀 API + Google 圖片搜尋計算菜市場名平均年齡</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-786 post type-post status-publish format-standard has-post-thumbnail hentry category-19 category-18 tag-azure tag-crossorigin-me tag-d3-js tag-face-api tag-google-image-search tag-how-old tag-microsoft" id="post-786">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-05-4" class="updated">4 5 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>, <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/05/cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/cover.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/cover-300x176.jpg 300w" height="527" width="900" alt="cover" src="http://blog.infographics.tw/wp-content/uploads/2015/05/cover.jpg" class="aligncenter size-full wp-image-812"></a>
+<p>你知道怡君跟雅婷哪個名字比較「年輕」嗎？前陣子火紅的年齡計算器 <a href="http://how-old.net">how-old.net</a> 其實是<a href="http://www.projectoxford.ai/">微軟 Oxford 計劃</a>中的一部份，而且有開放 <a href="http://www.projectoxford.ai/face">Face API</a> 給大家使用！就算圖形辨識與機器學習對我們來說太艱深，但透過 API 我們仍然可以站在巨人肩膀上，就讓我們一起來看看如何搭配 Google Image Search 與 Face API 將「菜市場名」做個有趣的視覺化吧！</p>
+<p><span id="more-786"></span></p>
+<p>想要算「菜市場名」的年紀，我們先假設以姓名做 Google 圖片搜尋得到的照片有足夠的代表性，接著只要將這些姓名的年紀算出來再平均就可以了。因此，我們這次要做的視覺化原理相當簡單：</p>
+<ol>
+<li>前端程式透過 crossorigin.me 取得 Google Image Search 結果</li>
+<li>使用 Microsoft Project Oxford Face API 算出前 20 名照片的年齡</li>
+<li>利用 D3.js 呈現年齡的分布與平均值</li>
+</ol>
+<p>然而，裡面牽涉到不少細節，所以我們主要將著重在解說如何使用 Face API ，但仍會將作品原始碼釋出供大家參考。</p>
+<h2>Face API 簡介</h2>
+<p>Project Oxford 的臉部辨識 API 是一個網路服務 API ，我們提供照片檔或是網址，這個 API 以 JSON 格式告訴我們照片中人物的性別、年紀等資訊。這個網址位於&nbsp;https://api.projectoxford.ai/face/v0/detections ，但我們直接連接他是沒有用的，我們必須透過 HTTP Post 動作提供照片資訊給它才行。</p>
+<p>在那之前，要注意這組 API 限制了存取的量與頻率；一分鐘內不能超過 20 次，而一個月的上限則是 5000 次。對程式化的專案捱說其實蠻少的，但做為教學用途我想也足夠了。</p>
+<p>這組 API 為了限制存取量，在使用時要求用戶提供一個訂用碼，我們可以透過微軟 Azure 帳戶取得，但微軟的網站設計得<strong>實在是不甚友善</strong>，他的設計引導人到需要 <strong>13 個步驟</strong>才能取得；我在這邊一步一步示範給大家看照著網站指引會如何取得 Face API 的訂用碼。 (你也可以直接申請 Microsoft Azure 帳號 ( <strong>步驟 5</strong> 開始 )，如果已有 Azure 帳號與訂用帳戶也可以直接跳到<strong>步驟 7</strong> )</p>
+<h3>取得Face API 訂用碼</h3>
+<p><strong>步驟&nbsp;1</strong>&nbsp;/ 連上&nbsp;<a href="http://gallery.azureml.net/MachineLearningAPI/b0b2598aa46c4f44a08af8891e415cc7">這個網站</a>&nbsp;他會告訴你要註冊帳號 ( 右方的綠色 SIGN UP 按鈕 )</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-01.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-01.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-01-300x133.png 300w" height="400" width="900" alt="step-01" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-01.png" class="aligncenter size-full wp-image-789"></a>
+<p><strong>步驟 2</strong> / 填寫好煩的註冊資訊</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-02.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-02.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-02-300x117.png 300w" height="350" width="900" alt="step-02" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-02.png" class="aligncenter size-full wp-image-790"></a>
+<p><strong>步驟 3</strong> / 收信認證電子郵件的所有權</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-03.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-03.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-03-300x83.png 300w" height="250" width="900" alt="step-03" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-03.png" class="aligncenter size-full wp-image-791"></a>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-03-2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-03-2.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-03-2-300x70.png 300w" height="210" width="900" alt="step-03-2" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-03-2.png" class="aligncenter size-full wp-image-792"></a>
+<p><strong>步驟 4</strong> / 那就登入吧，回到剛剛的<a href="http://gallery.azureml.net/MachineLearningAPI/b0b2598aa46c4f44a08af8891e415cc7">這個網站</a>，再點一次 SIGN UP。出現悲劇性搞不懂的畫面：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-04.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-04.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-04-300x100.png 300w" height="300" width="900" alt="step-04" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-04.png" class="aligncenter size-full wp-image-793"></a>
+<p><strong>步驟 5</strong> / 點選註冊 Windows Azure ，再次填寫註冊表單，只是這次還要填信用卡跟做手機認證，夠煩了吧</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-05.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-05.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-05-300x173.png 300w" height="520" width="900" alt="step-05" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-05.png" class="aligncenter size-full wp-image-794"></a>
+<p><strong>步驟 6</strong> / 聽說只要一分鐘，所以我去喝了個咖啡。完成後，點擊出現的「開始管理我的服務」按鈕</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-06.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-06.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-06-300x70.png 300w" height="210" width="900" alt="step-06" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-06.png" class="aligncenter size-full wp-image-795"></a>
+<p><strong>步驟 7</strong> / 進入服務管理頁面後，先找到 Marketplace ，點選「購買應用程式與服務」，找到 Face API ，點選後接著按網頁右下角的「→」符號。別擔心，我不是詐騙集團，這個 API ( 目前還 ) 是免費的：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-07.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-07.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-07-300x170.png 300w" height="510" width="900" alt="step-07" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-07.png" class="aligncenter size-full wp-image-797"></a>
+<p><strong>步驟 8</strong> / 確認 Free 方案有選取，再次點擊右下角的「→」圖示：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-08.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-08.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-08-300x189.png 300w" height="567" width="900" alt="step-08" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-08.png" class="aligncenter size-full wp-image-798"></a>
+<p><strong>步驟 9</strong> / 點選購買，再次聲明小編不是詐騙集團，這個 API ( 至少目前 ) 是免費的，別擔心被扣款：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-09.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-09.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-09-300x194.png 300w" height="581" width="900" alt="step-09" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-09.png" class="aligncenter size-full wp-image-799"></a>
+<p><strong>步驟 10</strong> / 回到 Marketplace 畫面，我們所「購買」的 Face API 正在建立，要花一點時間，再去泡個咖啡吧：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-10.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-10.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-10-300x48.png 300w" height="145" width="900" alt="step-10" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-10.png" class="aligncenter size-full wp-image-800"></a>
+<p><strong>步驟 11</strong> / 若你很不幸的跟小編一樣「佈建失敗」，那就必須刪除 ( 點擊 FaceAPI 後位於網頁最下方有刪除鈕 ) 後回到<strong>步驟 7</strong> 重來：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-11.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-11.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-11-300x47.png 300w" height="140" width="900" alt="step-11" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-11.png" class="aligncenter size-full wp-image-801"></a>
+<p><strong>步驟 12</strong> / 佈建成功，點選左方的「FaceAPIs」進入，然後點擊螢幕下方的「管理」按鈕</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-12.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-12.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-12-300x60.png 300w" height="180" width="900" alt="step-12" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-12.png" class="aligncenter size-full wp-image-803"></a>
+<p><strong>步驟 13</strong> / 畫面會出現打馬賽克的 Primary Key ，點擊右方的「Show」即可取得使用 API 必須的 Subscription Key。</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/step-13.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/step-13.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/step-13-300x67.png 300w" height="200" width="900" alt="step-13" src="http://blog.infographics.tw/wp-content/uploads/2015/05/step-13.png" class="aligncenter size-full wp-image-804"></a>
+<p>步驟 12 與步驟 13 小編在操作時忘了截圖，想要再次操作來截圖時，花了半個小時才找到方法回到剛剛的管理畫面；就算這 13 個步驟轉換率都有 50% ，乘起來最終轉換率大概也只有 0.00152% ，更何況是想要再次登入都有困難，若是新創公司做一個這樣的網站想賺錢，大概很快就倒了。這樣的產品對使用者太不友善，我覺得微軟真的要加加油，不然要翻身真的會很難。</p>
+<h3>使用 Face API</h3>
+<p>Face API 使用並不複雜，可以透過 AJAX POST 要求做到。 Face API 提供一些參數讓我們設定要不要做特定的分析：</p>
+<ul>
+<li>analyzesFaceLandmark: 分析五官位置</li>
+<li>analyzesAge: 計算年齡</li>
+<li>analyzesGender: 分析性別</li>
+<li>analyzesHeadPose: 計算頭部姿勢</li>
+</ul>
+<p>這幾個參數都是布林值，以 GET 參數的方式傳遞，我們可以將他們寫成一個 hash，然後用 jQuery 的 params 函式來轉換：</p>
+<pre>&nbsp; params = $.param({
+    analyzesFaceLandmark: false, // 不算五官位置
+    analyzesAge: true,           // 要算年齡
+    analyzesGender: true,        // 要算性別
+    analyzesHeadPose: false      // 不算頭部姿勢
+  });</pre>
+<p>若將上例參數傳給 Face API ，則我們只會得到性別跟年齡的計算結果。</p>
+<p>除了參數我們還需要傳送照片， Face API 接受直接傳送照片檔、或是以網址的方式來傳送照片；為求簡單，我們只示範用網址傳照片的方式。</p>
+<p>我們試著利用 jQuery 的 AJAX 函式取得下面這張圖的資訊：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/cc0-portrait.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/cc0-portrait.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/cc0-portrait-300x167.jpg 300w" height="500" width="900" alt="cc0-portrait" src="http://blog.infographics.tw/wp-content/uploads/2015/05/cc0-portrait.jpg" class="aligncenter size-full wp-image-805"></a>
+<p>圖片網址為 <a href="http://i.imgur.com/ted82gO.jpg">http://i.imgur.com/ted82gO.jpg</a> ，將網址包在 Request Body 中，程式碼大致上如下，照抄即可：</p>
+<pre>  var ajaxcall = $.ajax({
+&nbsp;   url: 'https://api.projectoxford.ai/face/v0/detections?' + params, // 使用剛剛產生的 params 變數
+    type: 'post',
+    contentType: "application/json; charset=utf-8",
+    traditional: true,
+    data: JSON.stringify({ url: "<span style="color: #ff6600;"><strong>http://i.imgur.com/ted82gO.jpg</strong></span>" }) // 圖片網址
+  });</pre>
+<p>因為照片中可能會有好幾個人，所以回傳值是一個陣列。我們可以從取得的計算結果中取得年紀跟性別的資訊：</p>
+<pre>  ajaxcall.done(function(data) {
+&nbsp;   console.log(data[0].attributes.age);    // 年紀 - 只取第一個人的資料
+    console.log(data[0].attributes.gender); // 性別 - 只取第一個人的資料
+  });</pre>
+<p>就上圖為例，取得的結果是 46 歲的男性。不太準喔！</p>
+<h2>圖片搜尋</h2>
+<p>因為我們想要把年齡判讀與姓名搜尋串接在一起，我們利用 crossorigin.me 與 Google Image Search 。 crossorigin.me 的概念跟用法在先前的文章「<a href="http://blog.infographics.tw/2015/03/crawl-in-browser-with-corsproxy-crossorigin-me/">誰說前端爬不了資料？使用 crossorigin.me</a>」有談到，沒概念的朋友可以去看看，簡單的說就是讓你可以純前端跨網域的讀取資料：</p>
+<pre>  var query = "<strong><span style="color: #ff0000;">婉君</span></strong>";
+  var baseUrl = "http://<span style="color: #ff0000;"><strong>crossorigin.me</strong></span>/https://www.google.com.tw/search" +
+              &nbsp; "?hl=zh-TW&amp;site=imghp&amp;tbm=isch&amp;q=";  // 使用 crossorigin.me
+  var googleAjax = $.ajax({
+&nbsp;   url: &nbsp;baseUrl+<span style="color: #ff0000;"><strong>query</strong></span>+'&amp;oq='+<span style="color: #ff0000;"><strong>query</strong></span>, // query 即為實際上搜尋的字詞
+&nbsp;   method: "get"
+  }).done(data) {
+    var imgs = $(data).find(".images_table img");
+  });</pre>
+<p>上例將搜尋結果得到的所有圖片存在 imgs 變數中，因此我們只要修改 query 變數就可以取到不同的圖片資訊了。中間產生內容的部份細節我們略過，直接來看看 Google 圖片搜尋「婉君」前幾張的年齡吧：</p>
+<p><a href="http://blog.infographics.tw/wp-content/uploads/2015/05/wanchuin2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/wanchuin2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/wanchuin2-300x268.jpg 300w" height="805" width="900" alt="婉君的平均年齡" src="http://blog.infographics.tw/wp-content/uploads/2015/05/wanchuin2.jpg" class="aligncenter size-full wp-image-819"></a>婉君的平均年齡是 &nbsp;13.1 歲，是個小妹妹！ ( N/A 者代表程式無法找到臉，我們會略過不計 )</p>
+<h2>菜市場名年齡大比拼</h2>
+<p>參考「<a href="http://exam.derekr.com/index-3-99-rank.htm">歷屆大學考試分發入學榜單查詢服務</a>」的菜市場名統計，我們利用 99 學年度的最常見女性名字來計算平均年齡，他們分別是：「雅婷」、「怡君」、「雅涵」、「佳穎」與「雅雯」。</p>
+<p>逐一取得年齡資料後，我們用橫軸做為年齡，縱軸則按姓名分，將圈圈畫到圖表上；圈圈的大小則代表該年齡 / 姓名的人數，結果如下圖：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/05/chart.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/05/chart.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/05/chart-300x107.jpg 300w" height="320" width="900" alt="Face API Age Chart for Common Names" src="http://blog.infographics.tw/wp-content/uploads/2015/05/chart.jpg" class="aligncenter size-full wp-image-811"></a>
+<p>可以看出平均年齡而言雅婷最年輕，佳穎最老了，而怡君、佳穎整體來說都是較老的名字，雅涵則是各個年紀都有人使用。</p>
+<p>由於 Face API 使用頻率限制以及 Google Image Search 圖片解析度較低導致的辨識力限制，這裡很粗糙的只將前 20 筆有獲得結果的數據拿來使用，因此有不同姓名的數據量不同的狀況。更嚴謹的做法是取更多的資料來做運算，而且由於年齡辨識準確度的問題，這樣的結果<strong>僅供參考</strong>，不過就 API 運用示意來說，我想這樣就足夠了。</p>
+<hr>
+<h2>結語</h2>
+<p>我們利用 Microsoft Face API 、 Google Image Search 、 Crossorigin.me 配合 D3.js 做出了個姓名與年齡的視覺化，是不是覺得很有趣呢？這樣的 API 一定還有更多的運用空間，比方說我們製作的另一個例子「<a href="http://data.infographics.tw/viz/keyword-coloring/">關鍵字上色 – 使用 Google 圖片搜尋</a>」利用 ColorThief 、 Google 圖片搜尋與 Crossorigin.me 快速分析出我們所輸入的關鍵字顏色，也相當有意思。大家可以想想看還有沒有什麼有趣的應用，參考這篇之後不妨自己也來做一個吧！</p>
+<p><small>( portrait photo credit:&nbsp;<a href="http://pixabay.com/model-fashion-glamour-girl-female-600238/">pixabay</a>&nbsp;(cc0) &amp; <a href="http://www.splitshire.com/girl-sitting-on-chair/">splitshire</a> (free use without attribution). found on <a href="http://zerospace.asika.tw">zerospace.asika.tw</a>. thanks! )</small></p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/azure/">azure</a>,<a rel="tag" href="http://blog.infographics.tw/tag/crossorigin-me/">crossorigin.me</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3-js/">d3.js</a>,<a rel="tag" href="http://blog.infographics.tw/tag/face-api/">face api</a>,<a rel="tag" href="http://blog.infographics.tw/tag/google-image-search/">google image search</a>,<a rel="tag" href="http://blog.infographics.tw/tag/how-old/">how-old</a>,<a rel="tag" href="http://blog.infographics.tw/tag/microsoft/">microsoft</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/05/free-vector-map/">免費地圖向量圖下載－Free Vector Map</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/05/three-steps-to-build-a-timeline-over-map/">三個步驟教你做地圖式時間軸 － 開源套件「時間地圖」介紹</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

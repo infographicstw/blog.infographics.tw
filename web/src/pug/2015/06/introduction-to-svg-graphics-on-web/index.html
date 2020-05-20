@@ -1,0 +1,270 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">網頁視覺化必備 － 可縮放向量圖 SVG 入門</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-920 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-illustrator tag-introduction tag-svg tag-tutorial tag-300 tag-356 tag-298" id="post-920">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-06-3" class="updated">3 6 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2015/06/cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/cover.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/cover-300x176.jpg 300w" height="527" width="900" alt="Intro of SVG - Cover" src="https://blog.infographics.tw/wp-content/uploads/2015/06/cover.jpg" class="aligncenter size-full wp-image-933"></a>
+<p>想在網頁上做視覺化？那「SVG」這項技術你最好別錯過。可縮放式向量圖形 ( SVG ， Scalable Vector Graphics ) 並不是新玩意，早在 1999 年就已經提交至 W3C 而與 IE 的 VML 等技術競爭了，它是什麼東東呢？現在就來讓我們快速的帶大家看看 SVG 的樣貌。</p>
+<p><span id="more-920"></span></p>
+<p>西元 1989&nbsp;年， Tim Berners-Lee 發明了全球資訊網 ( WWW ， World Wide Web ) 並建立了一種利用角括號 「&lt;」「&gt;」組成「標籤」所編排的排版語言「HTML」初版；歷經數次的改版，直到現在大家常談論的 HTML5 ，包含了各種語意標籤、多媒體標籤、各種感測器介面與網路連接的 API。HTML 是一種排版語言，讓我們可以用文字的方式來制定網頁的排版、文字呈現的型態與超連結的訊息。</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_921"><a href="https://blog.infographics.tw/wp-content/uploads/2015/06/cern.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/06/cern.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/06/cern-300x167.jpg 300w" height="500" width="900" alt="CERN Data Center @ 2010" src="https://blog.infographics.tw/wp-content/uploads/2015/06/cern.jpg" class="size-full wp-image-921" aria-describedby="caption-attachment-921"></a><p class="wp-caption-text" id="caption-attachment-921">WWW 發源地 CERN 的資料中心 ( 攝於 2010 ). credit: from Wikipedia, by Hugovanmeijeren, CC-BY-SA 3.0</p></div>
+<p>但這感覺好像少了點什麼。在 HTML 中，我們可以利用「&lt;img&gt;」影像標籤置入圖片，但我們沒辦法很簡單的處理形狀。「我要一個圓形 － 帶點稍微狂野的紅色，還有鮮厚的邊框，最好稍微有點透明」這樣的概念必須要透過影像編輯軟體實現，也就是在每次老闆的喜怒無常之下，設計師就只得默默的坐在電腦前，開啟影像編輯軟體來重新製作圖片。</p>
+<p>SVG 為原本不足的 HTML 帶入了新的概念 — 利用標籤來做圖。從簡單的直線、曲線、圓形、矩形，到複雜的任意路徑、填充樣式、座標轉換與動畫，我們可以利用標籤的形式來完成。這不光是換了一種影像的儲存格式而已，格式化、向量化的影像格式也就帶表了程式化的可能 － 各式的互動視覺化、視覺圖表都因此而可能，網頁遊戲製作也變得更簡單了。</p>
+<p>SVG 推出當時適逢瀏覽器大戰的年代，瀏覽器支援度不高，不過時隔多年，現在大部份的瀏覽器都可以解讀 SVG 格式了。要使用 SVG 很簡單，使用簡單的文字編輯器與雙手，將下面的文字鍵入並存檔：</p>
+<pre>  &lt;?xml version="1.0" encoding="utf-8"?&gt;
+  &lt;svg xmlns="https://www.w3.org/2000/svg"&gt;&lt;circle cx="50" cy="50" r="20"/&gt;&lt;/svg&gt;</pre>
+<p>使用瀏覽器開啟，你會看到一個黑色的圓。就是這麼簡單！</p>
+<h2>標籤簡介</h2>
+<p>在撰寫網頁時，我們可以在網頁中插入 SVG 圖形，使用 &lt;svg&gt; 標籤來做：</p>
+<pre>  &lt;svg&gt; ... &lt;/svg&gt;</pre>
+<p>&lt;svg&gt; 標籤會建立一個矩形區域，讓我們可以透過在&nbsp;&lt;svg&gt; 標籤中間插入各種標籤來在這塊區域中繪圖。最常見的標籤有下列數種：</p>
+<h3>繪製圓圈 － &lt;circle&gt;</h3>
+<p>透過 circle 標籤的屬性「cx」、「cy」與「r」，我們可以設定圓的圓心座標 ( cx , cy ) 與圓的半徑 r ，例如：</p>
+<pre>  &lt;svg&gt;
+<strong>    &lt;circle cx="50" cy="50" r="10"/&gt;
+</strong>  &lt;/svg&gt;</pre>
+<p>會以 ( 50, 50 ) 為圓心繪製一個半徑為 10 的圓。</p>
+<h3>繪製線條 － &lt;line&gt;</h3>
+<p>透過 line 標籤的屬性「x1」、「y1」與「x2」、「y2」，我們可以繪製一條由座標 (x1, y1) 到 (x2, y2) 的線，例如：</p>
+<pre>&nbsp; &lt;svg&gt;
+&nbsp; &nbsp; &lt;line x1="10" y1="10" x2="20" y2="20"/&gt;
+&nbsp; &lt;/svg&gt;</pre>
+<h3>繪製矩形 － &nbsp;&lt;rect&gt;</h3>
+<p>透過 rect&nbsp;標籤的屬性「x」、「y」與「width」、「height」，我們可以以座標 (x, y) 做為左上角繪製一個長寬分別為 width 、 height 的矩形，例如：</p>
+<pre>&nbsp; &lt;svg&gt;
+&nbsp; &nbsp; &lt;rect x="10" y="10" width="30" height="30"/&gt;
+&nbsp; &lt;/svg&gt;</pre>
+<p>可以繪製由兩端點 (10, 10) 與 (40, 40) 組成、長寬皆為 30 的一個矩形。</p>
+<h2>實戰 － 笑臉先生</h2>
+<p>馬上進入實戰，利用 &lt;circle&gt;、&lt;line&gt;、與 &lt;rect&gt; 如何畫出一張笑臉圖呢？三個圓圈加上一個矩形就搞定：</p>
+<pre>  &lt;svg&gt;
+&nbsp;   &lt;circle cx="12" cy="10" r="5"/&gt;
+&nbsp;   &lt;circle cx="38" cy="10" r="5"/&gt;
+&nbsp;   &lt;circle cx="25" cy="26" r="10"/&gt;
+&nbsp;   &lt;rect x="15" y="15" width="20" height="10" fill="white"/&gt;
+  &lt;/svg&gt;</pre>
+<p>上例會得到類似下面的結果：</p>
+<p></p>
+<p>可以看到在上例中，我們利用一個白色的矩形來隱藏圓形的上半部，讓它看起來像個笑臉的嘴巴。在使用繪圖標籤時，有些屬性是全體通用的，我們可以利用它們來做一些效果。</p>
+<h3>填充與邊框</h3>
+<p>想要更換圖形的顏色，我們可以使用「fill」與「stroke」屬性：</p>
+<ul>
+<li>fill: 設定形狀內部填滿的顏色</li>
+<li>stroke: 設定形狀邊線的顏色</li>
+<li>stroke-width: 設定形狀邊線的寬度</li>
+</ul>
+<p>舉例來說，fill=”white” 可以讓形狀填滿白色， stroke=”blue” 可以讓形狀有藍色的邊線，而 stroke-width=”5″ 可以讓形狀的邊線變得更粗。例如：</p>
+<pre>&nbsp; &lt;svg&gt;
+&nbsp; &nbsp; &lt;circle cx="50" cy="50" r="30" fill="green" stroke="blue" stroke-width="3"/&gt;
+&nbsp; &lt;/svg&gt;</pre>
+<p>上例的結果如下，有一個填滿綠色而邊框是藍色的圓形：</p>
+<p></p>
+<p>學會填色後，雖然好像才開始學五分鐘但其實已經可以畫出很多東西了，比方說日本動畫「魔法少女小圓」裡的謎樣生物「incubator」：</p>
+<p></p>
+<p>原理與前面的笑臉類似，利用六個圓圈與一個矩形搭配填色與邊框的設定很容易就可以做出這個例子。原始碼如下：</p>
+<pre>&nbsp; &lt;svg&gt;
+&nbsp; &nbsp; &lt;circle cx="9" cy="10" r="4" fill="darkred" stroke="deeppink" stroke-width="2"/&gt;
+&nbsp; &nbsp; &lt;circle cx="7" cy="8" r="1.5" fill="white"/&gt;
+&nbsp; &nbsp; &lt;circle cx="41" cy="10" r="4" fill="darkred" stroke="deeppink" stroke-width="2"/&gt;
+&nbsp; &nbsp; &lt;circle cx="39" cy="8" r="1.5" fill="white"/&gt;
+&nbsp; &nbsp; &lt;circle cx="22.3" cy="23" r="3" fill="none" stroke="black" stroke-width="1"/&gt;
+&nbsp; &nbsp; &lt;circle cx="27.7" cy="23" r="3" fill="none" stroke="black" stroke-width="1"/&gt;
+&nbsp; &nbsp; &lt;rect x="10" y="17" width="30" height="7" fill="white"/&gt;
+&nbsp; &lt;/svg&gt;</pre>
+<p>是不是很容易呢？</p>
+<h2>結語</h2>
+<p>手繪圖形雖然費時，但這對於了解語言的架構相當有幫助；當我們對基本的元素操做駕輕就熟的時候，我們也就可以很容易做出各式各樣的應用與變化；到時候，複雜的圖形我們也可以利用影像編輯軟體來輔助生成。</p>
+<p>由於篇幅關係，我們先簡單介紹到這個地方，基本的形狀還有 &lt;ellipse&gt; 、 &lt;polyline&gt; 、 &lt;polygon&gt; 等等，除了多邊形需要利用 points 屬性填入每個座標的 &nbsp;x / y 值比較複雜，其它的使用方法都類似，大家可以自己試試看。會使用基本的形狀之後，就可以開始學習使用 &lt;path&gt; 標籤來繪製任意的曲線，這牽涉到一組曲線描述的語法，我們將在接下來的 SVG － Path 篇深入探討 Path 標籤如何使用。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/illustrator/">illustrator</a>,<a rel="tag" href="https://blog.infographics.tw/tag/introduction/">introduction</a>,<a rel="tag" href="https://blog.infographics.tw/tag/svg/">svg</a>,<a rel="tag" href="https://blog.infographics.tw/tag/tutorial/">tutorial</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%85%a5%e9%96%80/">入門</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%8f%af%e7%b8%ae%e6%94%be%e5%90%91%e9%87%8f%e5%9c%96/">可縮放向量圖</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e6%95%99%e5%ad%b8/">教學</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/05/tell-story-with-storymapjs/">用地圖說故事 － StoryMapJS</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2015/06/three-keys-to-visualization/">絕對別忽略的三個視覺化關鍵要素</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="https://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="https://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>2</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-879">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/ccdb669bfa28eb86c731b790b47d967e?s=40">
+                <cite class="fn">griefsong</cite>         <time datetime="2017-04-14"><a href="https://blog.infographics.tw/2015/06/introduction-to-svg-graphics-on-web/#comment-879">14 4 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>謝謝你們的文章，好多文章都好棒！ </p>
+<p>本文第一個程式碼片段，svg tag 內似乎應該加上 xmlns（如下），用瀏覽器看它才會看到小黑圓，不然會看到 xml code…</p>
+<p>新新手時我沒認真試這段，要向人介紹時再瞄一眼才發現。<br>
+調整一下，可以讓人們讀文章時更覺可信喔～　：）</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-881">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2017-04-17"><a href="https://blog.infographics.tw/2015/06/introduction-to-svg-graphics-on-web/#comment-881">17 4 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好，感謝您的回饋！我們再來修改 🙂</p>
+      </section>
+          </article>
+  </div>
+</div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

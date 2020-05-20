@@ -1,0 +1,366 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">總整理！你不可錯過的 d3.js 資料轉換技巧</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1657 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-arrray tag-d3 tag-d3-js tag-data-structure tag-data-wrangling tag-map tag-nest tag-pack-layout tag-tree" id="post-1657">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-02-21" class="updated">21 2 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1667" href="http://blog.infographics.tw/wp-content/uploads/2016/02/cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/02/cover.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/02/cover-300x176.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/02/cover-768x450.png 768w" height="527" width="900" alt="Cover" src="http://blog.infographics.tw/wp-content/uploads/2016/02/cover.png" class="aligncenter size-full wp-image-1667"></a>
+<p>手上的資料格式跟圖表格格不入，總要處理半天才搞定嗎？當我們在利用 d3.js 做視覺化時，常碰到需要把資料轉換成各種不同結構的時候，因此 d3.js 其實提供了相當多方便的轉換函式，這次就讓我們來一次做個總整理吧！</p>
+<p><span id="more-1657"></span></p>
+<p>資料結構是資訊相關科系的必修課程，雖然是如此的專業科目，既然稱作「資料」結構，便與需要操作資料的我們都脫不了關係，無論你是要做行銷、商業智慧或是新聞專題。想要轉換一整排的資料？這就叫陣列。表現候選人之間的關係？你要使用有向圖。總預算款項目節的階層表現？樹狀結構是你的好朋友。資料透過精巧的轉換變成適當的資料結構，才能順利套入視覺化的框架之中。</p>
+<p>雖然說一般的圖表大多是使用陣列式的資料，我們難免還是要根據圖表規格來轉換資料格式與做基本的統計分析，例如 D3.js 的經典泡泡圖背後的 Pack Layout 結構，其實就是一種樹狀的資料結構；而為了讓我們能精準的控制資料範圍，座標、半徑等維度也必需要經過適當的轉換。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>我們可以自己撰寫程式來做資料的轉換，但這樣的程式碼通常重覆性都很高、而且也很繁瑣。於是， D3.js 變提供了一整組資料處理的函式集，讓資料整理變得再容易不過了！</p>
+<h2>陣列操作概論 — 使用 d3 Array 函式集</h2>
+<p>如前所述，陣列是我們最常用到的資料結構，我們可以利用 d3.extent 算出陣列中的極值：</p>
+<pre>  d3.extent([1,2,3,4,5]) &nbsp; // 執行結果為 [1,5]</pre>
+<p>這相當於各別呼叫 d3.min 與 d3.max：</p>
+<pre>  [d3.min([1,2,3,4,5]), d3.max([1,2,3,4,5])]</pre>
+<p>陣列的極值界定了資料的範圍，一個常見的使用情境為做螢幕座標的對應，我們可以使用 d3.scale.linear 的轉換函式：</p>
+<pre>  d3.scale.linear().domain(d3.extent([1,2,3,4,5]).range([0,800])</pre>
+<p>上面程式碼所傳回的函式可以替我們將 1 ~ 5 的範圍轉換到 0 ~ 800 ，很適合用來做圖表的 X 軸座標轉換。</p>
+<p>基本陣列我們可以這樣操作，但常常我們讀入的資料會是以物件陣列的形式表現，例如：</p>
+<pre>  var scores = [
+    {name: "James", score: 90},
+    {name: "Jimmy", score: 85},
+    {name: "Jean", score: 72},
+    {name: "Apple", score: 78}
+  ];</pre>
+<p>上面這個陣列中共有三個物件，每個對應到了一個學生姓名與他的成績。這時候 d3.extent 需要再多附帶一個 accessor 函式來取得我們想要計算極值的欄位：</p>
+<pre>  d3.extent(scores, function(it) { return it.score; });</pre>
+<h2>物件化：使用 d3.map</h2>
+<p>使用 accessor 函式取值是個很常見的模式。例如，我們可以利用 d3.map 函式將陣列轉換成物件形態：</p>
+<pre>  var scoremap = d3.map(scores, function(it) { return it.name; });</pre>
+<p>這時原本的陣列便會轉換成類似如下的形式：</p>
+<pre>  {
+    "James": {name: "James", score: 90},
+    "Jimmy": {name: "Jimmy", score: 85},
+    "Jane": &nbsp;{name: "Jean", score: 72},
+    "Apple": {name: "Apple", score: 78}
+  }</pre>
+<p>( 注: 事實上傳回的會是一個 d3.map 物件, 上例為其物件形態的示意結構。 )</p>
+<p>光是這樣，也許你會覺得沒什麼用處；事實上這至少有兩個好處：</p>
+<ol>
+<li>我們只要知道學生姓名，便能取得他的成績，例如： scoremap.get(“James”) 即能取得 James 的成績。</li>
+<li>由於每個名字只能對應到一筆資料，這個手法可以用來計算特定欄位中不同的資料共有幾筆。</li>
+</ol>
+<p>假設我們想知道班上學生有多少個不同的姓名，使用 d3.map 搭配 keys 即可做到：</p>
+<pre>  d3.map(scores,function(it) { return it.name; }).keys();</pre>
+<p>上述函式的執行結果如下：</p>
+<pre>  ["James", "Jimmy", "Jane", "Apple"]</pre>
+<p>也因此，從物件要逆轉回陣列也就容易了，我們直接搭配 JavaScript 的內建 Array.map 函式：</p>
+<pre>  scoremap.keys().map(function(it) { return scoremap.get(it); });</pre>
+<p>這樣一行便能把 scoremap 轉換為 scores 的陣列形式。</p>
+<h2>分組：使用 d3.nest</h2>
+<p>把陣列轉換成物件，在接下來要說明的這種狀況也非常有幫助。以上面學生分數的資料為例，若我們想要把學生每隔十分做一組分組，該怎麼做呢？ d3.nest 完美的解決了這個問題：</p>
+<pre> var scoregroup = d3.nest().key(function(it) {
+   return parseInt(it.score / 10);
+ }).map(scores);</pre>
+<p>這段程式碼在幹嘛呢？d3.nest 可以幫我們把陣列中的元素分組合成陣列；在上例中，我們透過 key() 中的 accessor 函式告訴 d3.nest，我們要以分數的十位數做為分組單位，然後利用 map() 指定將欲處理的陣列轉換成物件，結果如下：</p>
+<pre>  {
+    "7": [{name: "Jean", score: 72}, {name: "Apple", score: 78}],
+    "8": [{name: "Jimmy", score: 85}],
+    "9": [{name: "James", score: 90}]
+  }</pre>
+<p>接著，若我們想要知道 70 分的學生有多少個，使用 JavaScript Array 內建的 length 參數即可取得：</p>
+<pre>  scoregroup["7"].length</pre>
+<p>我們甚至可以在 accessor 函式中調整欄位格式，下例產生類似 “70~79” 這樣的欄位組名：</p>
+<pre>  d3.nest().key(function(it) {
+    var base = parseInt(it.score / 10);
+    return base + "0 ~ " + base + "9";
+  }).map(scores);</pre>
+<p>執行結果如下：</p>
+<pre>  {
+    "70~79": [{name: "Jean", score: 72}, {name: "Apple", score: 78}],
+    "80~89": [{name: "Jimmy", score: 85}],
+    "90~99": [{name: "James", score: 90}]
+  }</pre>
+<p>不過，像這樣產生分數分組，必須要資料中原本就已經有人獲得了區間中的成績才行，像上例並沒有人得到 70 分以下的成績，也就不會產生 “60~69” 的組別了。</p>
+<p>若要手動產生分組，一般可能使用迴圈：</p>
+<pre>  var range = []:
+  for(var idx = 0; idx &lt; 10; idx++ ) range.push(idx);</pre>
+<p>但其實 d3.js 也提供了類似 Python range() 這樣的函式，可以快速產生一組數據：</p>
+<pre>  d3.range(0, 10, 1);</pre>
+<p>在上例中，我們要 d3.js 從 0 開始，每隔 &nbsp;1 產生一組數據，直到 10 為止 ( 不含 10 )，結果如下：</p>
+<pre>  [0,1,2,3,4,5,6,7,8,9]</pre>
+<p>所以，若要產生上面的分數組別，只要再利用 Array.map 稍微再動一點手腳即可：</p>
+<pre>  d3.range(0,10,1).map(function(it) { return it + "0 ~ " + it + "9"; });</pre>
+<p>d3.range 的起點與間距可以省略，預設會從 0 開始、以 1 為間隔，所以下列兩者的執行結果是等價的：</p>
+<pre>  d3.range(0,10,1);
+  d3.range(10);</pre>
+<p>有時候我們想直接依照實際學生得分的範圍做分組，這時可以利用 d3.quantile 函式做快速分位。 d3.quantile 的基本語法如下：</p>
+<pre>  d3.quantile( 資料陣列, 分位值 )</pre>
+<p>背後的演算法我們不細談，只要大概想像成 d3.quantile 依我們選定的分位值 ( 0 ~ 1 ) 拿來在資料陣列中做內差取得新值即可。&nbsp;假設我們想要把學生得分分為 &nbsp;6 組，便可以這樣做：</p>
+<pre>  var ticks = d3.range(7).map(function(it) { 
+    return d3.quantile(d3.extent(scores), it/6);
+  });</pre>
+<p>在上例，我們先用 d3.range 產生 [0,1,2,3,4,5,6] ；接著利用 Array.map 將這些數字做為 d3.quantile 內差用的分位值，內差出學生分數 ( d3.extent(scores) ) 內的級距。以前面的分數為例：</p>
+<ul>
+<li>d3.extent(scores) 為 [72,90]</li>
+<li>d3.quantile([72,90], 0/6) = 72</li>
+<li>d3.quantile([72,90], 1/6) = 75</li>
+<li>d3.quantile([72,90], 2/6) = 78</li>
+<li>d3.quantile([72,90], 3/6) = 81</li>
+<li>d3.quantile([72,90], 4/6) = 84</li>
+<li>d3.quantile([72,90], 5/6) = 87</li>
+<li>d3.quantile([72,90], 6/6) = 90</li>
+</ul>
+<p>其傳回值 ticks 即為 [72,75,78,81,84,87,90] 。</p>
+<h2>Pairing — 資料快速配對</h2>
+<p>上例的級距做完以後，你可能會想問：「小編你說好要分成六組，怎麼算了七個數字出來」？其實道理很簡單，七個區間隔出來的範圍就剛好六組囉！但若我們想要把這些數字做為組別的名字，資料需要再經過組合。與 d3.range 相同，我們可以透過一個迴圈來做到，但也一樣繁瑣且重覆，這時就要使用 d3.js 所提供的 d3.pairs 函式，自動幫我們做資料配對：</p>
+<pre>  var pairs = d3.pairs([72,75,78,81,84,87,90]);
+  // pairs = [[72,75],[75,78],[78,81],[84,87],[87,90]]</pre>
+<p>d3.pairs 的配對方式很簡單，他將陣列中的相鄰數字一組一組重新建立成一個陣列，這在我們需要畫線時非～常的方便！因為線是由許多點連結而成，而我們的資料通常都是點的資訊，線的資訊便得自己建立了。這時使用 d3.pairs 就方便多了：</p>
+<pre>  // 假設 points 為一個物件陣列，每個物件都有 x 與 y 屬性標明位置
+  lines = d3.pairs(points);
+  d3.select("svg").selectAll("line").data(lines).attr({
+    x1: function(it) { return it[0].x; },
+    y1: function(it) { return it[0].y; },
+    x2: function(it) { return it[1].x; },
+    y2: function(it) { return it[1].y; }
+  });</pre>
+<h2>速查摘要</h2>
+<p>看到這裡，是否一個頭兩個大呢？資料處理原本就是個很繁瑣的問題，感謝 d3.js 本身帶有的強大輔助函式，讓我們可以省去很多功夫，專心在對付視覺化上。為了讓各位的頭小一點，我們把上列提到的所有函式在這裡做一個簡單的摘要，讀者可以利用摘要做快速的參考，再透過上列的說明做深入的了解。</p>
+<ul>
+<li>d3.extent(Array, accessor) — 計算陣列極值。傳回陣列。</li>
+<li>d3.min(Array, accessor) — 計算陣列最小值</li>
+<li>d3.max(Array, accessor) — 計算陣列最大值</li>
+<li>d3.map(Array, accessor) — 將陣列轉換成物件，利用 accessor 傳回值做索引</li>
+<li>d3.map(Array,accessor).keys() — 取得陣列中某欄位的資料有哪些不同的可能</li>
+<li>d3.nest().key(accessor).map(Array) — 把陣列依 accessor 指定的索引值分組</li>
+<li>d3.range(start,end,delta) — 在指定範圍與間距中產生一組資料陣列</li>
+<li>d3.quantile(Array, p) — 類似內插，利用傳入的 p 值 ( 0 ~ 1 ) 與陣列決定一個傳回值</li>
+<li>d3.pairs(Array) — 幫我們把陣列配對，適合用在點資料轉為線資料</li>
+</ul>
+<p>以上其實只是 d3.js 資料處理的其中一部份，像是 d3.zip 、 d3.permute 或是 d3.transpose 等函式我們並沒有談到，但我們已描述了大部份的使用情境，若有需要的話，讀者可以進一步詳細閱讀 d3.js 的說明文件。</p>
+<h2>結語</h2>
+<p>資料整理過程繁瑣又複雜，往往錯一步就步步錯，找半天也看不出來問題出在哪裡。然而資料轉換卻是視覺化必要的一個過程，躲也躲不過，如何利用現有的輔助工具讓我們可以更順利的做出想要的視覺化，這裡可是個很重要的關鍵與門檻喔！所以，不要嫌煩，好好的學習資料轉換的手法吧！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/arrray/">arrray</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3/">d3</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3-js/">d3.js</a>,<a rel="tag" href="http://blog.infographics.tw/tag/data-structure/">data structure</a>,<a rel="tag" href="http://blog.infographics.tw/tag/data-wrangling/">data wrangling</a>,<a rel="tag" href="http://blog.infographics.tw/tag/map/">map</a>,<a rel="tag" href="http://blog.infographics.tw/tag/nest/">nest</a>,<a rel="tag" href="http://blog.infographics.tw/tag/pack-layout/">pack layout</a>,<a rel="tag" href="http://blog.infographics.tw/tag/tree/">tree</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2016/02/nightingale-rose-chart/">《圖表101》 拯救生命的圖表 — 南丁格爾玫瑰圖</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2016/02/d3-js-4-0-preview/">D3.js 重大更新！ 4.0 版新鮮功能摘要整理</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>2</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-299">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/e19100256134f4f58493e08eca1db5cf?s=40">
+                <cite class="fn">Ali</cite>         <time datetime="2016-02-23"><a href="http://blog.infographics.tw/2016/02/data-restructure-with-d3js/#comment-299">23 2 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>感謝你們的分享!<br>
+文章提到經過d3.map(scores, function(it) { return it.name; })所得的scoremap似乎不昰單純的object，我試了一下似乎無法用scoremap[“James”] 直接取值，但可用scoremap.get(“James”)或scoremap._[“James”]，不知是不是我有哪裡弄錯?<br>
+再次感謝你們的分享! 獲益良多!</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-300">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-02-23"><a href="http://blog.infographics.tw/2016/02/data-restructure-with-d3js/#comment-300">23 2 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>Hi Ali, 很抱歉這邊我們寫錯了, 應該要寫成 scoremap.get(“James”) 才對. d3.map 產生的是 d3.js 參考 ES6 所特製的一種類似 Object 的資料形態, 若要利用此結果存取資料, 要透過 scoremap.get(” … “) 的方法. 詳細的使用方法可以參考 d3.map 的文件: <a rel="nofollow ugc" href="https://github.com/mbostock/d3/wiki/Arrays#maps">https://github.com/mbostock/d3/wiki/Arrays#maps</a></p>
+<p>感謝您的提醒, 我們已將錯誤修正 🙂</p>
+      </section>
+          </article>
+  </div>
+</div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

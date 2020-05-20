@@ -1,0 +1,189 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">DataBasic – 為初學者打造的資料探索器</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1612 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-analysis tag-csv tag-data tag-data-journalism tag-databasic tag-diff tag-lyrics tag-samediff tag-tag tag-wordcloud tag-wtfcsv" id="post-1612">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-01-19" class="updated">19 1 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1616" href="https://blog.infographics.tw/wp-content/uploads/2016/01/cover-3.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/01/cover-3.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2016/01/cover-3-300x176.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/01/cover-3-768x450.jpg 768w" height="527" width="900" alt="cover" src="https://blog.infographics.tw/wp-content/uploads/2016/01/cover-3.jpg" class="aligncenter size-full wp-image-1616"></a>
+<p>手上有一堆資料，但對於內容卻毫無頭緒嗎？前陣子 Databasic 正式上線，一口氣推出了三個有趣的資料探索工具，主打資料科學初心者，到底這個 DataBasic 葫蘆裡賣了什麼藥，就讓我們一起來看看！</p>
+<p><span id="more-1612"></span></p>
+<p>在為期 6 個月的開發後，2016 年 1 月 12 日 DataBasic 宣布正式上線，提供了三個有趣的工具給資料科學初心者使用，包括了：</p>
+<ul>
+<li>SameDiff – 比較兩個文章，提供兩者使用文字差異以及相似度的資訊</li>
+<li>WtfCSV – 提供資料的摘要資訊，包含簡單的統計與視覺化</li>
+<li>WordCounter – 計算文章內各個字的字量以及產生簡單的文字雲</li>
+</ul>
+<p>DataBasic 由 MIT 以及 Emerson College 的兩位公民媒體領域背景的教授所創辦，由 Knight Prototype Fundation <a href="https://www.knightfoundation.org/grants/201551190/">資助其早期 Prototyping 開發</a> ( 35k 美金 ) ，很明顯的可以說就是懷抱了一個願景，希望推進新聞產業在資料科學上的實力與應用。</p>
+<p>人類文明邁入電腦科技與網路時代，資料科學逐漸成為一個顯學，無論是資料視覺化、統計分析或是資料探勘等等的學問都變得相當重要。資料新聞學從衛報的資料部落格開始，到現在已經成為做記者不可或缺的能力，然而時代交替的這個當下記者的職前訓鍊仍然是以傳統的寫作與報導為主，直到這幾年大學才開始廣設資料新聞的相關課程；即便如此，技術力也是一個資料新聞的門檻。</p>
+<p>DataBasic 兩位創辦人&nbsp;<a href="https://kanarinka.com/">Catherine D’Ignazio</a> (&nbsp;Emerson College ) 與&nbsp;<a href="https://rahul.connectionlab.org/">Rahul Bhargava</a> ( MIT Center for Civic Media ) 似乎也是觀察到了這塊資料與新聞領域的真空，所以提出了 DataBasic 的概念：初學者、教育者與資料的交界點，我們需要用 DataBasic 來填滿。</p>
+<h3>WtfCSV</h3>
+<p>WtfCSV 提供資料的摘要資訊，包含簡單的統計與視覺化。以下圖為例，它針對各個欄位的資料形態做簡單的判斷，並自動挑選適合的圖表類型做快速的資料呈現。每個黃色的色塊代表了一個欄位，左上方的紅色圈圈標明了資料類型，目前可以看到有「文字」、「數字」與「日期」；呈現方式則有長條圖、Histogram 、折線圖與文字雲等等。</p>
+<a rel="attachment wp-att-1613" href="https://blog.infographics.tw/wp-content/uploads/2016/01/wtfcsv.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/01/wtfcsv.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2016/01/wtfcsv-300x154.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/01/wtfcsv-768x393.jpg 768w" height="461" width="900" alt="wtfcsv" src="https://blog.infographics.tw/wp-content/uploads/2016/01/wtfcsv.jpg" class="aligncenter size-full wp-image-1613"></a>
+<p>比方說，上圖的「Sex」資料形態為「文字」，但他用兩個長條分別表示男性與女性的數量；而左方的「Name」資料形態同為「文字」，他便使用文字雲來呈現資料，以快速並清楚的表現文字出現的頻率。上圖的年紀則以 8 歲一個區間做 Histogram 表現；另外，沒有出現在上圖的時間資料欄位則可能使用折線的方式來表現趨勢。</p>
+<h3>WordCounter</h3>
+<p>WordCounter 提供文本資料簡易的摘要，包含表現文字頻慮的文字雲以及單字、雙字與三字組合詞各別的出現次數表。多重字組的頻率分析比較少看到相似的工具，不失為一個初步探索資料的方式。下面為工具利用其範例資料產生的報告截圖：</p>
+<a rel="attachment wp-att-1614" href="https://blog.infographics.tw/wp-content/uploads/2016/01/wordcount.jpg"><img sizes="(max-width: 901px) 100vw, 901px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/01/wordcount.jpg 901w, https://blog.infographics.tw/wp-content/uploads/2016/01/wordcount-300x190.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/01/wordcount-768x486.jpg 768w" height="570" width="901" alt="wordcount" src="https://blog.infographics.tw/wp-content/uploads/2016/01/wordcount.jpg" class="aligncenter size-full wp-image-1614"></a>
+<p>&nbsp;</p>
+<h3>SameDiff</h3>
+<p>文本資料除了各別探索外，也可以用比較的方式來理解， SameDiff 將兩個文本彼此間共同出現的字頻與獨特的文字次數做簡單的呈現。比方說下圖中央的文字顯示的是在兩個範例文本間都有出現的文字，左右則是只出現在其中一個文本中的文字。同樣的文字依照其出現的頻率做排序。</p>
+<a rel="attachment wp-att-1615" href="https://blog.infographics.tw/wp-content/uploads/2016/01/samediff.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/01/samediff.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2016/01/samediff-300x94.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/01/samediff-768x240.jpg 768w" height="281" width="900" alt="samediff" src="https://blog.infographics.tw/wp-content/uploads/2016/01/samediff.jpg" class="aligncenter size-full wp-image-1615"></a>
+<p>&nbsp;</p>
+<p>三個工具的使用都非常簡單，我們所需要的幾乎就只是上傳資料，接著 DataBasic 便幫我們處理掉所有問題，不愧是為初學者打造的工具。事實上，DataBasic 打造工具的中心原則也是如此，他們希望每個工具能夠專注解決一個問題、不要有太多選項，而且越容易進入越好。兩位創辦人甚至舉辦了數次的工作坊來探索這些工具的可能性與改進空間。</p>
+<p>由於才剛剛上線，就 DataBasic 的願景來看，我們可以期待未來在這裡看到更多有趣與實用的工具，以開發速度來看未來一年內應該有機會陸續看到數個工具誕生吧，照 DataBasic Logo 與工具的顏色來看， Logo 用了五種顏色，而目前其中只有三種顏色用在三個不同的工具上，我們是否可以期待會出現粉紅色與藍色的工具呢 ( 好像某種戰隊… )？</p>
+<p>然而，各別的工具我認為需要更有效的串連方式與使用情境，才能發揮其功效，尤其是對初學者而言。是否真的能成為一個很棒的資料科學入門服務，就讓我們再觀察看看 DataBasic 的後續發展吧！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/analysis/">analysis</a>,<a rel="tag" href="https://blog.infographics.tw/tag/csv/">csv</a>,<a rel="tag" href="https://blog.infographics.tw/tag/data/">data</a>,<a rel="tag" href="https://blog.infographics.tw/tag/data-journalism/">data journalism</a>,<a rel="tag" href="https://blog.infographics.tw/tag/databasic/">databasic</a>,<a rel="tag" href="https://blog.infographics.tw/tag/diff/">diff</a>,<a rel="tag" href="https://blog.infographics.tw/tag/lyrics/">lyrics</a>,<a rel="tag" href="https://blog.infographics.tw/tag/samediff/">samediff</a>,<a rel="tag" href="https://blog.infographics.tw/tag/tag/">tag</a>,<a rel="tag" href="https://blog.infographics.tw/tag/wordcloud/">wordcloud</a>,<a rel="tag" href="https://blog.infographics.tw/tag/wtfcsv/">wtfcsv</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/01/draw-map-with-geojson-io/">地理區塊自己畫 – 使用 geojson.io</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/01/slideloot-with-powerpoint/">不懂設計？用 Slideloot + Powerpoint 快速製作資訊圖表</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

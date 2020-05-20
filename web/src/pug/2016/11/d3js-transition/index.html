@@ -1,0 +1,301 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">讓我的視覺化動起來！D3.js 動畫函式入門</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1952 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-animation tag-d3js tag-keyframe tag-transition" id="post-1952">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-11-7" class="updated">7 11 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2016/10/cover.gif"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover.gif 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x176.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-768x450.gif 768w" height="527" width="900" alt="D3 transition How To" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover.gif" class="aligncenter size-full wp-image-1957"></a>
+<p>看膩了靜態圖表，又覺得互動套件效果有限嗎？D3.js 除了提供強大的視覺化輔助函式，就連製作動畫也難不倒他！那麼，就讓我們一起來看看要如何使用 D3.js 做到動態圖表的效果吧！</p>
+<p><span id="more-1952"></span></p>
+<p>動畫為視覺化的元素之一，妥善運用可以做到很棒的效果。然而，即使程式都已經自行撰寫了，一般要做動畫並不是這麼容易，所幸我們還有 D3.js – D3.js 作者 Mike Bostock 從最初設計 D3.js 時就已經考慮到圖表元件的動畫彈性，而其 Functional Style 的特性更是讓這件事變得相當容易。舉例來說，若我們想用 D3.js 產生一個紅色的正方形，可以這樣寫：</p>
+<pre>&nbsp; d3.select("body").append("svg").append("rect").attrs({
+&nbsp; &nbsp; x: 10, y: 10, width: 20, height: 20, fill: "red"
+&nbsp; });</pre>
+<p>(若對 D3.js 不了解想要開始學習，可參考我們先前撰寫的「<a href="https://blog.infographics.tw/2015/03/d3js-the-introduction/">網頁視覺化利器 – D3.js 簡介</a>」一文 )</p>
+<p>由於其 Functional Style 特性，我們可以繼續在上述程式碼後面接上其它樣式的設定：</p>
+<pre>&nbsp; d3.select("body").append("svg").append("rect").attrs({
+&nbsp; &nbsp; x: 10, y: 10, width: 20, height: 20, fill: "red"
+&nbsp; }).attrs({ rx: 3, ry: 3});</pre>
+<p>在這裡，無論長寬、顏色或是圓角半徑，都會即時套用至矩形之上。上述源碼的執行結果如下：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/ex1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/ex1.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/ex1-300x33.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/ex1-768x85.png 768w" height="100" width="900" alt="example 1" src="https://blog.infographics.tw/wp-content/uploads/2016/10/ex1.png" class="aligncenter size-full wp-image-1959"></a>
+<p>這個串接式的寫法為什麼可以讓我們很輕易的做出動畫效果呢？</p>
+<h2>神奇的 Transition 函式</h2>
+<p>也許你會想，「我幹嘛要分兩段寫，寫成一段不是很好嗎？」的確上例來說是沒有分段的必要，不過一旦分了段、有了前後，忽然動畫的概念就變得簡單了：我只要把前面樣式設定後的狀態當成起始狀態、後面樣式設定後的狀態當成結束狀態 ，那就可以做動畫啦！</p>
+<p>舉例來說，我們將上例稍稍做些修正：</p>
+<pre>&nbsp; d3.select("body").append("svg").append("rect").attrs({
+&nbsp; &nbsp; x: 10, y: 10, width: 20, height: 20, fill: "red"
+&nbsp; }).attrs({
+    <span style="color: #ff0000;"><strong>x: 20, y: 20, width: 40, height: 10, fill: "blue"</strong></span>
+  });</pre>
+<p>現在前後兩個樣式設定都設定了不同的原點座標、長寬以及填色，就像是兩個 Keyframes 一樣；接著，在他們中間插入神奇的 Transition() 函式，噹噹！動畫就做好了：</p>
+<pre>&nbsp; d3.select("body").append("svg").append("rect").attrs({
+&nbsp; &nbsp; x: 10, y: 10, width: 20, height: 20, fill: "red"
+&nbsp; })<span style="color: #ff0000;"><strong>.transition().</strong></span>attrs({
+    x: 20, y: 20, width: 40, height: 10, fill: "blue"
+  });</pre>
+<p>下圖是動畫的範例結果：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/ex2.gif"><img height="100" width="900" alt="Example 2" src="https://blog.infographics.tw/wp-content/uploads/2016/10/ex2.gif" class="aligncenter size-full wp-image-1961"></a>
+<h2>控制時間的魔法師</h2>
+<p>當然動畫不是這樣就完了，若我想做很多組動畫怎麼辦？時間長度又要怎麼控制？transition() 函式會為我們提供一些額外的工具來控制動畫，包含動畫的延遲與長度：</p>
+<pre>  transition().duration(ms1).delay(ms2)</pre>
+<p>上例中很明顯「duration」即是控制動畫長度的函式、而「delay」則是控制動畫延遲的函式，他們都接受一個做為時間的參數，單位是千分之一秒。下例的矩形會在執行程式兩秒後，花費五秒中慢慢的由紅色變成黑色：</p>
+<pre>&nbsp; d3.select("body").append("svg").append("rect").attrs({
+&nbsp; &nbsp; x: 10, y: 10, width: 20, height: 20, fill: "red"
+&nbsp; })<span style="color: #ff0000;"><strong>.transition().duration(5000).delay(2000).</strong></span>attrs({
+    fill: "black"
+  });</pre>
+<p>也許你會猜多組動畫的功能也是利用額外的函式來提供，不過其實仔細想想， Functional Style 已經為我們提供連續動畫轉場的可能性啦！我們只要在每個樣式設定之間插入 transition() ，就可以做出連續的動畫了：</p>
+<pre>&nbsp; d3.select("body").append("svg").append("rect").attrs({
+&nbsp; &nbsp; x: 10, y: 10, width: 20, height: 20, fill: "red"
+&nbsp; })<span style="color: #ff0000;"><strong>.transition().</strong></span>attrs({
+    fill: "black"
+  })<span style="color: #ff0000;"><strong>.transition().</strong></span>attrs({
+    fill: "green"
+  });</pre>
+<p>上例中我們可以看到兩組 transition() 搭配三個不同的樣式設定，讓矩形從紅色轉為黑色、再轉換為綠色，下圖為實際動畫的結果。串接動畫，就像是串接函式一樣直覺！</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/ex3.gif"><img height="100" width="900" alt="Example 3" src="https://blog.infographics.tw/wp-content/uploads/2016/10/ex3.gif" class="aligncenter size-full wp-image-1963"></a>
+<h3>【講個秘訣】初學者的地雷 – delay 的計算方式</h3>
+<p>在 d3.js 3.x 版中，即使你利用串接函式的方式來做動畫連發，一旦你為各個 transition 設定了 delay 值，那麼這些動畫就會「從指令執行的那一瞬間」等待你所設定的 delay 後便開始播放。雖然設計邏輯有合理，但實在是太反直覺，以致於這個設計在 4.0 中被改掉，所有的 delay 都是相對於上一個動畫的結束時間來計算了。</p>
+<h2>自製任何動畫</h2>
+<p>雖然 transition() 好用，但有些地方的確是讓人有點疑惑： d3.js 是怎麼知道「black」與「red」之間要如何做動畫的呢？難道「Lhasa」與「Palau」之間也可以做「動畫」嗎？這個動畫又會長什麼樣子？</p>
+<p>事實上，D3.js 內部實作了一組內插函式，其中可以內差的資料種類包含了數字、顏色、包含數字的文字等等，一但知道了他的基本原理，我們就可以想像他是如何實作動畫的：</p>
+<ol>
+<li>根據 Keyframe 找出合適的內插函式</li>
+<li>在動畫中根據當前時間算出內插的值</li>
+<li>不斷更新元素屬性</li>
+</ol>
+<p>比方說，由於 SVG 中的形狀是由數字與文字的組合來描述的，我們便可以直接用 transition() 來製作變形動畫！下例利用 D3 的 d3.arc 函式產生圓餅的形狀字串，並在兩個不同的圓餅間變形：</p>
+<pre>d3.select("body").append("svg").append("path").attrs({
+  fill: "red", transform: "translate(80,80)",
+  <span style="color: #ff0000;">d: d3.arc()({</span>
+<span style="color: #ff0000;">    innerRadius: 20, outerRadius: 40,</span>
+<span style="color: #ff0000;">    startAngle: 0,   endAngle: 1</span>
+<span style="color: #ff0000;">  }) /* 畫出 57 度的圓餅</span>
+}).transition().duration(1000).attrs({
+  d: d3.arc()({
+    innerRadius: 20, outerRadius: 40,
+    startAngle: 0,   <span style="color: #ff0000;">endAngle: 3 /* 將動畫變形至 171 度的圓餅 */</span>
+  })
+});</pre>
+<p>上述程式碼可以做出下圖的效果：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/ex4.gif"><img height="200" width="900" alt="Example 4" src="https://blog.infographics.tw/wp-content/uploads/2016/10/ex4.gif" class="aligncenter size-full wp-image-1965"></a>
+<p>&nbsp;</p>
+<p>雖然做得出動畫，但感覺有點怪怪的，圓餅的形狀有點被扭曲了！的確，若我們直接叫 D3.js 為我們做動畫，它便會用預設的內插函式來做，但有時我們不希望照預設的內插函式來做動畫。比方說上例的圓餅圖我們實際上會希望他透過圓餅角度的變化來做動畫，而非點的位置或大小。</p>
+<p>這時候，我們可以利用 tween 函式來做到！ tween 函式的概念很簡單：內插函式由我們自己提供：</p>
+<pre>&nbsp; d3.select("body").append("svg").append("rect").attrs({
+&nbsp; &nbsp; x: 10, y: 10, width: 20, height: 20, fill: "red"
+&nbsp; }).transition()<span style="color: #ff0000;"><strong>.tween("animation", function() {
+</strong></span>    var node = d3.select(this);
+    return function(t) {
+      node.attr({rx: t * 10, ry: t * 10});    
+    };
+  });</pre>
+<p>在這裡，紅色部份的 tween() 函式呼叫為這個內插函式命名為 animation ，並透過第二個參數傳回一個我們客製的內插函式：</p>
+<pre>  function() {
+&nbsp;   var node = d3.select(this);
+&nbsp;   return function(<span style="color: #ff0000;">t</span>) { <span style="color: #ff0000;">/* 這裡傳回的函式即為我們客製的內插函式 ＊/</span>
+  &nbsp; &nbsp; node.attr({rx: t * 10, ry: t * 10});
+&nbsp;   }
+  }</pre>
+<p>內插函式中的參數 t 即為內插參數，在每次動畫的過程中都會由 0 漸漸變為 1 ，而每次變化都會執行這個內插函式一次。上例中的內插函式會將矩形的角落慢慢變成半徑為 10 的圓角。</p>
+<p>利用 tween 函式我們可以客製任何 transition() 無法產生的動畫，例如 &lt;text&gt; 中數字的漸變、多邊形端點數的變化、或是任意改變動畫的速率等等，相當方便！例如前面的甜甜圈動畫圖，我們便可以利用 tween 效果來改進動畫的體驗，只要將 t 參數帶入圓餅角度中即可：</p>
+<pre>d3.select("body").append("svg").append("path").attrs({
+  fill: "red",
+  transform: "translate(80,80)",
+  d: d3.arc()({
+    innerRadius: 20,
+    outerRadius: 40,
+    startAngle: 0,
+    endAngle: 1
+  })
+}).transition().duration(1000).tween("animation", function() {
+  var node = d3.select(this);
+  <span style="color: #ff0000;">return function(t) { /* 傳回我們的客製內插函式 */</span>
+    node.attrs({
+      <span style="color: #ff0000;">d: d3.arc()({ /* 每次內插都重新設定形狀 */</span>
+        innerRadius: 20,
+        outerRadius: 40,
+        startAngle: 0,
+        <span style="color: #ff0000;">endAngle: 1 + t * 2 /* 末端角度從 1 增加到 3 */</span>
+      })
+    });
+  };
+});</pre>
+<p>上例的執行結果如下：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/ex5.gif"><img height="200" width="900" alt="Example 5" src="https://blog.infographics.tw/wp-content/uploads/2016/10/ex5.gif" class="aligncenter size-full wp-image-1966"></a>
+<p>&nbsp;</p>
+<h2>各式各樣的動畫效果</h2>
+<p>雖然 tween 可以控制動畫速率，但為了一些基本的動畫效果就得自己寫內插函式，有時也是麻煩，幸好 D3.js 提供了 d3.ease 時序函式組，讓我們可以利用簡單的 ease() 函式設定來改變動畫的演進效果。</p>
+<p>舉例來說，透過時序前進再倒退的操作，我們可以做出類似球彈跳的效果、也可以利用平方、立方的時序轉換做出加速度甚至減速的動畫效果：</p>
+<pre>&nbsp; d3.select("body").append("svg").append("circle").attrs({
+&nbsp; &nbsp; cx: <span style="color: #3366ff;"><strong>50</strong></span>, cy: 20, r: 10, fill: "red"
+&nbsp; })<span style="color: #ff0000;"><strong>.transition().ease(d3.easeBounce).</strong></span>attrs({
+    cy: <span style="color: #339966;"><strong>100</strong></span>
+  });</pre>
+<p>上面的程式碼片段會讓一顆紅色的圓球往下墜落並彈跳，最終圓心停留在 (<span style="color: #3366ff;"><strong>50</strong></span>, <span style="color: #339966;"><strong>100</strong></span>) 的位置：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/10/ex6.gif"><img height="224" width="900" alt="Example 6 - Drop ball" src="https://blog.infographics.tw/wp-content/uploads/2016/10/ex6.gif" class="aligncenter size-full wp-image-1967"></a>
+<h2>小結</h2>
+<p>我們在這篇文章談到了 D3.js 做動畫視覺化的基本，也許你會覺得概念很短，但事實上光是這些基本元件，就可以讓我們作出類似下圖般的多重動畫 ( 此為 D3.js 作者 Mike Bostock 所製作的動畫範例 )：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1986"><a href="https://blog.infographics.tw/wp-content/uploads/2016/10/demo2.gif"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/demo2.gif 900w, https://blog.infographics.tw/wp-content/uploads/2016/10/demo2-300x100.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/demo2-768x256.gif 768w" height="300" width="900" alt="adopted from https://bl.ocks.org/mbostock/1256572" src="https://blog.infographics.tw/wp-content/uploads/2016/10/demo2.gif" class="size-full wp-image-1986" aria-describedby="caption-attachment-1986"></a><p class="wp-caption-text" id="caption-attachment-1986">adopted from https://bl.ocks.org/mbostock/1256572</p></div>
+<p>那麼，若你有 JavaScript 與 D3.js 的基礎，看完應該已經躍躍欲試了吧！不過在結束之前，再提供我們先前與讀者分享過的兩篇文章，他們都用到了 D3.js 的動畫技巧：</p>
+<ul>
+<li>「<a href="https://blog.infographics.tw/2015/03/d3js-bar-pie-morph-chart/">D3JS 實戰 － 是長條也是圓餅的變形圖表</a>」 – 利用 path 漸變做到長條圖至圓餅圖的變形動畫</li>
+<li>「<a href="https://blog.infographics.tw/2016/05/d3js-seven-pro-tips/">高手才知道！七個你所不知道的 D3.js 秘技</a>」 – &nbsp;除了動畫命名與 Tween 的技巧，也包含了像是資料綁定、屬性設定的小秘技。不容錯過！</li>
+</ul>
+<p>如果把這些文章都讀過，應該就能對動畫相當得心應手囉！那麼接下來的時間就留給讀者們，趕快打開你的編輯器來玩玩動畫吧！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/animation/">animation</a>,<a rel="tag" href="https://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/keyframe/">keyframe</a>,<a rel="tag" href="https://blog.infographics.tw/tag/transition/">transition</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/11/make-choropleth-with-datamaps/">熱度地圖簡單做！使用 Datamaps</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/11/plotdb-the-data-visualization-service/">為所有人打造的資料視覺化服務 — PlotDB</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="https://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="高手才知道！七個你所不知道的 D3.js 秘技" rel="bookmark" href="https://blog.infographics.tw/2016/05/d3js-seven-pro-tips/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-3-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-3-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-3-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-3-300x300.png">																										<br>
+													高手才知道！七個你所不知道的 D3.js 秘技												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

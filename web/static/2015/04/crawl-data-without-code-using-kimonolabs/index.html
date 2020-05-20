@@ -1,0 +1,417 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">不會寫程式也能爬，Kimono 幫你把網站變資料</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-247 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-api tag-crawler tag-data tag-kimono tag-kimonolabs tag-35" id="post-247">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-04-6" class="updated">6 4 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/03/cover1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/cover1.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/cover1-300x176.png 300w" height="527" width="900" alt="kimonolabs - cover" src="http://blog.infographics.tw/wp-content/uploads/2015/03/cover1.png" class="aligncenter size-full wp-image-393"></a>
+<p>常常做報告時需要網路上的資料，卻因為東西太多、滑鼠點壞了都都還抓不完嗎？ 科技的進步就是這麼神奇，Kimono 讓你連程式都不用寫，滑鼠點個幾下資料就自動匯整成 API 提供下載。以後要整理資料再也不用看工程師臉色了！</p>
+<p><span id="more-247"></span></p>
+<p>一般網路爬蟲的概念大致上都是依序下載網頁與解析文件，這部份的概念我們在之前分享的「<a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/" title="資料爬蟲實戰－使用 NODE.JS">資料爬蟲實戰 － 使用 node.js</a>」已經提到過了；然而，無論是網頁循序下載、文件分析等等的動作，都很難不透過程式來完成，尤其是文件分析常牽扯到 Regular Expression 或是 CSS Selector ，讓初學程式的朋友看得是一個頭兩個大。</p>
+<p>其實這樣的動作仍然可以自動化，重點並不在程式語法或技術詞彙，而是要告訴電腦：</p>
+<ol>
+<li>哪些是我們要的資料？他們有什麼樣的規律？ ( 比方說，在網頁上都是紅色、每次都會出現在方塊中的第一個 )</li>
+<li>哪些網頁要處理？怎樣找出這些網頁？ ( 比方說，跟著 Google 搜尋結果下方的分頁連結一個一個處理 )</li>
+</ol>
+<p>從這個角度出發， Kimono 幫你包辦了技術細節，我們剩下的只需要透過滑鼠點點點來告訴 Kimono 上面這兩點，「哪些欄位是我們要的？」「網頁要怎麼翻頁？」。</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/bookmarklet.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/bookmarklet.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/bookmarklet-300x93.png 300w" height="280" width="900" alt="kimono's bookmarklet" src="http://blog.infographics.tw/wp-content/uploads/2015/03/bookmarklet.png" class="aligncenter size-full wp-image-395"></a>
+<p>Kimono 最初是透過很有趣的方式運作 － 他提供一段程式碼「Kimonify」( 如上圖 ) ，我們先把它拖入書籤列，接著切換到我們想要爬取的網頁點擊該書籤，Kimonify 便會在該頁建立輔助工具列，供我們利用它來爬取資料。</p>
+<p>基本上這個書籤可以說就已涵蓋了 Kimono 的主要功能。第一次點擊 Kimonify 書籤按鈕時，除了 Kimono 本身的工具列，還會帶出如下圖的使用簡介，大致上看過一遍應該就可以上手了：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/kimonify-guide.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/kimonify-guide.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/kimonify-guide-300x118.jpg 300w" height="353" width="900" alt="Kimono - How to Use" src="http://blog.infographics.tw/wp-content/uploads/2015/03/kimonify-guide.jpg" class="aligncenter size-full wp-image-399"></a>
+<p>簡單幫各位翻譯一下「How to use …」的內容：</p>
+<ol>
+<li>在網頁上按任何東西來選取該物件</li>
+<li>如果只想選擇一部份內容，可透過點擊+拖曳</li>
+<li>Kimono 會挑出相似物件，我們則按「v」或「x」來告訴 Kimono 有沒有挑對</li>
+<li>按 (+) 來增加其它資料項</li>
+<li>右上方的按鈕可以讓你調整及預覽結果</li>
+<li>完成後，按右上方的「Finish」</li>
+</ol>
+<h2>實際操作</h2>
+<p>不實際上玩過一遍沒什麼感覺，讓我們來一步一步做做看！先從爬取 Google 來嘗試吧，搜尋「資料視覺化」後點擊「Kimonify」書籤結果如下：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/google.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/google.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/google-300x110.png 300w" height="330" width="900" alt="kimono with googling &quot;資料視覺化&quot;" src="http://blog.infographics.tw/wp-content/uploads/2015/03/google.png" class="aligncenter size-full wp-image-400"></a>
+<p>這時當滑鼠移過網頁上的文字時，我們會看到文字的底色變成了黃色，這時我們可以點擊 ( 或選取部份 ) 文字來選擇該文字，做為分析網頁內容的起點。</p>
+<h3>選取資料</h3>
+<p>比方說，若我想要的是所有的搜尋標題，那麼我就先點擊搜尋結果的標題，以上圖為例即是「資料視覺化/ Data Visualization …」該段文字， Kimono 會自動標記他所找到的類似項目。</p>
+<p>如下圖，點擊「資料視覺化/ Data Visualization …」( 紅色箭頭 1 處 ) 之後，「30 個把資料 … 」及「Big Data 資料分析 …」( 紅色箭頭 2 處 ) 的黃底也自動跳出，這時我們便可以透過後方的叉與勾告訴 Kimono 這樣的選擇是否正確，若正確的話即按勾：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/google2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/google2.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/google2-300x113.png 300w" height="340" width="900" alt="Kimono with Google, 2" src="http://blog.infographics.tw/wp-content/uploads/2015/03/google2.png" class="aligncenter size-full wp-image-401"></a>
+<p>點擊勾勾後，工具列黃圈中的 「1」會變成「10」，代表我們成功選取了 10 筆資料。有時 Kimono 無法自動找出相似物件，這時只要多點幾個同類物件， Kimono 就能順利幫我們取出該類物件。</p>
+<h3>資料命名</h3>
+<p>成功選取所有同類資料後，注意黃圈左方方格中的「property1」，他即代表我們為這 10 筆資料的命名，可以自由更換，以這個例子來說換成「title」比較適當。</p>
+<p>改完名稱後，點擊黃圈右方的「 + 」代表我們要新增不同的資料，接著重覆之前的步驟，我們可以一併把網址、內容摘要都取下來。大約重覆幾次後，便可以點擊工具列右邊的「Data Modal View」按鈕 ( 三條橫線那一個 ) 看看目前的資料結構：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/google3.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/google3.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/google3-300x137.png 300w" height="410" width="900" alt="Kimono with Google, Data Structure" src="http://blog.infographics.tw/wp-content/uploads/2015/03/google3.png" class="aligncenter size-full wp-image-402"></a>
+<h3>檢視模式</h3>
+<p>右上角的三個圖示 ( 螢幕、三條線與角括號 ) 可以讓我們在不同的顯示模式中切換，包含了下列三種模式：</p>
+<ol>
+<li>看得到整個網頁的資料選取模式 ( 左方的螢幕圖示 )</li>
+<li>資料結構模式 ( 中間的三條線圖示 ) ，以及</li>
+<li>顯示完整 JSON 的資料檢視模式 （右方的角括號圖示 )。</li>
+</ol>
+<p>如果不小心切換了模式回不去，到這邊按一下即可。</p>
+<h3>截取分頁資料</h3>
+<p>這樣可以讓我們爬取一頁的資料，但如果資料很多頁的時候怎麼辦？ Kimono 提供多頁爬取的功能，我們只要指出分頁的規則即可：首先點擊工具列右上方的書本符號進入選取分頁連結模式，然後找出頁面上的分頁連結按鈕雙擊。</p>
+<p>以 Google 為例，分頁連結在網頁最下方，點擊後可以看到 Kimono 帶出了各連結對應的頁碼：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/google6.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/google6.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/google6-300x113.png 300w" height="340" width="900" alt="Kimono with Google, Pagination" src="http://blog.infographics.tw/wp-content/uploads/2015/03/google6.png" class="aligncenter size-full wp-image-405"></a>
+<p>若雙擊無效，也可以單獨選取下一頁按鈕，這樣 Kimono 就知道要怎樣找到下一頁的位置了。</p>
+<h3>建立資料集與API</h3>
+<p>到這個階段可說我們的資料差不多準備好了，點擊右上角的「Done」後為資料集命名，然後建立 API：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/google4.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/google4.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/google4-300x117.png 300w" height="350" width="900" alt="Kimono - naming API" src="http://blog.infographics.tw/wp-content/uploads/2015/03/google4.png" class="aligncenter size-full wp-image-403"></a>
+<p>&nbsp;</p>
+<p>建立完的 API 畫面如下：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/google5.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/google5.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/google5-300x143.jpg 300w" height="430" width="900" alt="Kimono with Google, API" src="http://blog.infographics.tw/wp-content/uploads/2015/03/google5.jpg" class="aligncenter size-full wp-image-404"></a>
+<p>Kimono 提供 JSON 、 RSS 與 CSV 的格式，可以下載使用也提供線上 API 串接，對於一般資料使用或網站串接來說應該是相當足夠了。這個例子中製作出來的 JSON API 網址在<a href="https://www.kimonolabs.com/api/5fo515r8?apikey=mWV5IPPLxD7KEta2jMsibmIwGT9VyELQ" title="API for Googling &quot;資料視覺化&quot;">這裡</a>，有興趣可以看看結果長什麼樣囉。</p>
+<hr>
+<h2>總結</h2>
+<p>Kimono 利用方便的操作介面讓大家可以很快的建立資料 API 跟文件，對於不會寫程式爬資料的朋友可以說是個福音，而會寫程式的朋友也可以利用 Kimono 省去很多時間。 Kimono 建立了資料 API ，也等於提供了一個排程爬蟲平台，原本自己寫爬蟲時可能還會需要一個主機放置程式定時執行，使用 Kimono 連這個成本都節省了下來。</p>
+<p>Kimono 還提供許多方便的功能，例如資料變更警示信、 Google Spreadsheet 串接 、也提供程式化的資料轉換機制讓你可以化客製截取後的資料結果。相當方便的工具，大家若有建立了自己的 API ，不妨跟其它人分享一下囉。</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/api/">api</a>,<a rel="tag" href="http://blog.infographics.tw/tag/crawler/">crawler</a>,<a rel="tag" href="http://blog.infographics.tw/tag/data/">data</a>,<a rel="tag" href="http://blog.infographics.tw/tag/kimono/">kimono</a>,<a rel="tag" href="http://blog.infographics.tw/tag/kimonolabs/">kimonolabs</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e7%88%ac%e8%9f%b2/">爬蟲</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/04/seeing-than-reading-with-visualization-of-polis/">不只閱讀，更能看見－革命性的留言系統 pol.is</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/04/d3js-adobe-illustrator-nodejs/">視覺化的夢幻組合 － D3.js 、 Adobe Illustrator 與 NodeJS</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>12</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-9">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/232f9368ccc09e0609c555123c83e4af?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://www.kimonolabs.com">ryan rowe</a></cite>         <time datetime="2015-04-19"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-9">19 4 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>你好我是ryan，kimonolabs的founder。谢谢你们写这个blog post！我们真的喜欢人们在世界各地用kimono！</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-10">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-04-20"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-10">20 4 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>thank you too for building such a good service 🙂</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-67">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/01eeaa679ca52748441f1481933bcd94?s=40">
+                <cite class="fn">DAN</cite>         <time datetime="2015-09-27"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-67">27 9 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好, 建立完的 API 畫面, 都是英文, 無法顯示”中文”, 不知道”setting/設定”有沒有哪裡需要改設定的地方, 還是因為我用的是Windows 7 + chrome???</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-70">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-09-30"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-70">30 9 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好， Kimono 的網站 UI 目前應該都還只有英文喔！不過爬中文資料是沒問題的；你上面的那則留言是 Kimono 的 founder 留的，如果需要中文介面可以問問看他們有沒有翻譯計畫 😀</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-even depth-1 cf" id="comment-345">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/4b0c31c0f18de26b7b6ac97b3d672fea?s=40">
+                <cite class="fn">Sherry</cite>         <time datetime="2016-07-19"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-345">19 7 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好，想知道除了Kimonolabs外還有沒有哪些其他的工具呢？<br>
+這間公司好像已經不再營運了</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-354">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-07-26"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-354">26 7 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您可以使用 import.io, 或是繼續使用 kimonolabs 釋出的桌面版本.<br>
+我們先前有寫過 import.io 的簡單介紹, 您可以參考一下: <a rel="nofollow ugc" href="http://blog.infographics.tw/2015/06/data-crawling-with-import-io/">http://blog.infographics.tw/2015/06/data-crawling-with-import-io/</a></p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-420">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/fe7363a1608f3bd59b0530dd06496334?s=40">
+                <cite class="fn">marin</cite>         <time datetime="2016-09-5"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-420">5 9 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好<br>
+kimono現在是無法註冊帳號了嗎?</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-424">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-09-7"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-424">7 9 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好, kimono 被收購後停止提供線上服務, 但仍提供桌面版本軟體下載使用, 所以已經不需要註冊帳號了</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-even depth-1 cf" id="comment-436">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/fe7363a1608f3bd59b0530dd06496334?s=40">
+                <cite class="fn">marin</cite>         <time datetime="2016-09-12"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-436">12 9 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>那請問有桌面版本的教學嗎 ,因為使用方式向完全不一樣 感謝</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-535">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-09-23"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-535">23 9 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>因為這算是個已經不再繼續維護的軟體, 所以目前我們沒有預計要為桌面版寫教學喔~</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-437">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/6d83b6938de6544e58b6b0173a395033?s=40">
+                <cite class="fn">JEFF</cite>         <time datetime="2016-09-14"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-437">14 9 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>你好<br>
+小弟到今天才發現這麼好用的軟件，可惜由於錯過了注冊時間，沒有帳號及密碼，所以每次完成按DONE按鈕，都彈出登入畫面，無法儲存API。請問你有沒有解救方法？<br>
+能否借用你的帳戶一用？謝謝</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-536">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-09-23"><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/#comment-536">23 9 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>這樣的話, 我建議可以先試試看 import.io: <a rel="nofollow ugc" href="http://blog.infographics.tw/2015/06/data-crawling-with-import-io/">http://blog.infographics.tw/2015/06/data-crawling-with-import-io/</a></p>
+      </section>
+          </article>
+  </div>
+</div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

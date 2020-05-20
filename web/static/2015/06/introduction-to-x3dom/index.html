@@ -1,0 +1,357 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">視覺化的 3D 世界 － X3D 入門</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-966 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-d3js tag-html tag-markup-language tag-svg tag-vrml tag-webgl tag-x3d tag-x3dom" id="post-966">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-06-12" class="updated">12 6 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/06/cover2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/cover2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/cover2-300x176.jpg 300w" height="527" width="900" alt="X3D Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/06/cover2.jpg" class="aligncenter size-full wp-image-981"></a>
+<p>不太懂程式的你想要做 3D 視覺化，卻覺得 3D 離你太遙遠嗎？事實上，我們完全可以用平常寫網頁的方式來製作 3D 內容！網頁上達成 3D 效果的方式很多，今天就讓我們從標籤語言的角度來看看，如何使用 X3DOM 實現 3D 視覺化。</p>
+<p><span id="more-966"></span></p>
+<p>如果我們稍微對網頁有些概念，會知道網頁是由一堆元素組成的，包含超連結、圖片、列表 … 而從這些元素轉換到原始碼，我們會看到一對對像這樣的標籤：</p>
+<pre>  &lt;a href="http://blog.infographics.tw"&gt; link &lt;/a&gt;</pre>
+<p>上例是一個超連結的例子，由左右成對的開閉標籤「 &lt;a&gt;」、「&lt;/a&gt;」與包含要顯示的文字「link」組成，內含「href」屬性值為「http://blog.infographics.tw」。</p>
+<p>下面則是另外一個例子，單獨一個標籤「 &lt;img/&gt; 」代表圖片，「src」屬性值為「http://blog.infographics.tw/img/default.png」指向要顯示的圖片網址：</p>
+<pre>  &lt;img src="http://blog.infographics.tw/img/default.png"/&gt;</pre>
+<p>我們在寫網頁時，大多都依照這樣的規則在編寫，包括插入圖片 ( 使用 &lt;img&gt; ) ，強調文字 ( 使用 &lt;em&gt; ) 、製作列表 ( 使用 &lt;li&gt; ) 等等，整個網頁編輯的標籤語言我們則稱之為 HTML； HTML 所包含的標籤集主要都是在文字處理與排版，我們可以想像成是在製作 Microsoft Word 或 PDF 等文件的概念，圖形處理也就比較弱了。</p>
+<p>因此，大約在 1999 年前後，用來繪制 2D 圖形的 SVG 標準被制訂了，而 1994 年也出現了為 3D 繪圖而制訂 VRML 標準，經過若干年的演進，VRML 目前已升級為稱做「X3D」的標準。</p>
+<p>讓我們簡單的複習一下：</p>
+<ul>
+<li>HTML 在網頁中排版文件</li>
+<li>SVG 在網頁中做 2D 繪圖 ( 關於 SVG，可以參考我們先前的文章：<a href="http://blog.infographics.tw/2015/06/introduction-to-svg-graphics-on-web/">可縮放向量圖 SVG 入門</a> )</li>
+<li>X3D 在網頁做 3D 繪圖</li>
+</ul>
+<p>(* SVG, X3D 不光只是用來做網頁繪圖，但我們在這裡先當成是這樣吧 )</p>
+<h2>X3DOM － Web 3D Framework</h2>
+<p>雖然 X3D 以標籤語言的形式定義了 3D 物件的描繪，但這不代表瀏覽器就支援了；為了讓我們可以在瀏覽器中展示與使用 X3D ，我們可以使用 X3DOM &nbsp;這個 Framework ，他透過 WebGL 為我們實現了 X3D 的瀏覽器支援，讓我們不需要學習 WebGL 也可以輕易的製作 3D 內容！</p>
+<h3>前置作業</h3>
+<p>要使用 X3DOM ，我們只要在網頁中引入兩個 X3DOM 的檔案， x3dom.css 與 x3dom.js ：</p>
+<p>&lt;link rel=”stylesheet” type=”text/css” href=”x3dom.css”/&gt;<br>
+&lt;script type=”text/javascript” src=”x3dom.js”&gt;&lt;/script&gt;</p>
+<p>這兩個檔案可以在 <a href="http://www.x3dom.org/?page_id=7">X3DOM 網站的下載頁面</a>取得。</p>
+<h3>我的 3D 第一步</h3>
+<p>接著，試著在我們的網頁中加入下面的標籤：</p>
+<pre>  &lt;x3d&gt;
+    &lt;scene&gt;
+      &lt;shape&gt;&lt;box&gt;&lt;/box&gt;&lt;/shape&gt;
+    &lt;/scene&gt;
+  &lt;/x3d&gt;</pre>
+<p>你可以看到一個類似下面的結果，畫面中間一個很不容易辨識但是的確存在的正方體，我們甚至可以用滑鼠轉動它：</p>
+<p><br>
+由於 X3D 是一種標籤語言，我們很容易可以看出這些標籤在幹嘛：</p>
+<ul>
+<li>&lt;x3d&gt;：如同 &lt;svg&gt;，告知瀏覽器接下來的內容屬於 X3D</li>
+<li>&lt;scene&gt;：標示一個場景</li>
+<li>&lt;shape&gt;：標示一個物體</li>
+<li>&lt;box&gt;：一個立方體形狀</li>
+</ul>
+<p>&lt;shape&gt; 告訴瀏覽器我們想要顯示一個物體，而 &lt;box&gt; 則指定這個物體的形狀為立方體。光是形狀還不夠，我們可以在 &lt;shape&gt; 標籤下面使用 &lt;appearance&gt; 指定這個物體呈現的樣貌，例如我們使用 &lt;material&gt; 標籤在 appearance 指定這個物體的顏色：</p>
+<pre>&nbsp; &lt;shape&gt;
+&nbsp; &nbsp; &lt;appearance&gt;
+&nbsp; &nbsp; &nbsp; &lt;material diffuseColor="1 1 0"/&gt;
+&nbsp; &nbsp; &lt;/appearance&gt;
+&nbsp; &nbsp; &lt;box&gt;&lt;/box&gt;
+&nbsp; &lt;/shape&gt;</pre>
+<p>上例將會在網頁中畫出一個黃色的方塊：</p>
+<p></p>
+<p>或者是使用圖片做為其外觀：</p>
+<pre>&nbsp; &lt;shape&gt;
+&nbsp; &nbsp; &lt;appearance&gt;
+&nbsp; &nbsp; &nbsp; &lt;ImageTexture url="brick.png"/&gt;
+&nbsp; &nbsp; &lt;/appearance&gt;
+&nbsp; &nbsp; &lt;box&gt;&lt;/box&gt;
+&nbsp; &lt;/shape&gt;</pre>
+<p>馬上我們就可以做出一個瑪莉歐裡的3D問號磚：</p>
+<p></p>
+<h3>製作不同形狀</h3>
+<p>看到這邊我想大家都很興奮吧，「我也會 3D 了！」沒錯，使用標記語言的話真的很容易，不過我們現在只會畫方塊而已，要做遊戲的話大概只做得出來炸彈超人，炸彈還得是方的。</p>
+<p>所以我們就來做不同形狀吧！剛剛我們使用了 &lt;box&gt; 標籤，我想大家應該也猜得到，就跟 SVG 一樣我們只要換個標籤就能有不同形狀了：</p>
+<ul>
+<li>&lt;sphere&gt; ： 畫球的標籤</li>
+<li>&lt;cone&gt; ： 畫圓錐的標籤</li>
+<li>&lt;torus&gt; ： 畫圓環 ( 甜甜圈 ) 的標籤</li>
+<li>&lt;cylinder&gt; ： 畫圓柱的標籤</li>
+</ul>
+<p>我們利用兩個 &lt;shape&gt; 標籤放置不同的形狀後產生如下的結果：</p>
+<p></p>
+<p>雖然多個基本形狀可以組成很多有趣的模型，但這邊還是有兩個問題：</p>
+<ul>
+<li>要怎麼設定物體的位置？</li>
+<li>更複雜形狀要怎麼繪製？</li>
+</ul>
+<p>如果大家有看過先前的「 <a href="http://blog.infographics.tw/2015/06/introduction-to-svg-graphics-on-web/">可縮放向量圖 SVG 入門</a> 」一文，大概也可以猜到了：物件的位置利用特殊屬性設定 (比方說 SVG 中圓形中心的 (cx,cy) 屬性 )，複雜形狀則透過設定形狀的端點來製作 ( 類似 SVG 的 Path 標籤 ) 。</p>
+<h3>&lt;transform&gt; － 物體位移、旋轉等「線性轉換」</h3>
+<p>我們可以使用 &lt;transform&gt; 來移動物體的位置。例如，我們利用兩個球體與一個圓柱來製作啞鈴：</p>
+<pre>  &lt;transform <strong>translation="0 -1 0"</strong>&gt; <strong>&lt;!-- 沿 Y 軸移動 -1.5 單位 --&gt;</strong>
+    &lt;shape&gt;&lt;sphere/&gt;&lt;/shape&gt;
+  &lt;/transform&gt;
+  &lt;transform translation="0 0 0"&gt;
+    &lt;shape&gt;&lt;cylinder/&gt;&lt;/shape&gt;
+  &lt;/transform&gt;
+  &lt;transform <strong>translation="0 1 0"</strong>&gt; <strong>&lt;!-- 沿 Y 軸移動 -1.5 單位 --&gt;</strong>
+    &lt;shape&gt;&lt;sphere/&gt;&lt;/shape&gt;
+  &lt;/transform&gt;</pre>
+<p>這裡我們用 &lt;transform&gt; 將球體移至圓柱的兩端，但是因為我們沒有控制物體的大小所以變成了一個看起來像膠囊的東西：</p>
+<p></p>
+<p>不過沒關係，就像 SVG 的轉換一樣， X3D 的 也提供了位移、旋轉與縮放的機能。我們試著讓圓柱體縮小，再適當的旋轉一下整個形狀：</p>
+<pre>  &lt;transform <strong>rotate="0.4 0.4 1.0 1.57"</strong>&gt; <strong>&lt;!-- 以 (0.4,0.4,1.0) 向量為軸轉 90 度 --&gt;</strong>
+    &lt;transform translation="0<strong> -1.5</strong> 0"&gt; <strong>&lt;!-- 微調位移 --&gt;</strong>
+      &lt;shape&gt;&lt;sphere/&gt;&lt;/shape&gt;
+    &lt;/transform&gt;
+    &lt;transform translation="0 0 0" <strong>scale="0.5 1 0.5"</strong>&gt; <strong>&lt;!-- X 軸向與 Z 軸向各縮小成一半 --&gt;</strong>
+      &lt;shape&gt;&lt;cylinder/&gt;&lt;/shape&gt;
+    &lt;/transform&gt;
+    &lt;transform translation="0 <strong>1.5</strong> 0"&gt;
+      &lt;shape&gt;&lt;sphere/&gt;&lt;/shape&gt;
+    &lt;/transform&gt;
+  &lt;/transform&gt;</pre>
+<p>結果會類似下面。下例我們順便加了個材質，不過並不影響我們對 &lt;transform&gt; 的理解：</p>
+<p></p>
+<h3>&lt;indexedFaceSet&gt; － 使用多邊形建立各種物體</h3>
+<p>&nbsp;</p>
+<p>學會如何移動物體後，讓我們來看看怎麼樣建立任意形狀的物體。如同一個平面形狀我們可以想成是由許多線段連接組合而成一樣，一個立體的物體我們也可以當成是由許多塊多邊形拼湊而成的。舉例來說，一個金字塔形的物體有五個面、每個面有三個端點，總共則有五個點。</p>
+<p>我們可以把這些多邊形有用到的端點三個三個一組寫出來，以金字塔為例：</p>
+<pre>  左前方的點：-1  0  1
+  右前方的點： 1  0  1
+  右後方的點： 1  0 -1
+  左後方的點：-1  0 -1
+  正上方的點： 0  1.7  0</pre>
+<p>由於空間中的點總是三個三個一組，我們可以把他寫成一串，並用一個標籤 &lt;coordinate&gt; 來記載這些資訊：</p>
+<pre>  &lt;coordinate point="-1 0 1 1 0 1 1 0 -1 -1 0 -1 0 1.7 0"/&gt;</pre>
+<p>現在我們有了點，但還不知道哪些點組成哪些面。正如剛剛所說的，金字塔有五面，每個面各由三個端點組成；而端點都已經記載在 &lt;coordinate&gt; 標籤中了，我們可以說「我要第三個點」，很容易就可以從 &lt;coordinate&gt; 中找到第三個點為 (1,0,-1) 。以此做為點的代號，我們可以列舉每個面所用到的點代號，比方說：</p>
+<pre>&nbsp; 金字塔的底面：0 3 2 1
+&nbsp; 金字塔的前面：0 1 4
+&nbsp; 金字塔的左面：0 4 3
+&nbsp; 金字塔的右面：1 2 4
+&nbsp; 金字塔的後面：2 3 4</pre>
+<p>(* 這裡用 0 代表第一個點， 1 代表第二個點，依此類推 )</p>
+<p>為了撰寫方便，我們也把它們寫成一串，只是為了區隔不同面，我們在面與面之間插入「-1」來做區隔，這便是 indexedFaceSet 的格式：</p>
+<pre>&nbsp; &lt;indexedFaceSet coordIndex="0 3 2 1 -1 0 1 4 -1 0 4 3 -1 1 2 4 -1 2 3 4"&gt;
+&nbsp; &nbsp; &lt;coordinate point="-1 0 1 1 0 1 1 0 -1 -1 0 -1 0 1.7 0"/&gt;
+&nbsp; &lt;/indexedFaceSet&gt;</pre>
+<p>注意 &lt;coordinate&gt; 是放在 indexedFaceSet 裡面的。於是，我們就畫好了金字塔：</p>
+<p></p>
+<p>( 同樣的我們在這裡也套上了金字塔的材質，不影響理解 indexedFaceSet 的使用 )</p>
+<h3>3D 長條圖</h3>
+<p>講到這裡，我們還是要回到資料視覺化，那就來畫個圖表吧！我們這次利用 X3Dom 來畫個立體長條圖看看吧。台灣近一年來的失業率為：</p>
+<pre>&nbsp; 103/05 3.99%
+&nbsp; 103/06 3.97%
+&nbsp; 103/07 3.95%
+&nbsp; 103/08 3.94%
+&nbsp; 103/09 3.90%
+&nbsp; 103/10 3.87%
+&nbsp; 103/11 3.87%
+&nbsp; 103/12 3.84%
+&nbsp; 104/01 3.78%
+&nbsp; 104/02 3.74%
+&nbsp; 104/03 3.75%
+&nbsp; 104/04 3.75%</pre>
+<p>由於 X3D 是標記語言，我們可以輕易的利用 D3.js 建立資料與 3D 物體間的綁定：</p>
+<pre>d3.select("x3d scene").selectAll("transform").data(data).enter().append("transform")
+d3.select("x3d scene").selectAll("transform").each(function(it,idx) {
+  d3.select(this).attr({
+    translation: (idx/2 - 3)+" "+(it.1 - 3.7)*4+" 0",
+    scale: "0.1 "+ ((it.1 - 3.7) *4) + " 0.1"
+  });
+  shape = d3.select(this).append("shape");
+  shape.append("appearance").append("material").attr("diffuseColor", "red");
+  shape.append("box");
+});</pre>
+<p>產生的結果如下 ( 顏色經另外設定，為求精簡此處未列出顏色部份的源碼，且為了讓視覺上的變化更明顯，資料經過縮剪與轉換 )：</p>
+<p></p>
+<p>這就是我們的第一個 3D 立體長條圖囉！ ( 若沒有接觸過 D3.js ，可參考先前的文章：「<a href="http://blog.infographics.tw/2015/03/d3js-the-introduction/">網頁視覺化利器 － D3.js 簡介</a>」 )</p>
+<h2>結語</h2>
+<p>我們在這次的 X3D 入門簡單說明了 X3D 的使用方式與基本的一些標籤，大家都有跟上嗎？這次我們說明的語法只是 X3D 規格中的一小部份，但相信已經可以幫助大家更快的進入狀況了；當我們操縱元素熟練後，就可以使用編輯軟體來產生 x3d 格式的模型檔，這時因為我們很了解檔案內容，這時就可以很輕易的透過 D3.js 來操作囉！</p>
+<p>最後不妨參考一下這根 3D 香蕉，他使用 D3.js Fisheye Plugin 製作立體變形效果，是不是很軟 Q 呢？有機會我們再來介紹 X3D 更進階的使用方法吧！</p>
+<p></p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="http://blog.infographics.tw/tag/html/">html</a>,<a rel="tag" href="http://blog.infographics.tw/tag/markup-language/">markup language</a>,<a rel="tag" href="http://blog.infographics.tw/tag/svg/">svg</a>,<a rel="tag" href="http://blog.infographics.tw/tag/vrml/">VRML</a>,<a rel="tag" href="http://blog.infographics.tw/tag/webgl/">webgl</a>,<a rel="tag" href="http://blog.infographics.tw/tag/x3d/">x3d</a>,<a rel="tag" href="http://blog.infographics.tw/tag/x3dom/">x3dom</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/06/sparkline-with-peity-jquery-plugin/">彈指間畫出迷你圖表 － jQuery Plugin 「Peity」 簡介</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/06/data-crawling-with-import-io/">資料爬梳一鍵搞定 － 使用 import.io 爬梳網頁資料</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

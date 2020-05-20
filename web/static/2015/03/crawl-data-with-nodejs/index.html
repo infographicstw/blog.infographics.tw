@@ -1,0 +1,395 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">資料爬蟲實戰－使用 node.js</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-255 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-crawler tag-data tag-nodejs tag-35" id="post-255">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-03-11" class="updated">11 3 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/03/cover2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/cover2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/cover2-300x176.jpg 300w" height="527" width="900" alt="Nodejs Crawler - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/03/cover2.jpg" class="aligncenter size-full wp-image-302"></a>
+<p>上次介紹了網頁前端資料直爬的手法，但當資料量很大或是需要費時處理時，並不適合在網頁上做，否則會讓我們讀者的電腦當掉。因此，後端資料爬取仍不可或缺，今天我們就來看看如何使用 nodejs 在自己的電腦上寫爬蟲程式。</p>
+<p><span id="more-255"></span></p>
+<h3>NODEJS</h3>
+<p>先假設各位已經會寫 Javascript 了但不一定有 nodejs 的經驗。 nodejs 讓你可以在自己的電腦上用 Javascript 來撰寫程式，他提供了一套 API 讓你與本機電腦互動，API 都包裝成物件的形式，例如 fs 物件提供本機檔案存取的 API 、 JSON 物件則幫你做物件與字串間轉換 ( serialization &amp; deserilzation ) 。基本上只要大致上了解這些 API 的用法，寫 Javascript 就很像是在瀏覽器端撰寫一樣，差別只是執行環境所提供給你的 API 不太一樣而已。</p>
+<p>( 你可能會好奇，為什麼一定要用 Javascript 爬資料？小編自己其實傾向於前後端都使用 Javascript ，這樣程式碼只要有適當的包裝，就可以兩邊共用而不需要用兩種不同的語言寫一樣用途的程式碼了 )</p>
+<p>大致上了解了 nodejs 以後，讓我們來安裝一下 nodejs 的執行環境吧！在 windows 環境上，只要到&nbsp;<a rel="noopener" href="https://nodejs.org/download/" title="nodejs installation">https://nodejs.org/download/</a> 直接下載安裝檔來執行即可；而在 Linux 或 Mac 環境下，我建議參考<a rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server" title="How To Install Node.js on an Ubuntu 14.04 server">這個網頁</a>提供的作法，在終端機中鍵入下列指令(參考How To Install Using a PPA 段)：</p>
+<pre>  curl -sL https://deb.nodesource.com/setup | sudo bash -
+  sudo apt-get install nodejs
+  sudo apt-get install build-essential
+</pre>
+<p>接著試著執行 node –version ，看看程式輸出結果是不是類似下列：</p>
+<pre>  v0.10.26</pre>
+<h3>NPM</h3>
+<p>nodejs 除了提供一個 Javascript 的執行環境外，他也提供了一個管理套件的工具 npm ( nodejs package manager )，讓你很容易可以與他人交換各自擴充的 nodejs 套件。為了要撰寫爬蟲程式，我們要使用下列兩個擴充套件：</p>
+<ul>
+<li><a rel="noopener" href="https://github.com/request/request" title="simplified HTTP client">request</a>&nbsp;－ HTTP 客戶端輔助工具</li>
+<li><a rel="noopener" href="https://github.com/cheeriojs/cheerio" title="Cheerio - lean jquery implementation for server">cheerio</a> － Server 端的 jQuery 實作</li>
+</ul>
+<p>安裝套件的方式很簡單，執行下列指令即可：</p>
+<pre>npm install request cheerio</pre>
+<p>npm 會在你執行指令的目錄下建立 node_modules 資料夾來存放擴充套件，並且當你執行 Javascript 程式碼時， nodejs 會到這個目錄下尋找你用到的套件。使用的套件也相當的簡單，以下列程式碼引入 request 及 cheerio ，就可以用同名物件來存取他們的 API：</p>
+<pre>  var request = require("request");
+  var cheerio = require("cheerio");</pre>
+<p>好啦，該準備的事情都做好了，讓我們來看看資料要怎麼爬。</p>
+<h3>REQUEST</h3>
+<p>request 這個模組可以幫你下載資料。使用方式：</p>
+<pre>  request({
+    url: "你想抓的網址",
+    method: "GET"
+  }, function(e,r,b) { /* Callback 函式 */
+    /* e: 錯誤代碼 */
+    /* b: 傳回的資料內容 */
+  });</pre>
+<p>隨便來個例子，假設你覺得 blog.infographics.tw 真是極品部落格，你想要隨時監控他的內容，那你就這樣寫</p>
+<pre>  request({
+    url: "http://blog.infographics.tw",
+    method: "GET"
+  }, function(e,r,b) {
+    if(!e) console.log(b);
+  });</pre>
+<p>相當簡單吧！</p>
+<h3>CSS Selector</h3>
+<p>剛剛我們成功的把 blog.infographics.tw 首頁取下了，但他是 HTML 碼，並不是我們想像的「資料」。幸好 HTML 是相當結構化的格式，我們可以透過分析他的結構來取得我們要的資料。這時候就不得不提「CSS Selector」這個東西了。</p>
+<p>CSS Selector 原本用於 CSS，用來在網頁指定一群標籤以便為他們套用 CSS 樣式。而這個「指定標籤」的能力也就可以讓我們來選出一群有特定規律的標籤，比方說 “&lt;H3&gt;” 、 “&lt;div class=’title’&gt;&lt;span&gt;…&lt;/span&gt;&lt;/div&gt;” 這樣的東西。</p>
+<p>以 blog.infographics.tw 來說，若深入看網站首頁的源碼，你會發現文章以一個一個 LI 的形式包裝，這個 LI 有 item 這個類別，而標題則存在 LI 下的 H2 標籤中。若想取出所有的標題，可以用這樣的 Selector ：「li.item h2」</p>
+<p>這邊不另外說明 CSS Selector ，因為他的內容量其實已經可以再寫成另外一篇文章了，有興趣的朋友可以參考 <a rel="noopener" href="http://www.w3schools.com/cssref/css_selectors.asp" title="W3C School - CSS Selector">W3C School 的說明</a>。</p>
+<h3>CHEERIO</h3>
+<p>如果你有用過 jQuery ，你大概對 CSS Selector 不陌生，要透過 CSS Selector 取得對應的標籤(比方說前面講的標題)，你只需要：</p>
+<pre>  $("li.item h2")</pre>
+<p>那麼問題來了，在本機電腦上並沒有 jQuery 可以用，也沒有瀏覽器幫你建好 DOM Tree。該怎麼辦呢？剛好這邊有個 Server 端的 jQuery 實作叫 Cheerio ，那就來用用看吧！</p>
+<p>Cheerio 的使用方式也是相當簡單，把整個 HTML 扔給他，他就會送你一個「$」，就可以拿來跑 CSS Selector 了：</p>
+<pre>  $ = cheerio.load(blogHTMLString);
+  titles = $("li.item h2");</pre>
+<p>接下來你大概也知道怎麼辦了，利用 jQuery 的 text 函式取得標籤的內容：</p>
+<pre>  var result = [];
+  for(i=0;i&lt;titles.length;i++) { result.push($(titles[i]).text()); }</pre>
+<h3>JSON</h3>
+<p>標題都取得以後，我們可以利用 JSON 跟 fs API 來儲存結果：</p>
+<pre>  fs.writeFileSync("result.json",JSON.stringify(result));</pre>
+<p>於是最終爬下來的資料就放在 result.json 裡了。</p>
+<h3>WRAP UP</h3>
+<p>讓我們來看看完整的程式碼大概會長什麼樣子吧！</p>
+<pre>  var request = require("request");
+  var fs = require("fs");
+  var cheerio = require("cheerio");
+  request({
+    url: "http://blog.infographics.tw",
+    method: "GET"
+  }, function(e,r,b) {
+    if(e || !b) { return; }
+    var $ = cheerio.load(b);
+    var result = [];
+    var titles = $("li.item h2");
+    for(var i=0;i&lt;titles.length;i++) {
+      result.push($(titles[i]).text());
+    }
+    fs.writeFileSync("result.json", JSON.stringify(result));
+  });</pre>
+<p>執行結果大概會有點像下面這個樣子：</p>
+<pre>  [
+    "誰說前端爬不了資料？使用 crossorigin.me",
+    "看過圖表社交平台嗎? － 使用 plot.ly 製作圖表",
+    "統計圖表製作 － 使用 RAW","只有圖表卻想要資料？讓 D3 Deconstructor 幫你！",
+    "千萬不要犯，7 個常見的圖表錯誤",
+    "統計圖表製作 – 使用 d3-generator","統計圖表製作 － 使用 infogr.am",
+    "復航事件、人失誤與設計心理學","歷年台灣航空事故圖表",
+    "六個訣竅，改進你的視覺化作品"
+  ]</pre>
+<p>到這邊為止，你已經知道怎麼從一個網頁上取得資料了，那麼接著要做的也就不困難了 － 把預計要抓的網址建成一個列表，然後逐項的去做上面這樣的處理。相信不會太困難才對，就教給你自己來做嘗試囉！</p>
+<h2>結語</h2>
+<p>這篇文章大致上介紹了網路爬蟲最基本的做法，一些簡單的爬蟲透過這樣的原理便可以製作。然而，網頁爬蟲程式其實要應付的問題不光只是技術的基本問題，如何應變各種不同的狀況，則是更進階的問題，例如：</p>
+<ul>
+<li>throttling － 有些網站碰到大量的存取時，會逐漸降低同來源的優先序，直到最後完全不再處理，使得爬蟲需要花非常久的執行時間來執行。</li>
+<li>cookie verification － 有些網站需要我們確認後才能進入，亦或者是我們要的資料藏在特定的步驟之後。這時候我們必須再額外對不同網址呼叫 request ，並紀錄回傳的 cookie 值</li>
+<li>agent verification － Headers in HTTP Request 會帶入瀏覽器的版本資訊，有些網站會以此做依據判斷我們是否是爬蟲程式。request 可以帶入自訂的 Header ，所以很容易可以騙過網站</li>
+<li>reCAPTCHA － 常見的網站認證碼欄，一張圖片要你填入看到的數字或字母，正確送出後才讓你讀取。因為程式要正確的認出圖片中的資訊並不容易，這往往很不容易對付。</li>
+</ul>
+<p>不過，畢竟我們的主題還是關於資料視覺化 / 資訊圖表，撰寫網路爬蟲的議題也許點到為止就好了，所以就到此打住，有興趣的朋友可以再針對這裡所提到的這些問題各別去深入研究囉！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/crawler/">crawler</a>,<a rel="tag" href="http://blog.infographics.tw/tag/data/">data</a>,<a rel="tag" href="http://blog.infographics.tw/tag/nodejs/">nodejs</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e7%88%ac%e8%9f%b2/">爬蟲</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/03/crawl-in-browser-with-corsproxy-crossorigin-me/">誰說前端爬不了資料？使用 crossorigin.me</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/03/d3js-bar-pie-morph-chart/">D3JS 實戰 － 是長條也是圓餅的變形圖表</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>7</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-346">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/604ff818b0eba2af4509f8f162007129?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://www.zonetwelve.weebly.com">ZoneTwelve</a></cite>         <time datetime="2016-07-22"><a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/#comment-346">22 7 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好,我想請問一下如果我想要連HTML標籤內的連結也抓下來<br>
+我應該要怎麼寫呢?</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-356">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-07-26"><a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/#comment-356">26 7 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>cheerio 提供類似 jQuery 的語法, 所以你可以用 $(node).attr(“href”) 的方式來取得連結.</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-368">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/e85756abd5984c94040bd5988cdfc314?s=40">
+                <cite class="fn">TWNCB</cite>         <time datetime="2016-08-5"><a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/#comment-368">5 8 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>請問，如果網站的內容是透過js動態載入的話，同樣的方式也爬得到後來才動態載入的資料嗎？<br>
+謝謝</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-373">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-08-9"><a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/#comment-373">9 8 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>透過 js 動態生成的網頁是沒有辦法用這個方式爬取的, 需要搭配 phantomjs 或其它前端技術喔~</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-even depth-1 cf" id="comment-720">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/3e44ecbc9cae65bba274cfae0b8ae54d?s=40">
+                <cite class="fn">li</cite>         <time datetime="2016-12-22"><a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/#comment-720">22 12 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>您好<br>
+擷取出來的資料呈現亂碼<br>
+是要從哪裡設定呢？<br>
+謝謝</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-725">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-12-25"><a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/#comment-725">25 12 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>可能是因為截取對象並非萬國碼, 可以在 request 中做設定, 請參考這一個討論: <a rel="nofollow ugc" href="http://stackoverflow.com/questions/12040643/nodejs-encoding-using-request">http://stackoverflow.com/questions/12040643/nodejs-encoding-using-request</a></p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-1123">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/cdd65cd17e7f11d5d6e1e293d8945308?s=40">
+                <cite class="fn">Joe</cite>         <time datetime="2017-11-19"><a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/#comment-1123">19 11 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>JavaScript 不是直譯 , Node JS 定義成JavaScript的直譯器是不是不太妥當？</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

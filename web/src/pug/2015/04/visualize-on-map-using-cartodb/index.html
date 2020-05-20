@@ -1,0 +1,325 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">實價登錄地圖我也會！用 CartoDB 製作地圖視覺化</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-337 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-cartodb tag-cartogram tag-geoevent tag-geojson tag-geospatial tag-map tag-233" id="post-337">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-04-20" class="updated">20 4 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <p><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/cover3.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/cover3.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/cover3-300x176.jpg 300w" height="527" width="900" alt="Cartodb - cover" src="https://blog.infographics.tw/wp-content/uploads/2015/04/cover3.jpg" class="alignnone size-full wp-image-623"><br>
+</a>在地圖上畫資料，效能往往是個大問題。我們手上常有大量的資料，像是台北市監視器列表、全台登記工廠列表等等，但數十萬筆的資料要畫得動並不容易，很多網站都只能透過選取局部範圍的方式減少顯示的資料量。這時一個專為地圖繪製打造的服務降臨了－ CartoDB ，專門的地圖繪製工具，這次就讓我們來看看如何使用這個工具做地理資訊視覺化。</p>
+<p><span id="more-337"></span></p>
+<p>在 CartoDB 中，地圖 ( Map ) 與資料集 ( Dataset ) 是分開管理的。我們可以使用線上預先提供的資料，也可以自己上傳資料來玩。另一方面，我們可以建立地圖，並把資料集以圖層的方式疊加上去。</p>
+<p>註冊好帳號後，我們先來建立一個地圖吧！在帳號主畫面的右上角點選「NEW &nbsp;MAP」：</p>
+<p><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/newmap-300x123.jpg 300w" height="370" width="900" alt="CartoDB - NEW MAP 1" src="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap.jpg" class="alignnone size-full wp-image-626"><br>
+</a>接著會提示你一些範例影片，有需要可以點來看；不然則點選 Create Map from Scratch 右方的「CREATE NEW MAP」：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap2.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/newmap2-300x97.jpg 300w" height="290" width="900" alt="CartoDB - NEW MAP 2" src="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap2.jpg" class="alignnone size-full wp-image-628"><br></a>
+<p>下一步則是選擇地圖要使用的資料，在畫面下方可以看到已經有兩筆資料了 ( partial &amp; untitled_table ) ，但假設我們尚未上傳的話，則可以先建立空白地圖「Create empty map」後稍晚再上傳資料：</p>
+<p><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap3.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap3.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/newmap3-300x98.jpg 300w" height="293" width="900" alt="CartoDB - NEW MAP 3" src="https://blog.infographics.tw/wp-content/uploads/2015/04/newmap3.jpg" class="alignnone size-full wp-image-631"><br>
+</a>然後再點一次建立新地圖，接著看到的就是一個新的空白地圖：</p>
+<p><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/map-desc.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/map-desc.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/map-desc-300x187.jpg 300w" height="562" width="900" alt="New Map Description" src="https://blog.infographics.tw/wp-content/uploads/2015/04/map-desc.jpg" class="alignnone size-full wp-image-632"><br>
+</a>為了要與資料集連結，我們要點選右上角的藍底加號 ( 上圖「增加資料」按鈕 ) ； CartoDB 可接受 Google Drive 、 DropBox 、 Twitter 等等的資料來源，若有已經上傳的資料集也可直接選取。因為我們尚未上傳任何資料集，所以我們自己先來上傳吧！</p>
+<p>為了讓 CartoDB 幫我們處理地理資料，含有地理資訊的資料是必須的。我們以內政部提供的不動產實價登錄資料為例，先將資料轉換成 CSV 檔，同時也把資料內的 TWD97 座標轉換成 GWS84 經緯度資料：</p>
+<pre>  編號, 平均單價, 緯度,               經度
+  1,    56790,   24.900450404978617, 121.04203079002734
+  2,    35545,   24.865235166619183, 120.98375058934072
+  3,    3813,    24.89642058084311,  120.99917841674052
+  4,    39333,   24.875302789511338, 120.99502185400195
+  5,    228,     24.64559416214912,  121.01922400367464
+  6,    490,     24.692714419174756, 121.07796254636216</pre>
+<p>上例的每筆資料各有三個欄位，分別是該筆交易的平均單價、緯度以及經度。實際我們會上傳一個約 13 萬筆資料的 CSV 檔，這裡只列出其中六筆做為示意。下圖為上傳檔案的畫面：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/04/upload.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/upload.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/upload-300x158.jpg 300w" height="475" width="900" alt="Upload dataset" src="https://blog.infographics.tw/wp-content/uploads/2015/04/upload.jpg" class="alignnone size-full wp-image-633"></a>
+<p>匯入之後還有一個重要的步驟要做，為了讓 CartoDB 知道我們資料中哪兩個欄位是對應到經緯度，我們必需要做「Georeference 」的動作；匯入資料後切換到 Map View 時 CartoDB 會提示我們做對應，若沒有提示的話也可以自行到右上方的「Edit」下拉式選單中點選「Georeference layer」：</p>
+<p><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/georeference.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/georeference.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/georeference-300x120.jpg 300w" height="360" width="900" alt="Georefernece Layer" src="https://blog.infographics.tw/wp-content/uploads/2015/04/georeference.jpg" class="alignnone size-full wp-image-638"><br>
+</a>選取對應的欄位，此例中為 Field_4 ( 經度 ) 與 Field_3 ( 緯度 )：</p>
+<p><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/georeference-2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/georeference-2.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/georeference-2-300x188.jpg 300w" height="563" width="900" alt="Georeference" src="https://blog.infographics.tw/wp-content/uploads/2015/04/georeference-2.jpg" class="alignnone size-full wp-image-639"><br>
+</a>做好 Georeference 後，把地圖拖拉到台灣一帶，會看到類似這樣的地圖：</p>
+<p><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/sample-on-map.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/sample-on-map-300x140.jpg 300w" height="420" width="900" alt="First Attempt" src="https://blog.infographics.tw/wp-content/uploads/2015/04/sample-on-map.jpg" class="alignnone size-full wp-image-635"><br>
+喔喔，看起來有的資料跑到日本跟菲律賓去了。雖然不是很清楚為什麼，不過實用上資料會有一定的錯誤率，我們可以透過額外的處理來減少資料異常的狀況，這屬於資料爬梳的問題，有機會我們再聊。</p>
+<p>在編輯器右方有許多功能可以選擇，其中一個「Wizard」可以快速幫我們設定想要的圖標類型，其中包含了 Cluster 、 Choropleth、 Category 、 Bubble 、 Torque 、 Heatmap 、 Density 等等，我們可以試需求選擇適當的類型：</p>
+<div class="wp-caption alignnone" style="width: 910px" id="attachment_637"><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/wizard.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/wizard.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/wizard-300x173.jpg 300w" height="520" width="900" alt="Marker Wizard" src="https://blog.infographics.tw/wp-content/uploads/2015/04/wizard.jpg" class="wp-image-637 size-full" aria-describedby="caption-attachment-637"></a><p class="wp-caption-text" id="caption-attachment-637">Wizard</p></div>
+<p>比方說，下圖是選擇了 Bubble 類型之後的結果，我們用平均單價 ( 下圖中 「Column」 選項裡的 field_2 ) 做為圈圈的大小：</p>
+<p><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/bubble-zoom-in.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/bubble-zoom-in.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/bubble-zoom-in-300x200.jpg 300w" height="600" width="900" alt="Set Bubble Chart" src="https://blog.infographics.tw/wp-content/uploads/2015/04/bubble-zoom-in.jpg" class="alignnone size-full wp-image-640"><br>
+</a>使用 Wizard 做出的圖標客製化空間不大，這時我們可以使用 CartoDB 提供的另一個工具 － CartoCSS － 來幫我們做進階的設定。同樣在右邊的工具列可以看到「CSS」字樣的按鈕，選取他之後便會開啟 CSS 編輯器。</p>
+<p>從下例我們可以看到右邊即為 CartoCSS 編輯器，其中已經代入了一些值，是 Bubble Chart 所提供的屬性；我們想要將泡泡的顏色也對應到平均單價，於是在每一個欄位中我們都追加一個「marker-fill 」屬性，並各別給與一個不同的 RGB 值，按下下方的「Apply Style」按鈕後，左方的泡泡便更新成有顏色的版本了：</p>
+<p><a href="https://blog.infographics.tw/wp-content/uploads/2015/04/bubble-cartocssify.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/bubble-cartocssify.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/bubble-cartocssify-300x193.jpg 300w" height="580" width="900" alt="set css to bubble chart" src="https://blog.infographics.tw/wp-content/uploads/2015/04/bubble-cartocssify.jpg" class="alignnone size-full wp-image-641"></a><br>
+( 關於 CartoCSS 的細節請參考 <a href="https://www.mapbox.com/tilemill/docs/manual/carto/" title="Mapbox: CartoCSS">Mapbox 的這個網頁</a>，小編也沒有玩得很深入，大家一起學習囉！ )</p>
+<p>把整個地圖拉到彰化雲林一帶來看，高房價的區域密集的集中在北邊：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/04/price-in-county.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/price-in-county.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/price-in-county-300x162.jpg 300w" height="486" width="900" alt="Price Bubble in Changhwa" src="https://blog.infographics.tw/wp-content/uploads/2015/04/price-in-county.jpg" class="alignnone size-full wp-image-642"></a>
+<p>你這時可能會想說，看實價登錄物件時用特定條件過濾是蠻重要的功能，CartoDB 能幫我們做到這點嗎？答案是可以的！同樣在右邊的工具列，我們可以使用「filter」工具透過 UI 來調整條件，或者是利用「SQL」工具編寫 SQL 語法來調整顯示範圍。下圖即為利用「filter」工具將實價登錄物件限制在彰化中部以北的樣子：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/04/filter.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/04/filter.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/04/filter-300x167.jpg 300w" height="500" width="900" alt="Filter Items" src="https://blog.infographics.tw/wp-content/uploads/2015/04/filter.jpg" class="alignnone size-full wp-image-643"><br></a>
+<p>( 眼尖的你可能會發現為什麼台北資料量很少；因為檔案大小的限制，我們上傳時移掉北部大部份的物件，所以並沒有顯示。 )</p>
+<p>到目前為止我們已經弄出了一個還不錯的實價登錄地圖，如果想要分享給朋友的話，點擊右上角的分享鈕，我們可以選擇三種方式來分享地圖。下面我們展示透過 iframe 分享的地圖長的樣子，可以拖動、縮放來瀏覽喔：</p>
+<p></p>
+<p>很不錯吧！</p>
+<hr>
+<h2>&nbsp;小結</h2>
+<p>常見到房仲網站在地圖上顯示實價登錄物件都需要先選擇區域才能應付得了大量資料的顯示，那為什麼 CartoDB 能做到這麼快速且大量的資料繪製呢？</p>
+<p>事實上， CartoDB 在繪入資料跟調整設定的同時都快速的幫我們產生了「圖磚」－ 一張張的方塊圖，疊在地圖上拼出我們想要顯示的資訊。由於圖磚本身只是一張圖，不牽涉到大量的資料，所以顯示速度相當快，就不會有大量資料載入的問題了。</p>
+<p>當然，使用圖磚製作地圖圖層還會面臨到一些更複雜的問題，例如當我想點選某個圖標時該怎麼辦？利用條件過濾圖標時，圖磚要重新繪製嗎？這些問題其實都有對應的做法，有機會小編再跟大家分享。</p>
+<h3>優缺點速記</h3>
+<ul>
+<li>優點
+<ul>
+<li>相當快速且方便的工具</li>
+<li>能處理相當大的資料，且提供 iframe 直接嵌入</li>
+<li>免費即能用到一定的用量</li>
+<li>圖標多樣化，並且支援 CartoCSS</li>
+<li>可以製作動畫</li>
+</ul>
+</li>
+<li>缺點
+<ul>
+<li>介面過於複雜，第一次建立新地圖竟然要連按四次「Create New Map」</li>
+<li>上傳原始檔案不等於使用到的儲存空間大小，而免費空間限制在 50MB 以下
+<ul>
+<li>不付費無法吃下整個實價登錄列表，所以前面的例子只好砍掉部份資料</li>
+</ul>
+</li>
+<li>付費選項不便宜，要能處理實價登錄物件得花到 4500 元新台幣 / 月</li>
+<li>偶而資料欄位分析會出錯</li>
+</ul>
+</li>
+</ul>
+<p>除了快速處理並繪製地圖外， CartoDB 還有很多厲害的功能等著你去挖掘，比方說動畫製作等等，而他另一個誘人的地方就是開放原始碼，所以我們可以自己架 CartoDB！當然考量到建構跟維護的成本，做為一個穩定服務要花費的精力不見得比向 CartoDB 購買服務來得划算，但對一些人 ( 比方說學生、研究人員、開發者等等 ) 來說，這個選項提供了測試、製作報告或學習的機會，相當的方便。</p>
+<p>講了這麼多，你有沒有心動了呢？趕快用用看吧！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/cartodb/">cartodb</a>,<a rel="tag" href="https://blog.infographics.tw/tag/cartogram/">cartogram</a>,<a rel="tag" href="https://blog.infographics.tw/tag/geoevent/">geoevent</a>,<a rel="tag" href="https://blog.infographics.tw/tag/geojson/">geojson</a>,<a rel="tag" href="https://blog.infographics.tw/tag/geospatial/">geospatial</a>,<a rel="tag" href="https://blog.infographics.tw/tag/map/">map</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%af%a6%e5%83%b9%e7%99%bb%e9%8c%84/">實價登錄</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/04/geoevent-earthquake-visualization/">台灣歷年地震多嚴重？地震視覺化告訴你</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2015/04/case-study-of-annual-software-piracy/">視覺化不及格，點擊率卻排第一？軟體盜版金額統計案例剖析</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>6</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-12">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/b392aa6f6696fbc0b85c9e3b8e407604?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://www.facebook.com/paul.lin.75491">Paul</a></cite>         <time datetime="2015-04-22"><a href="https://blog.infographics.tw/2015/04/visualize-on-map-using-cartodb/#comment-12">22 4 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>例，先將資料轉換成 CSV 檔，同時也把資料內的 TWD97 座標轉換成 GWS94 經緯度資料：<br>
+→應是WGS84經緯度資料</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-13">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-04-22"><a href="https://blog.infographics.tw/2015/04/visualize-on-map-using-cartodb/#comment-13">22 4 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>感謝您的提醒，已修正 🙂</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-30">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/1eef24e7e820dd87504010fba23651eb?s=40">
+                <cite class="fn">alan lee</cite>         <time datetime="2015-06-25"><a href="https://blog.infographics.tw/2015/04/visualize-on-map-using-cartodb/#comment-30">25 6 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>實價登錄裡的資料哪裏有TWD 97的座標資料？</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-31">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2015-06-26"><a href="https://blog.infographics.tw/2015/04/visualize-on-map-using-cartodb/#comment-31">26 6 月, 2015 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>實價登錄購買的歷史資料中會有(不確定準確度)，網站上提供的當期免費下載資料則沒有；即便如此，仍可以利用模糊地址搭配 Geocoding 取得概略座標。<br>
+聽說最近實價登錄開放資料的規格有要再調整，未來不一定仍然是這樣喔。</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-even depth-1 cf" id="comment-466">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/734c6c6d1d7892437611e6b00a4d4789?s=40">
+                <cite class="fn">areic</cite>         <time datetime="2016-09-18"><a href="https://blog.infographics.tw/2015/04/visualize-on-map-using-cartodb/#comment-466">18 9 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>請問哪裡有轉換TWD97到 GWS94的工具？</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-534">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="https://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-09-23"><a href="https://blog.infographics.tw/2015/04/visualize-on-map-using-cartodb/#comment-534">23 9 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>這邊有個套件有提供函式庫: 這是他的線上範例: <a rel="nofollow ugc" href="https://zbryikt.github.io/coord/">https://zbryikt.github.io/coord/</a><br>
+源碼於此: github.com/zbryikt/coord/<br>
+需要批次轉換的話可以用這個套件自己做<br>
+如果不會 coding 的話, 可能得另外花時間找一下, 或是用現成的 GIS 軟體囉!</p>
+      </section>
+          </article>
+  </div>
+</div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

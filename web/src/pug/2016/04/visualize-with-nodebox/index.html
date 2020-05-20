@@ -1,0 +1,241 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">NodeBox – 用視覺的方式快速製作資料視覺化</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1818 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-chart tag-functional tag-nodebox tag-visualization" id="post-1818">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-04-22" class="updated">22 4 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-2.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-2-300x176.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-2-768x450.png 768w" height="527" width="900" alt="cover" src="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-2.png" class="aligncenter size-full wp-image-1833"></a>
+<p>視覺化卻要靠寫程式這種反視覺化的方式來做，不是太諷刺了嗎？雖然程式搭配人機介面與螢幕可以展現非常強大的各種視覺化，但也為許多人製造了進入門檻。不會寫程式？沒關係，來玩玩 NodeBox ，讓我們用拖拉的方式做視覺化！</p>
+<p><span id="more-1818"></span></p>
+<p>NodeBox 正如其名，專案內的各種元件被設計成一個個的節點 ( Node ) ，各有不同的輸出入；有的輸出形狀、有的輸出顏色、有的輸出座標或格點；而我們視覺化設計師則透過滑鼠拖曳來連結節點間的輸出入，顏色連形狀、形狀連格點 ….. 噹噹！視覺化完成了。</p>
+<p>就是這麼簡單。</p>
+<p>你還要去想 SVG Path 、 Update Selection 、 Chart Configuration 、 Layout &amp; Callback 什麼什麼看了就頭痛的東西嗎？太反直覺了！換個角度想， NodeBox 把「程式」這件事利用節點元件重新詮釋，而「編程」則變成了拉線。我們只要知道元件輸出入的含義，就不再需要去管分號是否打對、語法是否正確。NodeBox 幫你搞定這一切。 耶比！</p>
+<p>NodeBox 為一個桌面版應用程式，我們必須要先下載並安裝才能使用。首先，連至 <a href="https://www.nodebox.net/download/">NodeBox 的下載網頁</a>、選擇適合你的作業系統與 &nbsp;NodeBox 版本，點擊下載便行了。我們此文使用 &nbsp;NodeBox 3.0.44 版為各位做介紹。下載完成後點擊安裝檔，基本上沒什麼選項可以選，安裝完成後便會自動帶出 NodeBox 編輯環境 ( Windows 版本 )：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/editor.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/editor.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/editor-300x183.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/editor-768x468.png 768w" height="548" width="900" alt="editor" src="https://blog.infographics.tw/wp-content/uploads/2016/04/editor.png" class="aligncenter size-full wp-image-1819"></a>
+<p>編輯畫面分成三個部份：</p>
+<ol>
+<li>左方的灰色區域即為視覺化結果的輸出畫面</li>
+<li>右上方為各節點屬性的編輯視窗</li>
+<li>右下方則為節點編輯器，拖拉、建立新元件便是於此操作。</li>
+</ol>
+<p>在上圖中，我們看到右下角的編輯框中有個黑色長方形，中間寫著「rect1」，他便是一個節點，代表了一個長方形的輸出；當我們點選特定節點時，該節點產出的視覺化便會繪制在左方的輸出畫面，在此例的左邊我們可以看到已經有一個方塊在那裡了。那就是我們的視覺化輸出。做完了！喔耶！</p>
+<p>咳… 很抱歉，雖然畫方形是視覺化的基礎，我們不會只想畫一個方形就了事的。為了展示 NodeBox 可以辦到的事，我們先準備一個 CSV 檔，如下例：</p>
+<pre>  name,value
+  taiwan,30
+  japan,10
+  korea,40
+  thailand,10
+  vietnam,50
+  china,90
+  india,20</pre>
+<p>接著我們想要把資料匯到 NodeBox 中。怎麼匯入？</p>
+<p>我們開始想像，任何事、任何操作都是一個節點… Bingo ！利用節點讀取 CSV 。在節點編輯框上方我們可以看到有一個「(+) New Node」按鈕，按下去以後會跑出對話框，列出許多我們可以使用的節點：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/nodes.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/nodes.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/nodes-300x164.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/nodes-768x420.png 768w" height="492" width="900" alt="nodes" src="https://blog.infographics.tw/wp-content/uploads/2016/04/nodes.png" class="aligncenter size-full wp-image-1820"></a>
+<p>從上圖中我們可以看到各種不同的節點，有算絕對值的、也有畫圓弧的。左方為節點的分類，我們點選「Data」後，雙擊「Import Csv」，便會在編輯區看到一個新增的「Import CSV」節點。若要讀取 CSV 檔案，只需要透過右上方的屬性編輯框，設定 File 到我們檔案放置的位置即可。下圖為讀取 sample.csv 之後的範例，可以看到當我們點選「Import CSV」節點時，左方的輸出畫面就不再是矩形，而變成了資料的內容：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/import-csv.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/import-csv.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/import-csv-300x181.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/import-csv-768x464.png 768w" height="544" width="900" alt="import-csv" src="https://blog.infographics.tw/wp-content/uploads/2016/04/import-csv.png" class="aligncenter size-full wp-image-1821"></a>
+<p>這時注意節點上下方，是不是有一些小小的長方形的突起呢？這些方塊代表的便是節點的輸出入，上方是輸入、下方是輸出。把滑鼠移到方塊上，便會有 Tooltip 提示我們這個輸出/入代表的內容，例如下圖的兩個 tooltip：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/io.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/io.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/io-300x113.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/io-768x289.png 768w" height="339" width="900" alt="io" src="https://blog.infographics.tw/wp-content/uploads/2016/04/io.png" class="aligncenter size-full wp-image-1822"></a>
+<p>矩形節點上方有位置、寬度、高度與圓角等四個輸入，輸出則是矩形這個形狀本身；「Import CSV」則有檔名、分隔號、括號與數字分隔等 CSV 常見的設定，輸出則是資料本身。看到這裡我想大家應該都明白：沒錯，我們就是要將輸出跟輸入拉在一塊！</p>
+<p>當然，不見得所有輸出入都必須要有所連結，像是「Import CSV」節點來說，他的四個設定都可以在屬性編輯窗完成，不需要我們另外設定；而矩形節點也一樣，長寬其實都已經有預設值。但當我們想要開始調整圖表內容時，我們便可以依照自己的設計來連結節點。</p>
+<p>假設我們要來做個長條圖好了，大家應該會想：「Import CSV 」節點的輸出 ( data ) 接到矩形節點的輸入「Width ( 寬度 ) 」吧！這麼簡單嗎？ no no no …. 仔細想想，那長條的位置呢？我們的範例資料中有兩欄資料，要用哪一欄呢？這些問題都還沒有解決。</p>
+<p>不過，正如我們前面所說的，想做任何事？找個適合的節點吧！要選擇資料欄位，就用 Data 類別中的 「Lookup」節點吧，首先將「Import CSV」節點的輸出連結到「Lookup」節點唯一的輸入，然後點擊「Lookup」節點並編輯其「Key」屬性，設定為「value」( 這是我們的 sample.csv 中數值的欄位 ) ：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/lookup.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/lookup.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/lookup-300x159.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/lookup-768x406.png 768w" height="476" width="900" alt="lookup" src="https://blog.infographics.tw/wp-content/uploads/2016/04/lookup.png" class="aligncenter size-full wp-image-1824"></a>
+<p>這時，我們會注意到左方的輸出畫面已經從原本比較複雜的資料物件變成單純的數字了，代表我們順利的把輸入資料做了轉換。接著，試著將「lookup1」的輸出連結到「rect1」的「width」輸入，我們可以看到左方輸出畫面中的矩形好像比剛剛瘦了一點，但是只有一個：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/connect-width.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/connect-width.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/connect-width-300x159.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/connect-width-768x406.png 768w" height="476" width="900" alt="connect-width" src="https://blog.infographics.tw/wp-content/uploads/2016/04/connect-width.png" class="aligncenter size-full wp-image-1825"></a>
+<p>這是因為我們沒有設定矩形的位置。再次地，我們新增一個「Grid」節點 – 他可以幫我們產生格狀的座標點 – 然後將「grid1」節點的輸出連結到「rect1」節點，再次雙擊「rect1」以預覽輸出結果 – 結果是一片黑？</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/grid.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/grid.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/grid-300x159.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/grid-768x406.png 768w" height="476" width="900" alt="grid" src="https://blog.infographics.tw/wp-content/uploads/2016/04/grid.png" class="aligncenter size-full wp-image-1826"></a>
+<p>這裡有兩個問題：</p>
+<ol>
+<li>&nbsp;Grid 節點可以設定行跟列的數量，預設是 10 。所以我們產生了 10 x 10 個點，也就是一百個矩形。</li>
+<li>矩形的寬度雖然由資料決定，高度預設為 100 ，造成互相覆蓋的情形。</li>
+</ol>
+<p>因此，我們可以透過下列兩個步驟修正問題：</p>
+<ol>
+<li>雙擊「grid1」節點，調整 Columns 與 Rows 參數為 1 ( 一排 ) 與 7 &nbsp;( 七筆資料 )</li>
+<li>雙擊「rect1」節點，調整高度為 10</li>
+</ol>
+<p>長條馬上就出來啦！</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/bar-simple.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/bar-simple.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/bar-simple-300x159.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/bar-simple-768x406.png 768w" height="476" width="900" alt="bar-simple" src="https://blog.infographics.tw/wp-content/uploads/2016/04/bar-simple.png" class="aligncenter size-full wp-image-1827"></a>
+<p>當然光是這樣還是有些問題。為什麼長條不是靠左對齊？「grid1」的資料個數如果是寫死的，那資料更新時會不會爛掉？碰到問題，用 Node 就對了。首先我們用「count」節點來計算資料數量：</p>
+<ol>
+<li>建立一個新的「Count」節點</li>
+<li>將「lookup1」的輸出拉到「count1」的輸入</li>
+<li>再將「count1」的輸出拉至「grid1」的「rows」</li>
+</ol>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/count.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/count.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/count-300x159.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/count-768x406.png 768w" height="476" width="900" alt="count" src="https://blog.infographics.tw/wp-content/uploads/2016/04/count.png" class="aligncenter size-full wp-image-1828"></a>
+<p>接著我們利用「Align」節點將長條對齊：</p>
+<ol>
+<li>建立「Align」節點</li>
+<li>將「grid1」原本的輸出拉至「align1」的「position」輸入</li>
+<li>將「rect1」的輸出拉至「align1」的「shapes」輸入</li>
+<li>雙擊「align1」並設定「Horizontal Align」屬性為 Left</li>
+</ol>
+<p>大功告成：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/align.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/align.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/align-300x159.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/align-768x406.png 768w" height="476" width="900" alt="align" src="https://blog.infographics.tw/wp-content/uploads/2016/04/align.png" class="aligncenter size-full wp-image-1829"></a>
+<p>完全沒有寫程式碼，但跟寫程式有著一樣的彈性，卻彌平了程式的學習門檻，是不是很棒呢？下圖為重新排版並加入文字後的效果：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2016/04/bar2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/bar2.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/bar2-300x179.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/bar2-768x459.png 768w" height="538" width="900" alt="bar2" src="https://blog.infographics.tw/wp-content/uploads/2016/04/bar2.png" class="aligncenter size-full wp-image-1830"></a>
+<p>看起來好像我們花了不少功夫才完成這個長條圖，但事實上要做到更複雜的圖表，不一定會比長條圖麻煩到哪去。下圖為 NodeBox 本身<a href="https://www.nodebox.net/node/documentation/using/data-visualization.html">提供的教學</a>，雖然結果看起來很壯觀，右方的節點是否並不複雜呢？</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1831"><a href="https://blog.infographics.tw/wp-content/uploads/2016/04/complex.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/complex.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/complex-300x218.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/complex-768x559.png 768w" height="655" width="900" alt="adopted from NodeBox Documentation" src="https://blog.infographics.tw/wp-content/uploads/2016/04/complex.png" class="size-full wp-image-1831" aria-describedby="caption-attachment-1831"></a><p class="wp-caption-text" id="caption-attachment-1831">adopted from NodeBox Documentation</p></div>
+<p>下圖也是在同一份教學文件中截取的；雖然這個例子看起來相當複雜，但實際上的節點不見得很多，因為節點大多是在簡化重覆性的部份：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1832"><a href="https://blog.infographics.tw/wp-content/uploads/2016/04/more-complex.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/more-complex.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/more-complex-300x167.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/more-complex-768x427.png 768w" height="500" width="900" alt="adopted from NodeBox Documentation" src="https://blog.infographics.tw/wp-content/uploads/2016/04/more-complex.png" class="size-full wp-image-1832" aria-describedby="caption-attachment-1832"></a><p class="wp-caption-text" id="caption-attachment-1832">adopted from NodeBox Documentation</p></div>
+<h2>結語</h2>
+<p>用程式做視覺化雖然威力強大卻有著極高門檻、用繪圖軟體做視覺化雖然彈性極高卻相當繁瑣。 NodeBox 可說是為程式語言的門檻開了另一扇窗，讓我們可以透過更直覺的方式來製作視覺化，卻仍具備著程式批次處理的強項。</p>
+<p>其實在過去也一直都有利用視覺化方式來學習程式的例子，但由於他們的設計思維都偏向將程序性的語言直接翻譯成控制方塊，導致最後整個編輯畫面變得錯綜複雜，難以維護。 NodeBox 的程式邏輯較偏向於 Functional 函式思維的編程，一塊塊的指令透過輸出入的連結結合在一起，讓整個編程過程變得有彈性又直覺。</p>
+<p>不過，由於其產生的視覺化只存在 NodeBox 環境中，雖然他也能做動畫與基本互動效果，還是需要安裝 NodeBox 才能使用。此外，相較於D3.js 或 R 等開發環境與套件， NodeBox 相對的比較不出名，社群的協助跟案例也因此較少。即便如此，對於不懂程式的人來 NodeBox 還是一個快速做出視覺化的好選擇。</p>
+<p>此外， NodeBox 本身是開源的，我們可以在<a href="https://github.com/nodebox/nodebox">這裡</a>找到他的原始碼；他使用 Java 開發，如果你對他支援的功能有額外的要求或建議的話，不妨到他們的專案頁面建立 Issue ，直接參與開源軟體的開發吧！ 😀</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/chart/">chart</a>,<a rel="tag" href="https://blog.infographics.tw/tag/functional/">functional</a>,<a rel="tag" href="https://blog.infographics.tw/tag/nodebox/">nodebox</a>,<a rel="tag" href="https://blog.infographics.tw/tag/visualization/">visualization</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/04/visualize-with-voronoijs/">利用 Voronoijs 繪製多邊形式面積圖</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

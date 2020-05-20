@@ -1,0 +1,296 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">史上最強大的資料整理工具 － Open Refine</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1306 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-clean tag-data tag-excel tag-google tag-googlerefine tag-mess tag-openrefine tag-refine tag-spreadsheet tag-wrangle" id="post-1306">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-09-20" class="updated">20 9 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/09/openrefine-main-cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/openrefine-main-cover.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/openrefine-main-cover-300x176.jpg 300w" height="527" width="900" alt="Open Refine - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/09/openrefine-main-cover.jpg" class="aligncenter size-full wp-image-1307"></a>
+<p>三天三夜的逐行修正、重新調整欄位 … 你曾經跟資料奮戰過嗎？為了加速人類文明進步以及節省我們的時間， Google &nbsp;開發了 Open Refine — 專為科學家、非政府組織、記者等任何會接觸到資料的人而設計的工具，讓你不需要寫程式也可以進行複雜的資料整理。</p>
+<p><span id="more-1306"></span></p>
+<p>談到資料整理，你第一個會想到什麼？很多人可能都是利用 Microsoft Excel 、 Google Spreadsheet 等等的試算表工具來整理資料。試算表整理資料相當直覺，但畢竟試算表當初並不是專為了「資料整理」而打造的 — 在拿到資料的時候，我們可能會碰到各種問題，例如資料格式錯亂、欄位內容不統一、排版特殊且不堪使用 — 這其中有相當多種類的問題用基本的試算表功並沒辦法很容易的處理好。</p>
+<p>Open Refine — 最初由 Google 開發的 Google Refine 、於 2012 年釋出源始碼後更名為 Open Refine — 在其網頁的介紹是這麼寫的：</p>
+<blockquote><p>“powerful tool for working with messy data: cleaning it; transforming it from one format into another; extending it with web services; and linking it to databases like Freebase.”</p>
+<p>「專門對付雜亂資料的強大工具；清理、轉換資料的格式與內容，利用網路服務與線上資料庫延伸你的資料」</p></blockquote>
+<p>可見 Open Refine 就是專門為了對付惡劣的資料而設計的。立刻就來看看如何使用吧！</p>
+<h2>安裝 Open Refine</h2>
+<p>Open Refine 由 Java 開發，它被設計成一個本地端的網頁伺服器，執行時會自動開啟瀏覽器來運作。首先我們從 <a href="http://openrefine.org/download.html">Open Refine 的下載頁面</a>選擇自己平台所對應的安裝執行檔來下載；目前的穩定版本是 Google Refine 2.5<span style="color: #ff0000;">*</span> ，你也可以選擇下方的 Open Refine 2.6 版本來嘗試。</p>
+<h5><span style="color: #ff0000;">*</span> Open Refine 在 2.5 版以前仍稱為 Google Refine，以下為了方便起見統稱為 Open Refine</h5>
+<h2>建立專案</h2>
+<p>安裝完成後執行 Open Refine，它會自動為你開啟瀏覽器並連結到它所建立的本地伺服器，若你的瀏覽器未自動開啟的話，也可以自行輸入 <a href="http://localhost:3333/">http://localhost:3333/</a> 這個網址來進入 Open Refine 。 &nbsp;Open Refine 的進入畫面如下：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/08/create-project.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/08/create-project.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/08/create-project-300x123.png 300w" height="370" width="900" alt="openrefine - create-project" src="http://blog.infographics.tw/wp-content/uploads/2015/08/create-project.png" class="aligncenter size-full wp-image-1192"></a>
+<p>在 Open Refine 中，每個資料檔都是一個專案 ( Project ) ，我們可以透過各種方式匯入資料檔來建立專案：</p>
+<ol>
+<li>點選上圖 1 的位置來準備建立專案</li>
+<li>從上圖 2 的位置選擇資料來源，包括：
+<ol>
+<li>從電腦上傳</li>
+<li>從網址下載</li>
+<li>從剪貼簿貼上</li>
+<li>Google Data</li>
+</ol>
+</li>
+<li>以電腦上傳為例，我們可以在上圖 3 地位置選擇我們要的檔案</li>
+<li>最後，點擊下一步 ( 上圖 4 )</li>
+</ol>
+<p>Open Refine 支援的檔案格式相當多，包括 TSV 、 CSV、 XLS、 XML 與 JSON，各有不同的匯入選項，如果你有轉換資料格式的需求 ( 例如拿到 JSON 卻不曉得如何使用 ) ，也可以把 Open Refine 當成轉換工具。</p>
+<p>以 Excel 為例，匯入的資料會進入到設定頁面：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/08/config-project.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/08/config-project.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/08/config-project-300x203.png 300w" height="610" width="900" alt="openrefine - config-project" src="http://blog.infographics.tw/wp-content/uploads/2015/08/config-project.png" class="aligncenter size-full wp-image-1193"></a>
+<p>除了資料預覽 ( 上圖 1 ) 與格式選擇 ( 上圖 2 ) 以外，我們還可以選擇資料的工作表 ( 上圖 3 ) 、要做為標題欄以及跳過的列數 ( 上圖 4 )。我們可以隨意設定數值玩玩看，然後按「Update Preview」按鈕在資料預覽區看看結果如何，滿意了再設定專案名稱 ( 上圖 5 ) 以及建立專案 (上圖 6 )。</p>
+<h2>工作環境</h2>
+<p>建立好專案以後，我們會看到如下的畫面：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/overview.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/overview.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/overview-300x128.jpg 300w" height="385" width="900" alt="Open Refine Editor Overview" src="http://blog.infographics.tw/wp-content/uploads/2015/09/overview.jpg" class="aligncenter size-full wp-image-1310"></a>
+<p>畫面大致上分為三個部份：</p>
+<ul>
+<li><strong>右方的資料預覽區</strong>。類似 Excel 將資料逐行分欄呈現，不過不會一次全部顯示出，我們可以利用上方的 「 Show: 5 10 25 50」部份來控制要顯示的行數。這裡一共有 45090 行。<br>
+在每個資料欄的標題處都有下拉式選單，整個 Open Refine 主要的整理資料功能都藏在這裡了。</li>
+<li><strong>左方的資料控制區</strong>。當我們操作資料時，會設定許多過濾器來挑出我們要處理的資料，這些過濾器都會依序呈現在這裡。這個區塊有兩個頁籤：
+<ul>
+<li>「Facet / Filter」顯示過濾器，除了濾出想要的資料外，也可以進行編輯。</li>
+<li>「Undo / Redo」顯示編輯歷程，讓我們可以隨時還原錯誤的編輯。</li>
+</ul>
+</li>
+<li><strong>上方的專案列</strong>：
+<ul>
+<li>點擊左邊的 「Refine」圖示可以回到首頁</li>
+<li>複製「Permalink」連結以方便下次繼續編輯。Open Refine 在你編輯的同時會隨時產生一個對應的連結，這個連結對應到的即為你當下的編輯狀態，相當方便。</li>
+<li>右方的 「Export」按鈕可以匯出資料檔，編輯完成後一定會用到的按鈕。</li>
+</ul>
+</li>
+</ul>
+<h2>編輯手法介紹</h2>
+<p>講了這麼多，還是趕緊來進入實戰吧！剛剛上圖範例的資料檔為疾病管制署釋出的登革熱疫情資料，通常拿到資料我們最想知道的是：各個欄位有多少種不同的值？</p>
+<h3>※ Facet — 批次修正資料</h3>
+<p>在想要了解的資料欄位的標題展開下拉式選單 ( 下圖 1 ) ，點選 Facet → Text Facet &nbsp;(下圖 2 )，我們會看到下圖 3 處的「性別」Facet 框跑出來，這個框中統計了性別欄裡面出現值的種類與個數，以下圖為例：</p>
+<ul>
+<li>22672 個「女」</li>
+<li>22417 個 「男」</li>
+<li>1 個空白，可能是因為性別不明</li>
+</ul>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/facet.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/facet.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/facet-300x141.jpg 300w" height="424" width="900" alt="Open Refine - Text Facet" src="http://blog.infographics.tw/wp-content/uploads/2015/09/facet.jpg" class="aligncenter size-full wp-image-1311"></a>
+<p>當滑鼠移到各個值上時，後方會出現「edit」「include」等按鈕，方便我們直接對其做編輯，或是設定過濾條件。</p>
+<p>比方說，假設我們知道該不明的性別實際上為男性，那我們只要將滑鼠移上，點擊「edit」，填入男性，那麼該欄位就會被改為男性；這個編輯會一次影響到所有相同的欄位，因此如果有很多重覆的欄位需要修正，這會省掉我們相當多的時間。</p>
+<p>Facet 框同時也扮演了過濾器的角色。我們可以在這裡點選特定值 ( 例如：女 )， 代表我們只想顯示包含性別「女」的資料，這時右方的預覽畫面便會只剩女性：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/filter.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/filter.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/filter-300x141.jpg 300w" height="424" width="900" alt="Open Refine - Filter Example" src="http://blog.infographics.tw/wp-content/uploads/2015/09/filter.jpg" class="aligncenter size-full wp-image-1312"></a>
+<p>可看到上圖的「女」被選取後，右方只剩女性，這時可以點擊「exclude」來取消選取。</p>
+<p>Facet 用來修正錯別字或同義值相當方便，例如「台北市」與「臺北市」、「女」與「Female」「F」「女性」等，利用 Facet 一次便可以弄清楚資料欄中的數值種類，並快速的進行修正。</p>
+<p>利用 Filter 功能，則可以讓我們限制修正的範圍，例如若我們只想要修改台北市的資料，則利用居住縣市的 Facet 設定台北市為過濾條件後，接下來的修改就只會套用在台北市的範圍中了。</p>
+<h3>※ Fill Down — 自動填滿空白</h3>
+<p>有些有階層性的資料會省略重覆的部份，例如下圖為國人出國旅遊的人數資料：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/filldown.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/filldown.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/filldown-300x137.jpg 300w" height="412" width="900" alt="Open Refine - Filldown" src="http://blog.infographics.tw/wp-content/uploads/2015/09/filldown.jpg" class="aligncenter size-full wp-image-1313"></a>
+<p>可看到「首站抵達地」下方只有一個「亞洲」，其它都是空白的。當我們想要使用資料來視覺化或統計時，往往會需要這些空白被填滿，這時可以用「Fill down」功能 — 下拉式選單 → Edit Cells → Fill down ， Open Refine 會自動幫你填滿這些空白的欄位。</p>
+<p>相反的，如果你想做的是清除重覆的欄位，則可以使用「Blank down」— 下拉式選單 → Edit Cells → Blank down ， Open Refine 則會自動幫你把重覆的部份清空。</p>
+<h3>※ 欄位轉置 — 橫轉直、直轉橫</h3>
+<p>有時候我們拿到的資料會把數據擺成很多行，例如下列的資料：</p>
+<pre>  台北市,排名,10
+  台北市,得分,5
+  台北市,名聲,7</pre>
+<p>即使我們其實想要的是像這樣的格式：</p>
+<pre>  城市,排名,得分,名聲
+  台北市,10,5,7</pre>
+<p>這時可以用 Open Refine 的轉置功能來變換。我們要實驗的資料如下，可以看到每個城市都有「排名」「得分」與「名聲」三個值：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose1.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/transpose1-300x146.jpg 300w" height="439" width="900" alt="Open Refine - transpose1" src="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose1.jpg" class="aligncenter size-full wp-image-1314"></a>
+<p>這時利用下拉式選單 Transpose → Columnize by key/value column 選項，設定「Key ( 標題 )」從 Column2 取得，「Value ( 數值 ) 」從 Column3 取得：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/transpose2-300x181.jpg 300w" height="543" width="900" alt="Open Refine - Transpose 2" src="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose2.jpg" class="aligncenter size-full wp-image-1315"></a>
+<p>按下 OK 後，所有 Column2 的值便會跑到標題列去，而對應的值則會由 Column3 來填滿：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose3.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose3.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/transpose3-300x127.jpg 300w" height="380" width="900" alt="Open Refine - transpose 3" src="http://blog.infographics.tw/wp-content/uploads/2015/09/transpose3.jpg" class="aligncenter size-full wp-image-1316"></a>
+<h3>※ 清除不要的資料行</h3>
+<p>有時候我們只想要部份的資料，例如登革熱資料只想留下今年的部份，或是上面轉置範例中，想要刪除空白行。</p>
+<p>我們可以利用 Facet 挑選出我們想刪除的資料行，接著使用 All 欄下拉選單中的 Edit rows → Remove all matching rows 將所有符合當前條件的行都刪除掉。例如下圖我們透過 Column1 找出所有空白行，接著點擊 Remove all matching rows：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/remove1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/remove1.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/remove1-300x120.jpg 300w" height="360" width="900" alt="Open Refine - Remove Matching" src="http://blog.infographics.tw/wp-content/uploads/2015/09/remove1.jpg" class="aligncenter size-full wp-image-1317"></a>
+<p>原本有空白的城市排名資料便會變成這樣：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/09/remove2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/09/remove2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/09/remove2-300x90.jpg 300w" height="270" width="900" alt="Open Refine - Matching Removed" src="http://blog.infographics.tw/wp-content/uploads/2015/09/remove2.jpg" class="aligncenter size-full wp-image-1318"></a>
+<h2>總結</h2>
+<p>上面簡單的示範了幾種編輯資料的方式，是不是很方便呢？Open Refine 功能相當的多，能玩出的花樣不計其數，比方說用正規表達式過濾文字、程式找尋相似文字做自動修補、還有各種不同類型的 Facet ，由於篇幅限制，這裡只列舉幾個很常使用到的功能。其它更進階的功能，就留待下次介紹，或者是各位讀者自己發掘囉！</p>
+<p>就不寫程式來修理資料來說， Open Refine 幾乎可以說是當前工具中最強大的一個了，這樣的工具卻不常見到資料工作者在用，這次為各位簡介 Open Refine ，不曉得是否覺得對工作會有所幫助呢？現在 Open Refine 也已經開放源始碼了，如果有任何功能是你需要但卻沒有提供的，也可以到 <a href="https://github.com/OpenRefine/OpenRefine">Open Refine 的 Github 頁面</a>提出建議，甚至是主動幫忙改進喔！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/clean/">clean</a>,<a rel="tag" href="http://blog.infographics.tw/tag/data/">data</a>,<a rel="tag" href="http://blog.infographics.tw/tag/excel/">excel</a>,<a rel="tag" href="http://blog.infographics.tw/tag/google/">google</a>,<a rel="tag" href="http://blog.infographics.tw/tag/googlerefine/">googlerefine</a>,<a rel="tag" href="http://blog.infographics.tw/tag/mess/">mess</a>,<a rel="tag" href="http://blog.infographics.tw/tag/openrefine/">openrefine</a>,<a rel="tag" href="http://blog.infographics.tw/tag/refine/">refine</a>,<a rel="tag" href="http://blog.infographics.tw/tag/spreadsheet/">spreadsheet</a>,<a rel="tag" href="http://blog.infographics.tw/tag/wrangle/">wrangle</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/09/odyssejs-story-telling-with-cartodb/">Odyssey.js — 幫你用 CartoDB 地圖說出動人故事</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/09/hyperlapse-js/">Hyperlapse.js － 利用 Google 街景製作動態縮時效果</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">用視覺化快速掌握大量資料 － Datacomb</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1422 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-analyze tag-chart tag-data tag-datacomb tag-visualize" id="post-1422">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-11-5" class="updated">5 11 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/10/cover3.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/10/cover3.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/10/cover3-300x176.jpg 300w" height="527" width="900" alt="Datacomb - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/10/cover3.jpg" class="aligncenter size-full wp-image-1430"></a>
+<p>龐大的資料常不易分析與理解，有沒有什麼可以快速探索資料的方式呢？你需要 Datacomb ！ Datacomb 是個視覺化分析與探索工具， 可以幫將我們手上的數據視覺呈現，並搭配基本的互動功能，使我們迅速對資料建立基本的認識。</p>
+<p><span id="more-1422"></span></p>
+<p>資料新聞學手冊 ( Data Journalism Handbook &nbsp;) 一書中曾提到，視覺化除了做為敘事的手法之外，也可以做為探索資料集的方法之一。在探索資料的過程，我們要求的不是精美且優秀的視覺化，而是快速地建立多種面向的資料觀察方式。</p>
+<p>即便只是供快速瀏覽分析的視覺圖表，建立這樣的圖表仍然要花費不少的力氣，這時 <a href="https://github.com/cmpolis/datacomb">Datacomb</a> 出現了 — 一個網頁視覺化介面的資料探索工具。下圖為 Datacomb 瀏覽資料的範例畫面 ( 如果想要即刻看看Datacomb 的效果的話，可以連到<a href="http://www.bytemuse.com/datacomb/demo/">這個 Live Demo 網站</a> ) ：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/10/sample.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/10/sample.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/10/sample-300x167.jpg 300w" height="500" width="900" alt="Datacomb Example" src="http://blog.infographics.tw/wp-content/uploads/2015/10/sample.jpg" class="aligncenter size-full wp-image-1423"></a>
+<p>基本上我們可以想像成將整個資料表中的所有數字用長條表示，非數字則以顏色表現。上圖中的資料為 2014 年 NBA 球員的基本資料，從左至右代表了資料中一欄一欄的資料；最左邊是「所屬球隊 ( Team ) 」、「守備位置 ( Pos ) 」，這兩者是文字因此以顏色代表；接著「年紀 ( Age ) 」、「阻擋進攻 ( Blocks ) 」、 「抄球 ( Steals )」等則為數字，以長條圖的方式表現。</p>
+<p>除了基本的數字呈現，我們還可以做基本的資料操作，例如排序；下圖將資料以助攻次數 (Assists )由大到小排序，很容易我們可以從守備位置看出藍色的 PG ( 控球後衛 ) 幾乎佔滿了助攻前幾名的位置：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/10/sort.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/10/sort.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/10/sort-300x88.jpg 300w" height="264" width="900" alt="Sorting" src="http://blog.infographics.tw/wp-content/uploads/2015/10/sort.jpg" class="aligncenter size-full wp-image-1424"></a>
+<p>資料操作還包含了以下類型：</p>
+<h3><strong>§ 顯示直方圖 ( Histogram )</strong></h3>
+<p>直方圖可以幫助我們了解數值的分布傾向。從下圖來看，球星的年紀以 23 歲最多：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/10/histogram.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/10/histogram.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/10/histogram-300x56.jpg 300w" height="167" width="900" alt="Datacomb - Histogram" src="http://blog.infographics.tw/wp-content/uploads/2015/10/histogram.jpg" class="aligncenter size-full wp-image-1425"></a>
+<h3><strong>§&nbsp;顯示散佈圖 ( Scatter Plot )</strong></h3>
+<p>散布圖幫助我們理解資料數值間的關連性。下圖為以年紀為 Y 軸、其他參數為 X 軸描繪的各種參數分布，點擊紅箭頭處的圓圈即可開啟，點擊其它參數的圓圈則可指定該參數為 Y 軸：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/10/scatter.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/10/scatter.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/10/scatter-300x59.jpg 300w" height="176" width="900" alt="Datacomb - Scatter Plot" src="http://blog.infographics.tw/wp-content/uploads/2015/10/scatter.jpg" class="aligncenter size-full wp-image-1426"></a>
+<h3>§ 顯示基本統計數據</h3>
+<p>基本統計數據告訴我們資料的一些基本數字，如極值、平均、標準差、中位數等等，下圖可以看到球星從 19 歲到 38 歲都有，平均抄球次數則是 38 次，點擊下圖紅箭頭處可以打開：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/10/summary.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/10/summary.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/10/summary-300x54.jpg 300w" height="161" width="900" alt="Datacomb - Summary" src="http://blog.infographics.tw/wp-content/uploads/2015/10/summary.jpg" class="aligncenter size-full wp-image-1427"></a>
+<h3>§ 資料過濾 ( Filtering )</h3>
+<p>我們也可以只顯示有興趣的資料，點擊上方的「Show Filters」會展開過濾選單，如下圖中 Team / Pos 上方的勾選框、或者其他數值中上方的範圍選擇元件。可以看到下圖守備位置中勾選了「PF」後只剩下綠色的 PF：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/10/filter.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/10/filter.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/10/filter-300x110.jpg 300w" height="330" width="900" alt="Datacomb - Filter" src="http://blog.infographics.tw/wp-content/uploads/2015/10/filter.jpg" class="aligncenter size-full wp-image-1428"></a>
+<h3><strong>§ 顯示選擇的資料項</strong></h3>
+<p>我們可以點擊單筆資料項來鎖定它，這時他會以淡紅色的點呈現在散布圖之中，如下圖的紅箭頭處顯示的即為「Al Horford」在「阻擋」與「抄球」項目的分布位置。多選也是可以的，深色的點則是當前滑鼠所在的資料項：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/10/focus.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/10/focus.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/10/focus-300x71.jpg 300w" height="214" width="900" alt="Datacomb - focus" src="http://blog.infographics.tw/wp-content/uploads/2015/10/focus.jpg" class="aligncenter size-full wp-image-1429"></a>
+<p>&nbsp;</p>
+<h2>安裝 Datacomb</h2>
+<p>Datacomb 目前是以軟體而非服務的方式提供，我們必須要自行下載安裝後才能使用。想要玩玩看的朋友可以參考 Datacomb 的 Github 檔案庫 (&nbsp;<a href="https://github.com/cmpolis/datacomb">https://github.com/cmpolis/datacomb</a> )，它提供了使用的基本說明；基本上我們會需要下列步驟：</p>
+<ol>
+<li>事先安裝 NodeJS ( 我們先前的文章「<a href="http://blog.infographics.tw/2015/03/crawl-data-with-nodejs/">資料爬蟲實戰－使用 node.js</a>」有談到如何安裝 NodeJS )</li>
+<li>下載 Datacomb 的完整檔案 ( <a href="https://github.com/cmpolis/datacomb/releases">此處的壓縮檔</a> )</li>
+<li>解壓縮後，以命令提示字元 / 終端機進入 Datacomb 目錄，接著執行
+<ol>
+<li>npm install</li>
+<li>npm run build</li>
+<li>npm run serve</li>
+</ol>
+</li>
+<li>參考 <a href="https://github.com/cmpolis/datacomb/blob/master/demo/demo.js">demo.js</a>&nbsp;，依照我們要呈現的資料做修改。</li>
+</ol>
+<p>&nbsp;</p>
+<h2><strong>總結</strong></h2>
+<p>一般視覺化往往考慮到的都是表現與敘事階段，然而 Datacomb 提供了一個通用的資料探索視覺化介面，是不是很方便呢？有機會我們再將它包裝成一個服務給大家，這樣就不需要自行安裝與維護，方便性會再大大的提升。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/analyze/">analyze</a>,<a rel="tag" href="http://blog.infographics.tw/tag/chart/">chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/data/">data</a>,<a rel="tag" href="http://blog.infographics.tw/tag/datacomb/">datacomb</a>,<a rel="tag" href="http://blog.infographics.tw/tag/visualize/">visualize</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/10/pageflow/">給網頁苦手的數位專輯工具 － Pageflow 簡介</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/11/d3-in-a-box/">改作學習兩相宜、D3 源碼任你用 － D3 in a Box</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

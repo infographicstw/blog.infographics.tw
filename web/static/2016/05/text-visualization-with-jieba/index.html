@@ -1,0 +1,427 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1857 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-850 tag-bubble-chart tag-csv tag-jieba tag-python tag-wrangling tag-854 tag-856 tag-852" id="post-1857">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-05-22" class="updated">22 5 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2016/05/cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/05/cover.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/05/cover-300x176.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/05/cover-768x450.png 768w" height="527" width="900" alt="cover" src="http://blog.infographics.tw/wp-content/uploads/2016/05/cover.png" class="aligncenter size-full wp-image-1862"></a>
+<p>最近大家最關注的話題之一即是新總統就職，同時也出現了許多演講內文分析的圖表與新聞，但是你知道這樣的視覺化要怎麼製作嗎？這次就讓我們帶大家一起來看看，如何使用最棒的 Python 中文斷詞套件「結巴 ( Jieba )」來為我們快速做字頻分析。</p>
+<p><span id="more-1857"></span></p>
+<p>不像以空白分隔的英文字，中文斷詞一直都是個很大的麻煩。比方說，「美國人民主要在今天」似乎從下兩者的觀點來看，都是合理的：</p>
+<ul>
+<li>「美國」「人民」「主要」「在」「今天」</li>
+<li>「美國人」「民主」「要」「在」「今天」</li>
+</ul>
+<p>除了切分的方法，不斷新增的詞彙也是個問題；「魯蛇」、「八嘎囧」、「頗ㄏ」等等時下流行的用語，往往不在字典中，要怎麼讓程式知道這些字是個「詞」？這一直都是個不容易處理的問題。因此除了許多探討斷詞的研究以外，各地的研究單位如中研院也都嘗試著在製作自己的斷詞系統。</p>
+<p>當然，我們不大可能為了一個文字視覺化的專案而去自行開發斷詞系統，這時若有現成的斷詞函式庫，就好了！恰好，結巴 ( Jieba ) 是一個由來自百度的 Sun Jun Yi 所開發，以 Python 為主的中文斷詞函式庫，他除了內含的斷詞演算法外，也提供我們載入客製化詞庫的功能，並且是開放源碼的專案！</p>
+<p>目前結巴已有各種程式語言的版本，我們今天就用 Python 版的結巴 ( 結巴原始版本 ) 來玩玩看 2016 年總統就職演說的講稿吧！</p>
+<h2>準備執行環境</h2>
+<p>為了要執行 Python 版的結巴，我們需要安裝 Python 、PIP 與 Virtualenv ，若你完全沒有接觸過 Python ，可以參考我們先前介紹Bokeh (&nbsp;<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a> ) 時的安裝說明來進行，或是直接參考下列連結：</p>
+<ul>
+<li>安裝 Python — https://www.python.org/downloads/</li>
+<li>安裝 PIP —&nbsp;https://pip.pypa.io/en/stable/installing/</li>
+<li>安裝與使用 virtualenv —&nbsp;https://virtualenv.pypa.io/en/latest/installation.html</li>
+</ul>
+<p>準備就緒後便進入 virtualenv 並執行下列指令來安裝結巴函式庫：</p>
+<pre>  pip install jieba</pre>
+<h2>使用結巴</h2>
+<p>結巴的基本使用方式很簡單，直接利用「cut」函式將我們想要斷詞的文本傳入即可：</p>
+<pre>  import jieba
+  ret = open("speech.txt", "r").read()
+  seglist = jieba.cut(ret, cut_all=False)</pre>
+<p>其中 speech.txt 講稿檔來自<a href="https://www.facebook.com/Epic2Startup/photos/pcb.964610333656079/964609033656209/?type=3&amp;theater">Epic 創業筆記粉絲團</a>，你可以於該處取得。 &nbsp;jieba.cut 傳回的列表即為斷好詞的文字陣列，下面為開頭部份的斷詞結果：</p>
+<pre>  各位
+  友邦
+  的
+  元首
+  與
+  貴賓
+  、
+  各國
+  駐台
+  使節
+  及
+  代表
+  、
+  ... (下略)</pre>
+<p>我們可以再將這個結果簡單的利用 Python dict 來計算出現次數，並將結果儲存成 JSON 格式：</p>
+<pre>  import json
+  hash = {}
+  for item in seglist: 
+    if item in hash:
+      hash[item] += 1
+    else:
+      hash[item] = 1
+  json.dump(hash,open("count.json","w"))</pre>
+<p>或者是以 CSV 格式寫入 CSV 檔：</p>
+<pre>fd = open("count.csv","w")
+fd.write("word,count\n")
+for k in hash:
+&nbsp; fd.write("%s,%d\n"%(k.encode("utf8"),hash[k]))</pre>
+<p>輸出的 CSV 匯入 Google Spreadsheet 後並依次數排序會得到如下結果：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/05/word-count.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/05/word-count.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/05/word-count-300x117.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/05/word-count-768x299.png 768w" height="350" width="900" alt="2016總統就職演講斷詞統計" src="http://blog.infographics.tw/wp-content/uploads/2016/05/word-count.png" class="aligncenter size-full wp-image-1858"></a>
+<p>由於演講稿中含有標點，我們斷詞出來的結果有一些非文字的符號出現。將一些明顯的符號去除後，我們便能很快的使用 Google Chart 做出簡單的長條圖來呈現資料，如下圖中所呈現： Y 軸為各個詞的次數， X 軸則為各個字詞 ( 依次數排序 )：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/05/bar.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/05/bar.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/05/bar-300x132.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/05/bar-768x339.png 768w" height="397" width="900" alt="bar" src="http://blog.infographics.tw/wp-content/uploads/2016/05/bar.png" class="aligncenter size-full wp-image-1859"></a>
+<p>完整的範例程式碼可參考<a href="http://example.infographics.tw/1857/main.py">這個連結</a>；若需要原始全文，可以從<a href="http://example.infographics.tw/1857/speech.txt">這個連結</a>下載。</p>
+<p>有了資料，我們就可以玩各式各樣的視覺化了。我們將上例的 CSV 檔去掉「的」、「與」、「一個」等輔助用詞，再將之繪製不同的圖表，例如字頻泡泡圖：</p>
+<p></p>
+<p>或者，分組式的泡泡圖：</p>
+<p></p>
+<h2>&nbsp;結語</h2>
+<p>視覺化有相當多的議題值得我們不斷鑽研，不過在那之前，資料的梳理與分析也是一門相當複雜的學問。像結巴這樣的函式庫為我們省下了大量的時間與精力讓我們可以更快速的將資料整理完成，真的要感謝作者與開源社群的貢獻！</p>
+<p>也因為開源，結巴除了提供 Python 版本外，也已經有相當多語言的原生支援，比方說<a href="https://github.com/yanyiwu/nodejieba">這個 Node.js 版本的 Jieba</a>&nbsp;，用法與 Python 版本大同小異，若你有需要使用的話，可以直接參考<a href="https://github.com/fxsjy/jieba">結巴程式庫下方的說明</a>，有一個完整的語言支援列表。</p>
+<p>文章中的程式碼、資料檔跟輸出結果範例可以在<a href="https://github.com/infographicstw/example/tree/gh-pages/1857">這個 github 頁面</a>找到，有需要的話可以參考 🙂</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/2016/">2016</a>,<a rel="tag" href="http://blog.infographics.tw/tag/bubble-chart/">bubble chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/csv/">csv</a>,<a rel="tag" href="http://blog.infographics.tw/tag/jieba/">jieba</a>,<a rel="tag" href="http://blog.infographics.tw/tag/python/">python</a>,<a rel="tag" href="http://blog.infographics.tw/tag/wrangling/">wrangling</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e6%96%b7%e8%a9%9e/">斷詞</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e7%b5%90%e5%b7%b4/">結巴</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e7%b8%bd%e7%b5%b1/">總統</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2016/05/d3js-seven-pro-tips/">高手才知道！七個你所不知道的 D3.js 秘技</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2016/08/tips-on-basic-charts/">這樣做就對了！圖表的使用心法 – 基本圖表篇</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>11</span> Comments</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-327">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/9f9c52c96da03c1bbfc7a173fe769ad5?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://web.ntnu.edu.tw/~samtseng/">曾元顯</a></cite>         <time datetime="2016-05-24"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-327">24 5 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>這裡也有一個範例，不用寫程式，直接將總統就職演講全文拷貝進去，即可得到關鍵詞、關聯詞、以及最重要的三句話：<br>
+<a rel="nofollow ugc" href="https://www.facebook.com/photo.php?fbid=10207390070934285&amp;set=a.10202706769254670.1073741825.1362130732&amp;type=3&amp;theater&amp;notif_t=like&amp;notif_id=1463759876118423">https://www.facebook.com/photo.php?fbid=10207390070934285&amp;set=a.10202706769254670.1073741825.1362130732&amp;type=3&amp;theater&amp;notif_t=like&amp;notif_id=1463759876118423</a></p>
+      </section>
+          </article>
+  </div>
+  <div class="comment odd alt thread-odd thread-alt depth-1 cf" id="comment-328">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/02e9d0432d5bef16825465bb312a3e0b?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://蘇啟峰">蘇啟峰</a></cite>         <time datetime="2016-05-24"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-328">24 5 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>很受用 實際</p>
+      </section>
+          </article>
+    <div class="comment even depth-2 cf" id="comment-329">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/02e9d0432d5bef16825465bb312a3e0b?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://蘇啟峰">蘇啟峰</a></cite>         <time datetime="2016-05-24"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-329">24 5 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>結巴速讀</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment odd alt thread-even depth-1 cf" id="comment-333">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/e70e78e94e8e092f11999ba9e7c105bd?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://blog.pulipuli.info">布丁布丁吃布丁</a></cite>         <time datetime="2016-06-15"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-333">15 6 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>還有PHP版本跟詞性標註耶，真的好棒，感謝推薦</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-341">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/0049060c72159864c26f1d8756df5196?s=40">
+                <cite class="fn">Janine</cite>         <time datetime="2016-07-7"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-341">7 7 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>為什麼我分出來都會是亂碼呀?嗚嗚</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-344">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2016-07-15"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-344">15 7 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>可能跟編碼有關, 試試看將輸出的結果轉碼成 utf-8 或 big5 吧!</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-even depth-1 cf" id="comment-1023">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/71c669e033fa17a76d3cfc8c2f249c3c?s=40">
+                <cite class="fn">Chien</cite>         <time datetime="2017-08-8"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1023">8 8 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>舉手請問為什麼分詞後的結果(A)輸出成CSV或轉成dataframe皆無法寫入資料，我是以自己寫的一段txt作範例。</p>
+<p>import jieba<br>
+content=open(‘text.txt’,’rb’).read()<br>
+print(“Input:”,content)<br>
+————————————————————-<br>
+Input: b’\xef\xbb\xbf\xe9\x9b\xb2\xe6\x9e\x97\xe7\xb8\xa3\xe7\x9a\x84\xe5\xb0\x8f\xe7\x99\xbd\xe8\x8f\x9c\xe8\x88\x87\xe6\xa2\xa8\xe5\xb1\xb1\xe7\x9a\x84\xe9\xab\x98\xe9\xba\x97\xe8\x8f\x9c\r\n’</p>
+<p>A=jieba.cut(content)<br>
+print(“/”.join(A))<br>
+————————————————————<br>
+﻿/雲林縣/的/小白菜/與/梨山/的/高麗菜/</p>
+      </section>
+          </article>
+    <div class="comment byuser comment-author-infographics-tw bypostauthor odd alt depth-2 cf" id="comment-1030">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://infographics.tw">infographics.tw</a></cite>         <time datetime="2017-08-13"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1030">13 8 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>看起來你有順利輸出？</p>
+      </section>
+          </article>
+  </div>
+</div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-1216">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/8d9211f0b778bc764973ade39cb6eb67?s=40">
+                <cite class="fn">Thbou</cite>         <time datetime="2018-02-12"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1216">12 2 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>謝謝你的文章，另外，請問為什麼我一直得到下面這個錯誤訊息:AttributeError: ‘module’ object has no attribute ‘cut’</p>
+<p>(venv) C:\Users\Kay\Desktop\CRTT&gt;jieba.py<br>
+Traceback (most recent call last):<br>
+  File “C:\Users\Kay\Desktop\CRTT\jieba.py”, line 1, in<br>
+    import jieba<br>
+  File “C:\Users\Kay\Desktop\CRTT\jieba.py”, line 3, in<br>
+    seglist = jieba.cut(ret, cut_all=False)<br>
+AttributeError: ‘module’ object has no attribute ‘cut’</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment odd alt thread-even depth-1 cf" id="comment-1320">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/1c70009575f0619059d2ecf038fde839?s=40">
+                <cite class="fn">icesnow</cite>         <time datetime="2018-07-24"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1320">24 7 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>為什麼我分出來也都會是亂碼呀? 如何修改程式碼呢? 謝謝`</p>
+      </section>
+          </article>
+  </div>
+  <div class="comment even thread-odd thread-alt depth-1 cf" id="comment-1468">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/ee31096f02af18c4513aabd20e015eb5?s=40">
+                <cite class="fn">Jett</cite>         <time datetime="2018-12-25"><a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">25 12 月, 2018 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>我這邊跑出的結果是這樣<br>
+hash={ }<br>
+^<br>
+IntentationError: unexpected indent</p>
+<p>不知道到底是哪邊出錯?= =</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

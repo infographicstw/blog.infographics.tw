@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'ldi';
+  font-weight: normal;
+  font-style: normal;
+  src: url("/assets/lib/ldui/fonts/ldi.ttf?x74ll4") format('truetype'), url("/assets/lib/ldui/fonts/ldi.woff?x74ll4") format('woff'), url("/assets/lib/ldui/fonts/ldi.svg?x74ll4#ldi") format('svg');
+}
+body .typeset.heading-contrast {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+b {
+  font-weight: 700;
+}
+.post {
+  color: #444;
+  width: 28%;
+}
+.post .flex-grow-1 {
+  font-size: 0.8em;
+}
+.post .btn {
+  font-size: 0.8em;
+}
+.post .desc {
+  min-height: 96px;
+  text-align: justify;
+}
+.post:hover {
+  text-decoration: none;
+  color: #000;
+}
+@media (max-width: 768px) {
+  .post {
+    width: 90%;
+    margin: auto;
+  }
+}

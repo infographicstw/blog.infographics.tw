@@ -1,0 +1,276 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">p5.js － 初學者的資料視覺化函式庫</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-232 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-p5js tag-processing tag-48" id="post-232">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-03-27" class="updated">27 3 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/03/cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/cover.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/cover-300x176.png 300w" height="527" width="900" alt="p5.js Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/03/cover.png" class="aligncenter size-full wp-image-242"></a>
+<p>網頁資料視覺化常使人感到挫折 － 各種不同規格、瀏覽器支援、技術細節的瑣碎，往往令初學者為之卻步。p5.js 包裝所有的技術細節而提供了一組專用函式庫，讓不同領域的開發者可以更專心於視覺化本身。</p>
+<p><span id="more-232"></span></p>
+<p>p5.js 事實上是 Processing 的 JS 移植版。2001 年，MIT MediaLab 的 Casey Reas and Benjamin Fry 考量到技術細節的問題，開發了 Processing 語言來包裝資料視覺化外的旁枝末節，讓開發者可以專心於視覺化本身。p5.js 做為 Processing 的移植，完整的採用了Processing 的函式庫介面，並使用 Javascript 做為開發語言，讓原本使用 Javascript 的開發者不再需要另外學習一套程式語言。</p>
+<p>p5.js 的邏輯相當簡單，一段 p5.js 程式碼包含初始化與繪圖兩個階段，你只要定義對應的函式，程式便會自行運作：</p>
+<pre>  function preload() { /* 載入資料 */ }
+  function setup() { /* ... 初始化程式碼, 資料載入完後執行 */ }
+  function draw() { /* 繪圖程式碼，會自動不斷的執行 */ }</pre>
+<p>讓我們來想像製作一個簡單的統計圖表 － 長條圖的過程：</p>
+<ol>
+<li>在 preload 中載入資料</li>
+<li>在 draw 中依資料繪出長條圖</li>
+</ol>
+<p>其中所需要的對應功能，例如載入資料或繪製矩形，即利用 p5.js 包裝好的函式庫來實作。例如，載入資料可以使用 loadJSON 函式，繪製矩形可以使用 rect 函式。馬上就來實作看看：</p>
+<pre>  var data = null;
+  function preload() {
+    loadJSON("index.json", function(it) { data = it; }); /* 載入資料 */
+  }
+
+  function draw() {
+    if(data) {
+      for(i=0;i&lt;data.length;i++) {
+        rect(10, i*10, data[i]+10, 8); /* 畫出來 */
+      }
+    }
+  }</pre>
+<p>以資料 [20, 5, 40, 15, 33] 為例，執行結果大概像這個樣子：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/bar.png"><img height="100" width="100" alt="p5js Bar Chart Example" src="http://blog.infographics.tw/wp-content/uploads/2015/03/bar.png" class="aligncenter size-full wp-image-234"></a>
+<p>要做到更複雜的事，可以參考 <a href="http://p5js.org/reference/" title="P5JS Reference">p5.js 的 Reference</a> ，裡面記載了有什麼樣的函式可以使用，包括了顏色、輸入裝置(滑鼠、鍵盤等)、繪圖、寫字等等約 14 個類別的函式。舉例來說，下面為實作一個圓餅圖的程式碼：</p>
+<pre>  var data = [20,5,40,15,33]; /* 為了簡潔, 資料預先寫好 */
+  var piedata = [], piecolor = [48,96,144,192,240];
+  var mouseAngle = 0, pieDelta = 0, hover = 0;
+
+  function setup() {
+    <strong>createCanvas</strong>(640,480); /* 設定畫布的寬高 */
+    total = data.reduce(function(a,b){ return a+b; }, 0);
+    for(var i=0,count=0;i&lt;data.length;i++) { /* 轉換資料給圓餅圖用 */
+      piedata.push([Math.PI * 2 * count / total, Math.PI * 2 * (count + data[i]) / total]);
+      count += data[i];
+    }
+  }
+
+  function draw() {
+    <strong>clear</strong>(); /* 每次重畫都清除畫布 */
+    for(var i=0,dx=0,dy=0;i&lt;piedata.length;i++,dx=0,dy=0) {
+      fill(piecolor[i%5]);
+      /* 將滑鼠上的圓餅浮出 */
+      if(mouseAngle &gt;= piedata[i][0] &amp;&amp; mouseAngle &lt; piedata[i][1]) {
+        dx = Math.cos((piedata[i][0] + piedata[i][1])/2) * 10;
+        dy = Math.sin((piedata[i][0] + piedata[i][1])/2) * 10;
+      }
+      /* 繪出圓餅 */
+      <strong>arc</strong>(320 + dx, 200 + dy, 300, 300, piedata[i][0], piedata[i][1], PIE);
+    }
+  }
+
+  /* 滑鼠移動的時候，確認滑鼠相對圓餅中心的角度 */
+  function <strong>mouseMoved</strong>() {
+    mouseAngle = Math.PI / 2 - Math.atan((320 - <strong>mouseX</strong>) / (200 - <strong>mouseY</strong>));
+    if(mouseY &lt; 200) mouseAngle = mouseAngle + Math.PI;
+  }</pre>
+<p>這段程式碼的執行結果如下：<br>
+</p>
+<p>若你對完整程式碼有興趣的話，原始碼可以在<a href="https://github.com/infographicstw/example/tree/gh-pages/232" title="p5.js Pie Chart source code">這裡</a>找到。</p>
+<h3>Processing.js</h3>
+<p>事實上 Processing 除了 p5.js 這個實作以外，還有一個叫 processing.js 的工具，他同樣是將 Processing 移植到網頁上來。那麼 p5.js 與 processing.js 有什麼不同呢？</p>
+<ul>
+<li>Live Translation vs Native Code : processing.js 即時將 Processing 使用的 PDE 檔轉成 Javascript 後再執行，而 p5.js 原生便是使用 Javascript 撰寫程式碼。</li>
+<li>由於 p5.js 直接使用 Javascript ，你也可以與任何其它的 Javascript 函式庫併用。</li>
+</ul>
+<p>比方說，前例的圓餅圖顏色是寫死在程式碼中的，這時我們可以考慮與 tinycolor.js 或 D3.js 併用來產生顏色：</p>
+<pre>  var colormap = d3.scale.linear().domain([0,4]).range(["#f00","#0f0"]);
+  ...
+  fill(colormap(i%5));</pre>
+<p>其擴充性相對於 processing.js 可說是大上許多。</p>
+<h2>結語</h2>
+<p>這次我們簡單的玩了一下 p5.js ，並製作了兩種基本的統計圖表， p5.js 可說是相當容易上手。然而容易上手並沒有讓他變成很侷限的視覺化工具，相反的他其實仍然能夠做出相當不錯的互動式資料視覺化。例如 p5.js 官網上的<a href="http://p5js.org/learn/examples/Simulate_Flocking.php" title="Flocking Simulation">這個例子 Flocking Visualization</a> ，展示了個體規則對群體表現的影響，使用者除了觀賞網頁中的動畫外，也可以透過滑鼠拖曳來加入新的個體，實現互動的效果。</p>
+<p>p5.js 相當適合給剛學會 Javascript 但對網頁技術還不是很熟的朋友，或者是做為視覺化課程中練習實作的一個套件。有興趣的朋友不妨到 <a href="http://p5js.org/" title="p5js official website">p5.js 的官網</a>上尋找更多的資訊。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/p5js/">p5js</a>,<a rel="tag" href="http://blog.infographics.tw/tag/processing/">processing</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e8%a6%96%e8%a6%ba%e5%8c%96%e5%b7%a5%e5%85%b7/">視覺化工具</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/03/chart-visualization-with-amcharts/">不寫程式也能有強大彈性 － Amcharts 圖表工具</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/04/visualize-with-datahero/">上傳資料？落伍了！使用 DataHero 製作視覺化圖表</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

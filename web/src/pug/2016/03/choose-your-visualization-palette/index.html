@@ -1,0 +1,235 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">顏色這樣挑！搞定你的視覺化色盤（ 上 ）</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1697 post type-post status-publish format-standard has-post-thumbnail hentry category-9 category-18 tag-binary tag-chroma tag-color tag-diverging tag-hcl tag-hsl tag-hue tag-lightness tag-palette tag-qualitative tag-rgb tag-saturation tag-sequential tag-visualization" id="post-1697">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-03-11" class="updated">11 3 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>, <a rel="category tag" href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1712" href="https://blog.infographics.tw/wp-content/uploads/2016/03/cover1.png"><img sizes="(max-width: 898px) 100vw, 898px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/03/cover1.png 898w, https://blog.infographics.tw/wp-content/uploads/2016/03/cover1-300x175.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/03/cover1-768x449.png 768w" height="525" width="898" alt="cover1" src="https://blog.infographics.tw/wp-content/uploads/2016/03/cover1.png" class="aligncenter size-full wp-image-1712"></a>
+<p>曾煩惱視覺化作品的顏色怎麼選嗎？也許你看過很多色盤網站，但你可能不知道，一般色盤網站的色盤並不適合直接運用在資料視覺化之上的喔！「什麼！那該怎麼辦？」別擔心，今天我們就來深入淺出地從視覺化的角度帶大家重新認識「顏色」吧！</p>
+<p><span id="more-1697"></span></p>
+<p>視覺化脫離不了顏色 — 任何東西只要能被看到，就有個顏色。在視覺化的過程，我們常會需要應用各種顏色，這時缺乏靈感的我們難免不去參考各種提供色盤的網站，例如：</p>
+<ul>
+<li><a href="https://colorhunt.co/">Color Hunt</a>&nbsp;— 四種顏色一組的小編嚴選</li>
+<li><a href="https://www.colourlovers.com/palettes">Colour Lover</a> — 色盤社群，擁有相當多數量的色盤</li>
+<li><a href="https://color.adobe.com">Adobe Color CC</a> — 前身為 Adobe Kuler ，程序化的挑選顏色 ( 互補色、相近色等 )</li>
+<li><a href="https://loading.io/color/">Loading.io Colors</a> — 由關鍵字選色，提供主題預覽與色盲測試</li>
+</ul>
+<p>通常我們選擇色盤，看得順眼的就上了；但這些色盤應用在資料視覺化上真的適合嗎？挑選視覺化專用的色盤時，有沒有什麼該注意的呢？我們把幾個重要的原則整理於此，供大家在未來選擇色盤時的參考。</p>
+<p>&nbsp;</p>
+<h2>顏色的基本成份</h2>
+<p>顏色有相當多的表達方式，我們可以說這個顏色很「藍」或很「憂鬱」，也可以用更精確的方式例如「#0000ff」來表現。在資料視覺化中，目前最適合的表現方式為「HCL」的編碼：</p>
+<ul>
+<li>H – Hue：色調，指示不同類型的顏色，例如紅、綠、黃</li>
+<li>C – Chroma：彩度，鮮豔與灰暗的差異</li>
+<li>L – Lightness：明度，代表人類實質感受到的顏色亮度</li>
+</ul>
+<p>其中很值得注意的一點，HCL 的明度與其它編碼法的亮度是不同的概念；舉例來說，當我們看著下圖的黃色與藍色時，會覺得黃色比較亮，但在 HSL 空間中他們的亮度是一樣的：</p>
+<a rel="attachment wp-att-1700" href="https://blog.infographics.tw/wp-content/uploads/2016/03/yello-blue.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/03/yello-blue.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/03/yello-blue-300x136.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/03/yello-blue-768x349.png 768w" height="409" width="900" alt="yello-blue" src="https://blog.infographics.tw/wp-content/uploads/2016/03/yello-blue.png" class="aligncenter size-full wp-image-1700"></a>
+<p>若在灰階的情境下展示，左方的藍便會比右方的黃暗上許多，這代表我們缺乏了對明度的控制力。使用 HCL 空間時，我們能直接指定相同的明度；下圖左右兩邊的色盤均以其明度標示於其下，右方色盤即為將左方色盤的明度重新調整過後的樣子：</p>
+<a rel="attachment wp-att-1701" href="https://blog.infographics.tw/wp-content/uploads/2016/03/lightness.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/03/lightness.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/03/lightness-300x32.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/03/lightness-768x82.png 768w" height="96" width="900" alt="lightness" src="https://blog.infographics.tw/wp-content/uploads/2016/03/lightness.png" class="aligncenter size-full wp-image-1701"></a>
+<p>為什麼我們要這麼注意明度的調整呢？</p>
+<p>&nbsp;</p>
+<h2>顏色的主要用途：區別、強調與分組</h2>
+<p>視覺化大師 Edward Tufte 於其書「Envisioning information」中提到，顏色最主要的用途便是「to label」— 利用顏色將資料做妥善的區別。不同的顏色可以讓我們分辨不同的資料，但顏色間的差異程度則影響著我們辨識的能力，試想下面兩組色盤若應用在資料視覺化上，哪組比較能讓我們更清楚的分辨出不同的資料呢？</p>
+<a rel="attachment wp-att-1702" href="https://blog.infographics.tw/wp-content/uploads/2016/03/diff.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/03/diff.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/03/diff-300x41.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/03/diff-768x106.png 768w" height="124" width="900" alt="diff" src="https://blog.infographics.tw/wp-content/uploads/2016/03/diff.png" class="aligncenter size-full wp-image-1702"></a>
+<p>在上圖中，左方的五種顏色在 HCL 空間中彼此距離都近，讓他們看起來差異並不大；而右方的五個顏色的距離都相當的遠，很容易一眼就看出來顏色間的差異。由此我們可以了解到一個秘訣：為了讓顏色更容易分辨，我們可以在 HCL 空間中選取彼此距離遠的顏色來做色盤。</p>
+<p>然而，色調、彩度與明度因為其本質的不同，適合應用的情境也不一樣。色調所帶的色彩訊息，容易讓相近的顏色自成一群，例如紅色、橙色與黃色對比於綠色、藍色等等；明度的連續性特質，更適合表現數值大小與變化。要突顯特定資料時，利用強大的對比 ( 互補色、彩度的變化 ) 效果則更好。</p>
+<p>由這幾個特點我們歸納一個選色的基本規則：</p>
+<ul>
+<li>利用色調來做分組 ( 離散式 )</li>
+<li>利用明度來比較數值 ( 連續性 )</li>
+<li>接著，再輔以彩度來強化對比</li>
+</ul>
+<p>讀到這裡，我們也應該了解為什麼要使用 HCL 色域了：我們需要自由操作明度的能力，才能更妥善的呈現資料。當然光是操作的能力仍然是不夠的；接著我們要從資料出發來思考如何運用這些基本規則。</p>
+<p>&nbsp;</p>
+<h2>考慮資料的性質</h2>
+<p>同樣是資料視覺化，資料卻往往有很大的差異，而資料組織與呈現的方式也會很大的影響到顏色所扮演的角色。Colorbrewer 作者 Cynthia Brewer 指出幾種常見的視覺化類型：</p>
+<p><strong>二元化 / Binary</strong>：當我們只需要呈現兩種不同結果時 ( 例如，男 / 女 、 戰敗 / 戰勝 等 )。這時我們需要兩個顏色，要注意的是這兩個顏色必須在明度上有顯著差異。下圖為兩組二元化的色盤範例：</p>
+<a rel="attachment wp-att-1705" href="https://blog.infographics.tw/wp-content/uploads/2016/03/binary.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/03/binary.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/03/binary-300x60.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/03/binary-768x153.png 768w" height="179" width="900" alt="binary" src="https://blog.infographics.tw/wp-content/uploads/2016/03/binary.png" class="aligncenter size-full wp-image-1705"></a>
+<p><strong>兩極化 / Diverging</strong>：數據分成正負兩群，同時要表現其程度時 ( 例如，股市漲跌、氣溫升降等 )。通常以兩個不同的色調做基礎，各別讓明度依數值做線性變化。下圖為兩極化的範例，可以看到明度由兩端往中間遞增，用以表現數值的變化，而紅與藍的色調則用來表現方向性：</p>
+<a rel="attachment wp-att-1706" href="https://blog.infographics.tw/wp-content/uploads/2016/03/diverging.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/03/diverging.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/03/diverging-300x33.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/03/diverging-768x85.png 768w" height="100" width="900" alt="diverging" src="https://blog.infographics.tw/wp-content/uploads/2016/03/diverging.png" class="aligncenter size-full wp-image-1706"></a>
+<p><strong>質化 / Qualitative</strong>：數據並非連續或數值，而是離散的時候 ( 例如「支持的球隊」、「人種」、「選舉制度」等 )。通常以多個色調做基礎，明度相近但不相同。下圖為質化的範例，左方是我們的色盤，右方是各個顏色所分別對應的明度。</p>
+<a rel="attachment wp-att-1707" href="https://blog.infographics.tw/wp-content/uploads/2016/03/qualitative.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/03/qualitative.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/03/qualitative-300x33.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/03/qualitative-768x85.png 768w" height="100" width="900" alt="qualitative" src="https://blog.infographics.tw/wp-content/uploads/2016/03/qualitative.png" class="aligncenter size-full wp-image-1707"></a>
+<p><strong>連續式 / Sequantial</strong>：當我們要表現程度、分數等連續性資料的時候 ( 例如「生育率」、「溫度」、「字數」等 )。這時大多固定色調，然後利用明度差異來製做色階：</p>
+<a rel="attachment wp-att-1708" href="https://blog.infographics.tw/wp-content/uploads/2016/03/sequential.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/03/sequential.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/03/sequential-300x33.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/03/sequential-768x85.png 768w" height="100" width="900" alt="sequential" src="https://blog.infographics.tw/wp-content/uploads/2016/03/sequential.png" class="aligncenter size-full wp-image-1708"></a>
+<p>這幾類的性質也可以互相搭配，產生更多的可能性；但這都是基於我們所想製作的視覺化要如何呈現；我們想要表現的是總統大選各縣市的投票率，亦或是獲勝政黨？想要表現政黨支持度差異，又或者是陣營的差別？從我們想要表現的內容出發，到決定資料類型，再到色盤的選擇與挑選，可以說都是息息相關，脫離不了關係的。</p>
+<p>關於資料類型與其對應的顏色挑選，可以直接參考 Cynthia Brewer 所寫的「<a href="https://web.natur.cuni.cz/~langhamr/lectures/vtfg1/mapinfo_2/barvy/colors.html#binary">Color Use Guidelines for Mapping and Visualization</a>」一文，裡面有更詳盡的介紹。</p>
+<h2>小結</h2>
+<p>讀到這裡，相信你已經了解：光是挑選個顏色，裡面就已經很有學問！其實顏色的選擇還有很多可以玩味的內容，礙於篇幅限制，接下來的內容我們分篇在後續的文章再繼續與讀者們分享，若對資料視覺化有興趣，別忘了繼續追蹤我們的網站，以取得最新的視覺化資訊喔！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/binary/">binary</a>,<a rel="tag" href="https://blog.infographics.tw/tag/chroma/">chroma</a>,<a rel="tag" href="https://blog.infographics.tw/tag/color/">color</a>,<a rel="tag" href="https://blog.infographics.tw/tag/diverging/">diverging</a>,<a rel="tag" href="https://blog.infographics.tw/tag/hcl/">hcl</a>,<a rel="tag" href="https://blog.infographics.tw/tag/hsl/">hsl</a>,<a rel="tag" href="https://blog.infographics.tw/tag/hue/">hue</a>,<a rel="tag" href="https://blog.infographics.tw/tag/lightness/">lightness</a>,<a rel="tag" href="https://blog.infographics.tw/tag/palette/">palette</a>,<a rel="tag" href="https://blog.infographics.tw/tag/qualitative/">qualitative</a>,<a rel="tag" href="https://blog.infographics.tw/tag/rgb/">rgb</a>,<a rel="tag" href="https://blog.infographics.tw/tag/saturation/">saturation</a>,<a rel="tag" href="https://blog.infographics.tw/tag/sequential/">sequential</a>,<a rel="tag" href="https://blog.infographics.tw/tag/visualization/">visualization</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/03/d3js-with-excel-e2d3/">E2D3 — 不懂程式也能用 Excel 建立 D3 圖表</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/03/choose-your-visualization-palette-2/">顏色這樣挑！搞定你的視覺化色盤（ 中 ）</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>1</span> Comment</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-950">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/fd45f22fa57f78ae0346f383e8d5ea82?s=40">
+                <cite class="fn">cindy</cite>         <time datetime="2017-05-23"><a href="https://blog.infographics.tw/2016/03/choose-your-visualization-palette/#comment-950">23 5 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>這個色盤產生器好像也有用到一些這裡講到的技巧: <a rel="nofollow ugc" href="https://loading.io/color/random/">https://loading.io/color/random/</a></p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

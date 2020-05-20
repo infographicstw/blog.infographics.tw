@@ -1,0 +1,273 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">資料爬梳一鍵搞定 － 使用 import.io 爬梳網頁資料</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-993 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-crawling tag-data tag-import-io tag-kimono tag-scraper tag-scrapy" id="post-993">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-06-16" class="updated">16 6 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/06/cover3.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/cover3.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/cover3-300x176.jpg 300w" height="527" width="900" alt="import.io Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/06/cover3.jpg" class="aligncenter size-full wp-image-994"></a>
+<p>複製、貼上… 你還在手動爬資料嗎？類似 Kimono ， import.io 同樣幫程式苦手爬網站的資料，但 import.io 與 Kimono 不同的地方在於： import.io 讓你一鍵搞定！這次小編就帶大家來看看 import.io 提供了什麼樣的功能吧！</p>
+<p><span id="more-993"></span></p>
+<p>資料分析盛行的這個年代，「砍站」的動作也開始流行了起來；網頁本身也是資料的一種，但往往我們需要的是網頁裡面的數據，也就是精鍊過的資料。</p>
+<p>結構化的網頁格式讓程式化資料截取變成可行，但即使現在幾乎所有領域都需要做資料分析，程式設計技能也並不是所有人都具備的，因此爬蟲服務如雨後春筍的一個個冒了出來。</p>
+<p><a href="http://import.io">import.io</a>&nbsp;直接在他們的首頁提供了輸入框讓我們輸入想爬取的網址，網址送出後結構化資料很快就傳便便，不愧是一鍵爬資料：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_998"><a href="http://blog.infographics.tw/wp-content/uploads/2015/06/ex11.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/ex11.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/ex11-300x170.jpg 300w" height="510" width="900" alt="import.io Example 1" src="http://blog.infographics.tw/wp-content/uploads/2015/06/ex11.jpg" class="wp-image-998 size-full" aria-describedby="caption-attachment-998"></a><p class="wp-caption-text" id="caption-attachment-998">爬取 Yahoo 拍賣搜尋「史萊姆」的結果</p></div>
+<p>上例為 Yahoo 拍賣搜尋「史萊姆」的結果，圖片、連結、直購價、剩餘時間、運費、所在地等欄位全都預先幫我們準備好了 ( 因為表格很長，上圖只顯示部份 ) ，同時翻頁也做好，只要按「Next Page」就可以自動截取下一頁，完全不需要我們煩惱！</p>
+<p>截取後的資料我們可以透過 API 的方式使用，或是直接下載 CSV 檔，下載 CSV 檔時要指定想要截取的頁面數：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/csv.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/csv.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/csv-300x100.jpg 300w" height="300" width="900" alt="Get CSV" src="http://blog.infographics.tw/wp-content/uploads/2015/06/csv.jpg" class="aligncenter size-full wp-image-1000"></a>
+<p>下例是利用 Google Spreadsheet 開啟下載後 CSV 的樣子：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/csv-view.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/csv-view.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/csv-view-300x98.jpg 300w" height="294" width="900" alt="View CSV in Google Spreadsheet" src="http://blog.infographics.tw/wp-content/uploads/2015/06/csv-view.jpg" class="aligncenter size-full wp-image-1001"></a>
+<h3>使用 import.io API</h3>
+<p>若我們在搜尋之後選擇右下角的「Get API」， import.io 會將這次的搜尋儲存至我們的帳號中 ( 如果尚未登入則會彈出一個登入提示對話框 ) ，接著我們便可以看到 API 接口的詳細資訊。除了一般的 HTTP 接口 API 外， import.io 也提供了 Google Spreadsheet 專用的載入指令，以及 plot.ly 圖表製作工具的銜接指示！</p>
+<p>在 Google Spreadsheet 部份， import.io 簡單的利用了 Google Spreadsheet 的「importHtml」指令，讓我們只要貼上 import.io 提供的指令串就可以得到類似上面開啟 CSV 的結果，也就是不再需要另外下載、上傳 CSV 檔：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/spreadsheet.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/spreadsheet.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/spreadsheet-300x90.jpg 300w" height="270" width="900" alt="Open in Google Spreadsheet" src="http://blog.infographics.tw/wp-content/uploads/2015/06/spreadsheet.jpg" class="aligncenter size-full wp-image-1004"></a>
+<p>我們同時也可以點擊左下角的「Open Spreadsheet」，在同意讓 import.io 存取 Google 帳號後， import.io 便會自動幫我們把資料丟進 Google Spreadsheet ，相當方便。</p>
+<h3>搭配 Plot.ly 快速完成視覺化</h3>
+<p>今年一月初 import.io 與 plot.ly 正式宣布合作，讓 import.io 可以把資料直接匯出到 plot.ly 圖表工具中，彼此的方便性都在更上了一層。</p>
+<p>要利用 plot.ly，我們先點選「Plot.ly」頁籤，這裡除了基本教學影片外，也可以勾選欲匯出的資料欄位。選取想要用來視覺化的欄位後接著點選「Export to Plot.ly」即可將資料匯出至 Plot.ly：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/plotly.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/plotly.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/plotly-300x147.jpg 300w" height="440" width="900" alt="Export to Plot.ly" src="http://blog.infographics.tw/wp-content/uploads/2015/06/plotly.jpg" class="aligncenter size-full wp-image-1005"></a>
+<p>匯出資料時 Plot.ly 可能會要求我們登入，如果尚未註冊則需要先註冊，但基本上都是免費的，不用擔心無法註冊。資料一旦匯入，我們便可以利用匯入的資料來做圖表，下圖為我們利用 Plot.ly 製作史萊姆相關商品價錢的散佈圖： ( 如果沒有接觸過 Plot.ly 可以參考我們先前分享的 Plot.ly 介紹：「<a href="http://blog.infographics.tw/2015/03/social-chart-visualization-with-plotly/">看過圖表社交平台嗎? － 使用 plot.ly 製作圖表</a>」一文。 )</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/pricing.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/pricing.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/pricing-300x137.jpg 300w" height="410" width="900" alt="pricing" src="http://blog.infographics.tw/wp-content/uploads/2015/06/pricing.jpg" class="aligncenter size-full wp-image-1006"></a>
+<p>可以看到大部份的史萊姆相關商品價錢都在 10000 元以下，只有三個超過 10000 元，其中一個高達 60000 ！ ( 據雅虎拍賣的生態來看，接近 0 元與高達 6 萬元的商品可能都是為了在搜尋排序上有更高的曝光率而設。 )</p>
+<p>如果不包括登入、註冊的話，從貼上網址到圖表產生，一共按了不到 10 下滑鼠！想想若完全手動要生成這樣的圖表要花多少時間：撰寫爬蟲、執行、資料整理、使用 D3.js 等函式庫繪圖 . . . 光用想的就頭大，真的忍不住要感謝人類科技的進步呢。</p>
+<h3>import.io Extractor</h3>
+<p>很遺憾，天底下沒有這麼完美的事。import.io 的程式自動分析網頁結構來截取資料仍然有其極限，比方說碰到 Ajax 型態動態生成的網頁時，全自動資料截取就會破功。 import.io 提供了進階的客製化功能「Extractor」、「Crawler」以及「Connector」，我們可以透過 import.io App 來使用這些功能：</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1010"><a href="http://blog.infographics.tw/wp-content/uploads/2015/06/install.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/install.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/install-300x127.jpg 300w" height="380" width="900" alt="Install import.io" src="http://blog.infographics.tw/wp-content/uploads/2015/06/install.jpg" class="wp-image-1010 size-full" aria-describedby="caption-attachment-1010"></a><p class="wp-caption-text" id="caption-attachment-1010">下載 / 安裝 import.io 應用程式</p></div>
+<p>安裝好 import.io App 後直接開啟，可以看到 App 本身其實就是一個網頁瀏覽器，預設開啟的頁面是我們在 import.io 網站的個人入口頁面：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/app.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/app.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/app-300x205.jpg 300w" height="615" width="900" alt="import.io Application" src="http://blog.infographics.tw/wp-content/uploads/2015/06/app.jpg" class="aligncenter size-full wp-image-1011"></a>
+<p>若要客製進階版的網頁分析，我們可以在左上角的「New …」 下拉選單中選擇想要的類型，包括：</p>
+<ul>
+<li>Extractor － 從一頁中取出資料</li>
+<li>Crawler － 從整個網站取出資料</li>
+<li>Connector － 從網站中取出資料，且包含互動的部份</li>
+</ul>
+<p>舉例來說，假設我們想要從 amazon 網站取得 metal slime ( 金屬史萊姆 ) 的商品資訊，直接將相關連結貼至 import.io 首頁搜尋框的結果並不盡理想，應該有十筆以上的結果但我們只得到了四筆結果，這時我們就可以利用 import.io app 的「Extractor」從網頁取出資料。</p>
+<p>要使用 Extractor，首先開啟 import.io App ，新增「Extractor」後將在 amazon 搜尋「meta slime」結果的網址貼到網址列中，然後點擊左上方的「OFF」切換至「ON」：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/app-extractor.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/app-extractor.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/app-extractor-300x179.jpg 300w" height="538" width="900" alt="app-extractor" src="http://blog.infographics.tw/wp-content/uploads/2015/06/app-extractor.jpg" class="aligncenter size-full wp-image-1012"></a>
+<p>這時會先產生一組預設的欄位分析結果，當我們對結果不滿意時可以點擊右上角的列表按鈕 ( 鈑手左邊那一個 ) 來開始「訓練」分析程式。</p>
+<p>訓練的方式不複雜，類似 Kimono 的做法，我們透過在下方的網頁中點擊相關內容來訓練分析程式取得更好的分析結果。預設分析結果中的欄位不足時，也可以點上方的「New Column」按鈕來增加欄位，再另外進行訓練。</p>
+<p>一切都完成後，點擊右上方的「DONE」，再為這個 API 命個名就完成了，未來若再碰到分析不精準的問題，隨時可以回來重新調整分析程式。</p>
+<p>以上大致上就是 Extractor 的使用方法。除了 Extractor ， import.io 還有提供 「Class Extractor」、「Crawler」與「Connector」，項目相當多無法在此一一介紹完畢，不過 import.io 在操作過程中的使用說明還算清楚，大家可以自己嘗試玩玩看囉！</p>
+<hr>
+<h2>結語</h2>
+<p>與 Kimono 相比，import.io 有個很不錯的優勢在於：預設的分析結果很可能就是我們想要的內容。這時若使用 Kimono 則免不了要自行點選相關欄位，也得另外安裝 bookmarklet 或 Browser Extension ，比起 import.io 稍微麻煩了一些。</p>
+<p>不過，其實仍然有不少內容是 import.io 無法自動搞定的，舉例來說，信義房屋的頁面使用 import.io 是沒辦法拿到正常資料的：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/sinyi.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/sinyi.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/sinyi-300x120.jpg 300w" height="360" width="900" alt="信義房屋截取結果" src="http://blog.infographics.tw/wp-content/uploads/2015/06/sinyi.jpg" class="aligncenter size-full wp-image-1013"></a>
+<p>而與信義房屋打對台的永慶房屋則可以取得結果：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/06/yunching.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/06/yunching.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/06/yunching-300x93.jpg 300w" height="280" width="900" alt="永慶房屋結果" src="http://blog.infographics.tw/wp-content/uploads/2015/06/yunching.jpg" class="aligncenter size-full wp-image-1014"></a>
+<p>在這種情況下，我們必須透過 Extractor 來做分析程式訓練，而這部份相比 Kimono 的分析介面設計得比較直覺，小編認為是略勝 import.io 一籌的，因此使用 Kimono 在這種情況可能會比較方便。</p>
+<p>另外，由程式動態生成內容的網頁也會有自動分析的問題，我們可以在進階版的分析工具中啟用 Javascript 來試著截取動態內容，不過小編至目前試過了幾個網站，感覺還不太給力，期待 import.io 未來的改版做得更好。</p>
+<p>即便克服了這些問題爬到了資料，有些網站會針對大量資料截取行為做特別處理，例如擋 IP、throttling、 reCAPTCHA 等等的機制，像 Kimono 爬取永慶、信義網站就會爬一半卡住，import.io 是否有克服這類的問題？這就留待讀者們實戰時確認囉！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/crawling/">crawling</a>,<a rel="tag" href="http://blog.infographics.tw/tag/data/">data</a>,<a rel="tag" href="http://blog.infographics.tw/tag/import-io/">import.io</a>,<a rel="tag" href="http://blog.infographics.tw/tag/kimono/">kimono</a>,<a rel="tag" href="http://blog.infographics.tw/tag/scraper/">scraper</a>,<a rel="tag" href="http://blog.infographics.tw/tag/scrapy/">scrapy</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/06/introduction-to-x3dom/">視覺化的 3D 世界 － X3D 入門</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/06/introduction-to-ai2html/">AI 變 HTML！ai2html 讓你用 Adobe Illustrator 做網頁</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>1</span> Comment</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-939">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/b72a04252b634a269de839878aa0293f?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://www.octoparse.com">Nora</a></cite>         <time datetime="2017-05-12"><a href="http://blog.infographics.tw/2015/06/data-crawling-with-import-io/#comment-939">12 5 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>謝謝分享！！<br>
+樓主可以試試Octoparse（www.octoparse.com）,也有你上面提到的所有強大的功能，可以寫個類似的對比文~~</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

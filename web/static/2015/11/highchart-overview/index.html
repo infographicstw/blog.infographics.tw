@@ -1,0 +1,239 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">彈性與易用性兼具的圖表工具 — Highchart</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1452 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-amchart tag-highchart tag-javascript tag-jslib" id="post-1452">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-11-18" class="updated">18 11 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/11/cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/cover.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/cover-300x176.png 300w" height="527" width="900" alt="Highchart - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/11/cover.png" class="aligncenter size-full wp-image-1462"></a>
+<p>使用現成圖表，卻常覺得做不到想要的效果嗎？ <a href="http://www.highcharts.com/">Highchart</a> 身為一個圖表函式庫，它同時也提供了線上的圖表編輯器，讓你在使用工具快速做圖的同時也保留了客製化的彈性喔！那就讓我們一起來看看如何使用 Highchart 吧！</p>
+<p><span id="more-1452"></span></p>
+<p>如果你有看過聯合報新媒體部的數位報導，你可能已經看過 <a href="http://www.highcharts.com/">Highchart</a> 的成品了。在聯合報新媒體實驗部的線上數位專輯之中，有不少圖表使用了 Highchart 來製作，比方說在「<a href="http://p.udn.com.tw/upf/newmedia/2015_data/20150803_udntraffic/udntraffic/index.html">致命撞擊 — 被低估的死亡車禍數據</a>」中、「統計的魔鬼細節」下方的線圖即是利用 Highchart 製作。</p>
+<p>Highchart 是個 JavaScript 圖表函式庫，這代表我們可以使用它搭配 JavaScript 在網頁上來建立統計圖表。要利用 Highchart ，首先在網頁中引入 JQuery 與 Highchart 的程式庫：</p>
+<pre>&nbsp; &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"&gt;&lt;/script&gt;
+  &lt;script src="http://code.highcharts.com/highcharts.js"&gt;&lt;/script&gt;</pre>
+<p>接著，參考 <a href="http://www.highcharts.com/docs">Highchart 使用文件</a>以建立函式庫所需的對應資料：</p>
+<pre>&nbsp; var data = {
+&nbsp; &nbsp; chart: {type: "bar"},
+&nbsp; &nbsp; series: [{name: "Jane", data: [3,1,4,1,5,9]}]
+&nbsp; }</pre>
+<p>再利用 Highchart 函式在選定的節點上建立圖表即可：</p>
+<pre>  $("body").highcharts(data);</pre>
+<p>上面建立的圖表是長條圖，大概會有類似下面這樣的結果：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/11/bar-2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/bar-2.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/bar-2-300x117.png 300w" height="350" width="900" alt="Bar Chart by Highchart" src="http://blog.infographics.tw/wp-content/uploads/2015/11/bar-2.png" class="aligncenter size-full wp-image-1454"></a>
+<p>&nbsp;</p>
+<h2>可是，我不會寫程式？</h2>
+<p>從上面的例子可以了解到 Highchart 接收一個「圖表設定」( 上例中的 data 變數 ) 來繪製圖表，所以我們要做圖表，首先要知道的就是該怎麼產生那個設定。 為了讓這件事更容易辦到， Highchart 提供了圖表線上編輯器「<a href="http://cloud.highcharts.com">Highchart Cloud</a>」，讓我們可以透過圖形介面直接產生圖表。</p>
+<p>首先連至 cloud.highcharts.com 註冊，完成後點擊右上角的「CREATE CHART」：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/11/create.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/create.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/create-300x127.png 300w" height="380" width="900" alt="Create Chart in Highchart" src="http://blog.infographics.tw/wp-content/uploads/2015/11/create.png" class="aligncenter size-full wp-image-1455"></a>
+<p>接下來便會進到 Highchart 的圖表編輯畫面。不得不說他的編輯器製作得真的還不錯，具響應式功能又不會太擁擠：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/11/editor-1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/editor-1.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/editor-1-300x187.png 300w" height="562" width="900" alt="Editor Highchart" src="http://blog.infographics.tw/wp-content/uploads/2015/11/editor-1.png" class="aligncenter size-full wp-image-1456"></a>
+<p>從圖中我們可以看到 Highchart 的圖表製作類似 <a href="http://blog.infographics.tw/2015/10/darawrapper/">Datawrapper</a> 分成四個步驟：「匯入」、「樣板」、「客製」與「分享」。在這個階段我們可以手動貼上資料到輸入框中，也可以直接使用他所提供的範例資料快速嘗鮮。一但資料填入完成，圖表甚至立刻就出來了：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/11/chart.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/chart.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/chart-300x173.png 300w" height="520" width="900" alt="Line chart with Highchart" src="http://blog.infographics.tw/wp-content/uploads/2015/11/chart.png" class="aligncenter size-full wp-image-1457"></a>
+<p>完成資料匯入後，我們可以在第二個步驟選擇我們想用的圖表，下圖為可用的圖表類型的參考畫面，可以看到這裡有十種的圖表類型，各種圖表類型 ( 如圖中的「Bar Type」) 還有莫約十種的變化，可說選擇性相當高：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/11/charts.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/charts.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/charts-300x163.png 300w" height="490" width="900" alt="Chart Types in Highchart" src="http://blog.infographics.tw/wp-content/uploads/2015/11/charts.png" class="aligncenter size-full wp-image-1458"></a>
+<p>任何圖表的選擇都會即時反應到右方的圖表預覽窗，速度非常快。除此之外，我們的資料所不適用的圖表則會以灰色的方式呈現，上圖中的長度圖 ( 中央下方兩張 ) 即為無法使用的圖表類型。若自動套用圖表時資料對應到錯誤的維度上，我們也可以用圖表下方的資料編輯表調整資料的格式，以符合我們想要的資料呈現。</p>
+<p>在客製化的部份，則有 11 種不同類別的設定可以調整，它們事實上大多對應到不同的程式設定項；在這邊呈現的選項並不是所有我們可以設定的項目，雖然犧牲了這層彈性，但大大降低了設定複雜度。若我們真的想要進入硬漢模式，點擊設定框上方的「ADVANCED」，會看到一個資料夾架構的屬性編輯窗，它讓我們可以填入幾乎大部份的圖表設定。下圖為「SIMPLE」與「ADVANCED」框的比較：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/11/config.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/config.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/config-300x146.png 300w" height="438" width="900" alt="config and customization" src="http://blog.infographics.tw/wp-content/uploads/2015/11/config.png" class="aligncenter size-full wp-image-1459"></a>
+<p>「ADVANCED」硬漢版設定比較詳細，但每個設定項的功能可能還得參考 &nbsp;Highchart 說明文件來了解，若初步想製作一個簡單的圖表，「SIMPLE」模式的表單大多自我解釋了每個項目的用途，我們可以邊看邊設定。</p>
+<p>設定完成後，圖表也大致上完成了，這時我們可以點選「ADVANCED」旁的「CODE」將設定項目輸出成程式碼設定，又或者直接進入下一個步驟「SHARE」。</p>
+<p>在這個步驟， Highchart 提供了最基本的分享連結、嵌入程式碼以及直接下載圖表為圖檔的選項：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/11/share.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/share.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/share-300x110.png 300w" height="330" width="900" alt="Share with Highchart" src="http://blog.infographics.tw/wp-content/uploads/2015/11/share.png" class="aligncenter size-full wp-image-1460"></a>
+<p>若使用連結分享，該連結的 OG ( Open Graph，請參考「<a href="http://blog.infographics.tw/2015/03/open-graph-and-data-visualization/">Open Graph？跟資料視覺化有什麼關係？</a>」一文 ) 已經是我們所做的視覺化；我們也可以直接使用圖片網址來引用圖片 ( 上圖左下的「Or hotlink to an image!」 )，相當方便。最後的成品如下：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/11/final.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/11/final.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/11/final-300x140.png 300w" height="420" width="900" alt="Final Result" src="http://blog.infographics.tw/wp-content/uploads/2015/11/final.png" class="aligncenter size-full wp-image-1461"></a>
+<p>到此為止，我們使用線上編輯器做好了一個圖表；如果有任何需要進階客製化的地方，我們可以再接著參考 Highcart 說明文件後進到硬漢版設定項來調整，或者直接將完整的設定碼取出，自行修改。這裡 Highchart 提供了相當的彈性讓我們做各式的客製化，同時也可以在我們自己的網站中以程式碼直接繪製圖表，不再需要依靠嵌入碼或外部連結。真的是相當方便！</p>
+<h2>結語</h2>
+<p>雖然說 Highchart 並不是第一個附帶編輯器的圖表函式庫，像先前我們介紹過的 Amchart ( 請參考：「不寫程式也能有強大彈性 － Amcharts 圖表工具」) 也有一個線上圖表編輯器，不過 Highchart 附帶的線上編輯器非常容易使用，不僅使用步驟式引導來帶我們製作圖表，設定項目也將過於複雜的部份分開；編輯畫面也不至於過於複雜。從使用性的角度來看， Highchart 是比 Amchart 更容易上手的。</p>
+<p>即便如此，一旦我們想要客製化更多東西，再容易使用的介面也會開始變得複雜；那是因為我們本來就要做很複雜的調整。 Amchart 將所有的設定製作成一個旁大的選單，而 Highchart 則需要我們自行透過說明文件去發掘用法，小編覺得如果我們真的要很彈性、客製的圖表的話，也許使用 D3.js 還是最好的手段；只是當我們不具備程式技能的時候， Highchart 還是可以讓我們做到很多其它圖表工具不容易做到的事情囉。</p>
+<p>最後， Highchart 是免費圖表工具，但你可以付費來將他的商標從產生的圖表上移除，在 Highchart 首頁下方即表列了付費之後可以取得的功能，若你們是需要利用圖表的公司或企業，不妨考慮 Highchart 的付費功能喔！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/amchart/">amchart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/highchart/">highchart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/javascript/">javascript</a>,<a rel="tag" href="http://blog.infographics.tw/tag/jslib/">jslib</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/11/d3-in-a-box/">改作學習兩相宜、D3 源碼任你用 － D3 in a Box</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/11/chartico-introduction/">Chartico – 快速製作可愛長條圖</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

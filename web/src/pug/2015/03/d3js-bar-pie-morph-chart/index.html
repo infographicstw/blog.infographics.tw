@@ -1,0 +1,252 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">D3JS 實戰 － 是長條也是圓餅的變形圖表</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-172 post type-post status-publish format-standard has-post-thumbnail hentry category-19 tag-d3js tag-21 tag-20" id="post-172">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-03-15" class="updated">15 3 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="https://blog.infographics.tw/wp-content/uploads/2015/02/morph-cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/02/morph-cover.png 900w, https://blog.infographics.tw/wp-content/uploads/2015/02/morph-cover-300x176.png 300w" height="527" width="900" alt="Chart Morphing Cover" src="https://blog.infographics.tw/wp-content/uploads/2015/02/morph-cover.png" class="aligncenter size-full wp-image-184"></a>
+<p>常見的圖表工具提供的往往是繪製特定圖表的功能，你有看過可以在類型間變化的圖表嗎？這次我們為了展現 D3JS 與 &nbsp;SVG 強大的一面，特地實作一個變形圖表，讓大家了解客製化圖表比起圖表工具能有多大的變化空間。</p>
+<p><span id="more-172"></span></p>
+<p>D3JS 提供了資料－物件模型、視覺化輔助函式庫、同時也包含了一個動畫模組 － d3.transition ；這個模組不僅可以將單一數值 ( 例如半徑、高度等 ) 動態化，連一整個形狀 ( Path 元素的 d 屬性 ) 也可以協助你做動畫處理。</p>
+<p>由於圓形 ( 或是任何包含圓弧的形狀 ) 也可以利用 Path 處理，只要適當的對應其參數，不難想像要如何從長條圖變形成圓餅/甜甜圈圖或者泡泡圖。那麼接下來就讓我們來實作看看長條圖與圓餅圖之間的變形圖表吧！</p>
+<h3>準備材料</h3>
+<ul>
+<li>HTML 一份，包含一個 SVG 元素，並且已經引入 D3JS 函式庫</li>
+<li>測試資料少許</li>
+<li>JS 檔一個，驅動圖表繪製</li>
+</ul>
+<p>HTML 的內容摘要如下：</p>
+<pre>  &lt;script type="text/javascript" src="https://d3js.org/d3.v3.min.js"&gt;&lt;/script&gt;
+  &lt;svg width="100%" height="400px" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid"&gt;
+  &lt;/svg&gt;
+  &lt;script type="text/javascript" src="index.js"&gt;&lt;/script&gt;</pre>
+<p>測試資料直接放在 JS 檔中，隨意挑選了九個國家的2014生育率：</p>
+<pre>var data = [
+  ["Iceland",14.1],
+  ["Egypt",30.4],
+  ["Syria",27.6],
+  ["Malaysia",17.5],
+  ["Japan",8.3],
+  ["USA",12.7],
+  ["Taiwan",8.5],
+  ["India",21.8],
+  ["Germany",8.1]
+];</pre>
+<p>JS 檔 ( index.js ) 的內容我們則逐項加入。</p>
+<h2>長條圖實作</h2>
+<p>長條圖可說是圖表製作中最經典也最簡單的例子了。我們需要的就只是將資料一個一個對應到 SVG 元素；最快的方式是使用 &nbsp;RECT 元素，不過今天為了要做變形圖表，我們使用 PATH 元素：</p>
+<p>path = d3.select(“svg”).selectAll(“path”).data(data).enter().append(“path”);</p>
+<p>與資料一對一的 PATH 元素建立好之後，接著要設定元素的參數：</p>
+<pre>path.attr("d", function(d,i) {
+  var x1 = 100, x2 = 100 + d[1] * 22;
+  var y1 = i * 40, y2 = i * 40 + 30;
+  return (
+    "M" + x1 + " " + y1 +
+    "L" + x2 + " " + y1 +
+    "L" + x2 + " " + y2 +
+    "L" + x1 + " " + y2 + "Z"
+  );
+});
+</pre>
+<p>因為光是這樣長條的顏色很單調，我們利用 d3.scale.category20 來隨意給他上點顏色：</p>
+<pre>var color = d3.scale.category20();
+path.attr("fill", function(d,i) { return color(d[0]); });</pre>
+<p>製作出來的結果如下：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/02/bar.png"><img sizes="(max-width: 718px) 100vw, 718px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/02/bar.png 718w, https://blog.infographics.tw/wp-content/uploads/2015/02/bar-300x160.png 300w" height="383" width="718" alt="Morph - Bar chart" src="https://blog.infographics.tw/wp-content/uploads/2015/02/bar.png" class="aligncenter size-full wp-image-180"></a>
+<h2>圓餅圖製作</h2>
+<p>有了長條圖的程式碼，要製作圓餅圖相對就容易多了，問題在於圓餅對應的 Path 路徑如何計算？D3JS 很貼心的提供了產生圓餅的工具函式 d3.svg.arc ，我們可以直接利用他來繪製。不過再那之前，我們對資料做了點修改，在每項資料後面追加一個累積的生育率數值，可以用程式快速的加入：</p>
+<pre>var sum = 0;
+for(var i = 0; i &lt; data.length ; i++ ) {
+  data[i].push(sum);
+  sum += data[i][1];
+}</pre>
+<p>這裡的 sum 變數代表所有國家的生育率總和，並利用在 path 路徑的計算中：</p>
+<pre>var arc = d3.svg.arc().innerRadius(180).outerRadius(200);
+path.attr({
+  transform: "translate(400,200)",
+  d: function(d,i) {
+    return arc.startAngle(6.28 * d[2] / sum).endAngle(6.28 * (d[2] + d[1]) / sum)();
+  }
+});</pre>
+<p>於是你可以看到圓餅圖的繪製結果如下 ( 其實是甜甜圈圖 )：</p>
+<a href="https://blog.infographics.tw/wp-content/uploads/2015/02/donut.png"><img sizes="(max-width: 718px) 100vw, 718px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/02/donut.png 718w, https://blog.infographics.tw/wp-content/uploads/2015/02/donut-300x163.png 300w" height="389" width="718" alt="Morph - Donut Chart" src="https://blog.infographics.tw/wp-content/uploads/2015/02/donut.png" class="aligncenter size-full wp-image-181"></a>
+<h2>變形圖表</h2>
+<p>使圖表變形相當的容易，插入 d3.transition 即可。當我們繪製好長條圖之後，想要變形成圓餅圖時，在設定圓餅圖屬性前呼叫 d3.transition：</p>
+<pre>d3.transition().duration(1000).attr({
+  /* 圓餅圖的參數設定(略) */
+});</pre>
+<p>但是產生的動畫效果不如預期，我們會看到一堆東西爆炸然後忽然出現圓餅圖。問題出在哪？</p>
+<h2>特製的圓餅生成函式</h2>
+<p>d3.transition 的實作方式是在屬性中對應數值然後逐項內插，以變形來說，對應的參數是 “d” ；但我們繪製長條圖跟繪製圓餅時使用的 “d” 格式並不完全相同，導致內差的數值出現了問題。我們隨意挑選一個圓餅圖的 “d” 參數來一窺究竟 ( 為了方便閱讀，我做了小幅度的修改與排版 )：</p>
+<pre>  M-190.6,-60.5
+  A 200,200 0 0,1 -67.5,-188.2
+  L-54.0,-150.5
+  A 160,160 0 0,0 -152.4,-48.4
+  Z</pre>
+<p>指令依序為 M、A、L、A、Z －這與我們繪製長條圖時使用指令 M、L、L、L、Z 不同。我們只要能利用 M、A、L、A、Z 這樣的序列畫出長條，那一切就完成了。 ( 我相信你很可能對 SVG Path 的 “d” 參數不太熟悉，那也沒關係，因為這邊主要是在示範如何達成變化效果，大概了解到 “d” 是透過一個個指令告訴瀏覽器要如何畫到下一個座標這樣就行了。若想要深入了解 Path 的使用方式，請參考<a href="https://www.w3.org/TR/SVG/paths.html#PathData" title="W3C SVG Path Data Format">這個網頁</a>，有詳細的規格 )</p>
+<p>然而，因為 A 指令的設計並不適合做漸變， M、A、L、A、Z 這樣的序列動畫效果並不好，所以我們必須改寫 Arc 生成函式以達到更好的效果。比方說，利用長條指令序列 M、L、L、L、Z 來模擬圓餅圖效果的話可以獲得一個類似這樣的結果：</p>
+<p></p>
+<p>動畫效果很不賴，不過這個圓餅看起來很硬。為了讓圓餅看起來很正常，我們改用 M、S、L、S、Z 的序列，並且重新製作 Arc 與 Bar 生成函式，最終做出來的結果如下，點擊圖中的「Change」按鈕來看變形效果：</p>
+<p></p>
+<p>由於這個範例目的純粹在於示意，所以 Arc 生成函式只做個大概，並沒有弄得非常準確；同時 M、S、L、S、Z 的序列使用了貝茲曲線，但是貝茲曲線無法完美畫出圓型，所以其實還有相當的改進空間。若你對程式碼有興趣，可以參考<a href="https://github.com/infographicstw/example/tree/gh-pages/172/2/" title="Gist for Bar 2 Donut">該程式碼的 github 頁面</a>。</p>
+<h2>結語</h2>
+<p>由於使用 SVG 的Path 元素控制形狀，再加上 D3JS transition 的效果，可以做到很多樣版圖表工具辦不到的事情。事實上，不光是 D3JS ， 像是 <a href="https://alexk111.github.io/SVG-Morpheus/" title="SVG Morpheus">SVG Morpheus</a> 這樣的 Javascript Library 也可以拿來做類似的效果；甚至 SVG 本身其實也提供了動畫的功能 ( SVG SMIL ) 。</p>
+<p>不過客製圖表當然也不是不會有問題，首當其衝的就是技術難度吧，要能做到像這樣的圖表轉換，不僅需要對 Javascript 跟相關 Library 有所了解， SVG / Dom 的操作也必須有相當經驗，甚至基本的數學 ( 三角函數等等 ) 都要有能力使用；這對理工背景的學生來說可能沒太大問題，但對要做報表的業務助理、視覺化新聞的新聞記者來說可能就有點超過了。</p>
+<p>另一個問題則是在相容性上，至今瀏覽器之間對不同網頁技術的支援度仍然有些差異，更別提過去版本的瀏覽器很可能不支援特定的技術。比方說 IE 就不支援 SMIL ，舊版本 IE 也不支援 SVG ，在舊版 IE 尚有一定使用率之前，這些都是必須要克服的問題。</p>
+<p>市面上許多 freemium 的圖表工具大多以足夠的相容性為前提製作，所以使用這些工具之時除了不太需要深入的技術、也不太需要煩惱跨瀏覽器的支援。不同的選擇各有優劣，我想大家應該可以在不同的情況下自行判斷該怎樣製作圖表比較妥當囉。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e5%9c%93%e9%a4%85%e5%9c%96/">圓餅圖</a>,<a rel="tag" href="https://blog.infographics.tw/tag/%e9%95%b7%e6%a2%9d%e5%9c%96/">長條圖</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2015/03/crawl-data-with-nodejs/">資料爬蟲實戰－使用 node.js</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2015/03/open-graph-and-data-visualization/">Open Graph？跟資料視覺化有什麼關係？</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="高手才知道！七個你所不知道的 D3.js 秘技" rel="bookmark" href="https://blog.infographics.tw/2016/05/d3js-seven-pro-tips/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-3-300x300.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-3-150x150.png 150w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-3-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/04/cover-3-300x300.png">																										<br>
+													高手才知道！七個你所不知道的 D3.js 秘技												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化" rel="bookmark" href="https://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/10/cover.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/10/cover-300x176.jpg 300w" alt="treemap - cover" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2015/10/cover.jpg">																										<br>
+													D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="D3.js 實戰 － Canvas 把我的視覺化變「快」了！" rel="bookmark" href="https://blog.infographics.tw/2015/07/optimize-d3-with-canvas/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/07/cover1.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/07/cover1-300x176.jpg 300w" alt="D3 + Canvas : Cover" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2015/07/cover1.jpg">																										<br>
+													D3.js 實戰 － Canvas 把我的視覺化變「快」了！												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="怡君 vs 雅婷！用年紀 API + Google 圖片搜尋計算菜市場名平均年齡" rel="bookmark" href="https://blog.infographics.tw/2015/05/name-age-by-azure-face-api-with-google-image-search/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2015/05/cover.jpg 900w, https://blog.infographics.tw/wp-content/uploads/2015/05/cover-300x176.jpg 300w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2015/05/cover.jpg">																										<br>
+													怡君 vs 雅婷！用年紀 API + Google 圖片搜尋計算菜市場名平均年齡												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

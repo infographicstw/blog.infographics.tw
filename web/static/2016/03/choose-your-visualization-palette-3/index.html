@@ -1,0 +1,248 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">顏色這樣挑！搞定你的視覺化色盤（ 下 ）</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1745 post type-post status-publish format-standard has-post-thumbnail hentry category-18 tag-achromatopsia tag-color tag-colorblind tag-deuteranopia tag-hcl tag-protanopia tag-semantic tag-tritanopia" id="post-1745">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-03-27" class="updated">27 3 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1757" href="http://blog.infographics.tw/wp-content/uploads/2016/03/cover-2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/cover-2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/cover-2-300x176.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/cover-2-768x450.jpg 768w" height="527" width="900" alt="cover" src="http://blog.infographics.tw/wp-content/uploads/2016/03/cover-2.jpg" class="aligncenter size-full wp-image-1757"></a>
+<p>當你搞懂了明度彩度、資料型態與選色工具，挑選顏色還有更重要的問題：如何為你的讀者而選？搞定色盤最終章！</p>
+<p><span id="more-1745"></span></p>
+<p>在色盤系列文前兩集裡 ( <a href="http://blog.infographics.tw/2016/03/choose-your-visualization-palette/">上</a> 、 <a href="http://blog.infographics.tw/2016/03/choose-your-visualization-palette-2/">中</a> ) ，我們專注在顏色上，從基本的編碼、配色方式到工具與演算法，逐一的與各位介紹過了一輪，大家回去是否都有試著做出自己的色盤了呢？的確，針對資料視覺化中的「顏色」這個元素，我們已經有了相當詳盡的介紹；然而，色彩仍有一個很不容易注意到、與其它元素相比卻又有很大差異的一個問題：色盲。</p>
+<h2>黑白的世界 — 色盲問題</h2>
+<p>在這個世界上有一定比例的人看不到完整的色彩。人類視網膜依靠兩種細胞來感受光線，其中錐狀細胞依其對光線波長的感受程度來看，又可分為三組，大致上對應到紅色、綠色與藍色三種光線的波長。然而，由於先天或後天影響的關係，會造成人眼對光線感受的影響，比方說有些遺傳性的、先天缺失綠色錐狀細胞的現象，而像這樣無法感受到顏色差異的狀況，我們便稱之為色盲。</p>
+<p>很少人無法理解形狀或長度 — 在「錯把太太當帽子的人」一書中，作者 Oliver Sacks 描述到一位音樂學院教授因為腦部病變而無法正確識別物體，甚至還曾試圖要將太太當成帽子抓起戴到頭上 ；大腦是個很複雜且精密的器官，各種認知與理解的過程都有其負責管理的區域，所以我們很難說沒有人會因為腦傷或中風而導致無法認知視覺基本元素。但畢竟這樣的人佔了極少數的人口比例，而顏色並不一樣，由於遺傳因素世界上約有 7 ~ 10% 的人有色彩感受上的問題，其中又以男性佔了大多數，他們通常缺少了某種類特定的錐狀細胞而導致辨色能力低落。</p>
+<p>從錐狀細胞缺乏的角度來思考，可能有四種類型的色盲：</p>
+<ul>
+<li>缺乏紅色錐狀細胞 — Protanopia ( 紅色盲 )</li>
+<li>缺乏綠色錐狀細胞 —&nbsp;Deuteranopia ( 綠色盲 – 最常見的色盲類型 )</li>
+<li>缺乏藍色錐狀細胞 — Tritanopia ( 藍色盲 )</li>
+<li>缺乏兩種以上的錐狀細胞 — Achromatopsia ( 全色盲，相對少見，萬中無一 )</li>
+</ul>
+<p>然而，缺乏特定錐狀細胞並不代表他們看不到該種顏色，而是他們對色彩的分辨能力與感受會與非色盲有很大的差別。為了要了解與測試我們的視覺化作品在色盲讀者的世界中的表現，我們必須要瞭解各種顏色在相對的色盲類型中會變成什麼樣子。</p>
+<p>在 Françoise Viénot 的論文「Digital Video Colourmaps for Checking the Legibility of Displays by Dichromats」裡面，他們提出了一個建議的轉換函式，讓我們可以將正常顏色對應各種不同類型的色盲型態來做轉換；網路上也有類似 <a href="https://github.com/Altreus/colourblind">Alterus 的&nbsp;colourblind</a> 這類的色盲檢查器，可以讓我們透過 bookmarklet 的方式來執行色盲檢驗。下圖為使用 <a href="https://github.com/hail2u/color-blindness-emulation">color-blindness-emulation</a> 套件製出的各式色盲模擬：</p>
+<a rel="attachment wp-att-1753" href="http://blog.infographics.tw/wp-content/uploads/2016/03/blindness.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/blindness.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/blindness-300x188.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/blindness-768x482.jpg 768w" height="565" width="900" alt="colorblindness emulation" src="http://blog.infographics.tw/wp-content/uploads/2016/03/blindness.jpg" class="aligncenter size-full wp-image-1753"></a>
+<p>在上圖中，左上角的弦圖為正常人所看到的顏色，而右方四個弦圖則分別模擬了不同類型的色盲：</p>
+<ul>
+<li>2 — 缺乏紅色錐狀細胞</li>
+<li>3 — 缺乏綠色錐狀細胞</li>
+<li>4 — 缺乏藍色錐狀細胞</li>
+<li>5 — 全色盲</li>
+</ul>
+<p>從這個模擬中不曉得你是否有觀察到什麼呢？事實上，由於紅藍兩色在光譜的兩端，無論是缺失哪一種錐狀細胞，都還能保留某個程度的分辨能力，因此在使用顏色做為視覺元素的時候，以紅、藍兩色為主是個不錯的選擇，只是可惜對於全色盲的讀者來說仍然是無法正確辨識。</p>
+<p>雖然說色盲一直是個已知的問題，但這個社會中還是存在著大量靠色彩傳遞資訊的管道；比方說，紅綠燈便是這樣的設計；雖然有些國家會在燈號上加入形狀元素來提高辨識度，仍有國家禁止色盲者上路駕駛。這樣的設計，是欠缺了妥善的考慮，還是打從一開始就打算犧牲掉少數族群的權益呢？這可能不是我們這次該探討的主題，然而在使用顏色的同時，我們的確也要好好思考：顏色可以豐富我們的視覺，但並不是所有人都能正常閱讀我們的作品。</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_1755"><a rel="attachment wp-att-1755" href="http://blog.infographics.tw/wp-content/uploads/2016/03/traffic.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/traffic.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/traffic-300x160.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/traffic-768x410.jpg 768w" height="480" width="900" alt="traffic light tree by William Warby" src="http://blog.infographics.tw/wp-content/uploads/2016/03/traffic.jpg" class="wp-image-1755 size-full" aria-describedby="caption-attachment-1755"></a><p class="wp-caption-text" id="caption-attachment-1755"><span style="color: #808080;">traffic light tree by William Warby, CC-BY 2.0. source: https://www.flickr.com/photos/wwarby/2460655511/</span></p></div>
+<p>這不光是顏色，我們所使用的文字、背後的技術、媒介的形態、甚至「視覺化」本身都有可能已經濾掉了一些缺乏相對能力的讀者了，像是不識字的幼童、沒有電腦的窮人、甚至是無法看見的盲人。其實這方面的問題早已被廣泛的討論，搜尋「網路無障礙」或「網頁親和力」等關鍵字便能找到許多相關的資源與文章，我們在前文「<a href="http://blog.infographics.tw/2015/12/accessibility-of-visualization/">當網路無障礙碰上資料 — 八個秘訣，打造無障礙視覺化</a>」也提出了八個訣竅，有興趣的讀者不妨參考一讀。</p>
+<h2>色彩的語意 — 賦與顏色更深的意涵</h2>
+<p>有人說資料視覺化必須要是客觀的，但資料視覺化卻永遠擺脫不了人的選擇。顏色便是其中一個問題：為什麼我們要用紅色、而不用橙色？為什麼我們要選藍紅黃，而不用紫橙青？</p>
+<p>很多情境下我們會選擇不同的顏色；過年壓歲錢的統計圖表也許是紅色、水資源的面積或折線圖可能用藍色、牽涉到嚴肅議題的圖表則不會使用太活潑的配色等等，有時考慮到視覺化與相關產品的整體設計、有時則是由顏色從根本帶給讀者一個整體的氣氛與暗示。談到顏色的語意，便不得不談談史丹佛大學人機互動小組 (Stanford HCI Group ) 的 Sharon Lin 等人於 2013 年發表的論文「Selecting Semantically-Resonant Colors for Data Visualization」。在文章中，他們討論到針對資料的內容挑選顏色的做法與效果，並設計了一個演算法試圖來匹配顏色。</p>
+<p>舉例來說，談論到水果銷售量的長條圖時，何不利用水果的顏色來決定色盤？紅色的長條對應到蘋果、黃色的長條對應到香蕉… &nbsp;Sharon Lin 此篇文章中利用 Google 圖片搜尋來建立文字與顏色之間的關連，並針對資料建立對應色盤後、與預設色盤及專家手工挑選的色盤做效能的評量。下圖為其中幾組資料的色盤範例，「A」者為程式產生、「E」則為專家打造：</p>
+<a rel="attachment wp-att-1758" href="http://blog.infographics.tw/wp-content/uploads/2016/03/semantic.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/semantic.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/semantic-300x86.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/semantic-768x220.jpg 768w" height="258" width="900" alt="semantic colors" src="http://blog.infographics.tw/wp-content/uploads/2016/03/semantic.jpg" class="aligncenter size-full wp-image-1758"></a>
+<p>這些色盤做好之後，便套用到視覺圖表之中，並在受試著看過不同版本色盤的圖表之後，實驗評量他們針對特定問題回答的正確性與速度，發現雖然程式色盤組的表現略遜於專家色盤組，但比起預設色盤來說，可以看到顯著的差異。</p>
+<p>這篇文章也引發了一些討論，比方說文化差異的考量、實驗中長條圖含意的混淆等等，但其實也為我們開啟了另外一種想像：顏色能夠表現的事情比我們原先想像的還要多。</p>
+<p>事實上，顏色心理學也是一個很重要的議題：前進色、後退色等等對於空間、大小認知的影響，是否也需要一併考慮到圖表製作中對於客觀事實可能有的扭曲之中？色彩差異引發的視覺幻象，又是否也必須要在製作圖表時一併考慮到？以下圖為例，左右兩個圓的顏色其實是一樣的，但在人眼中卻會覺得右邊的顏色比較亮：</p>
+<a rel="attachment wp-att-1760" href="http://blog.infographics.tw/wp-content/uploads/2016/03/illusion.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/illusion.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/illusion-300x100.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/illusion-768x256.jpg 768w" height="300" width="900" alt="illusion" src="http://blog.infographics.tw/wp-content/uploads/2016/03/illusion.jpg" class="aligncenter size-full wp-image-1760"></a>
+<p>同樣的礙於篇幅限制，我們不會繼續談色彩心理學與 Optical Illusion 的問題；讓我們將資料視覺化的色盤系列在此畫下一個句點吧！若讀者們對色彩心理學有興趣，進階的內容已經有相當多的書籍在討論，相信一定有辦法繼續研讀的 🙂</p>
+<h2>總結</h2>
+<p>分為三集的色盤挑選系列文章，終於寫完了，小編也鬆了口氣！讓我們來複習一下、在這裡大家學到了什麼吧！</p>
+<ul>
+<li>HCL 色域與 RGB 、 HSL 的差別</li>
+<li>明度、彩度與色調的各自用途</li>
+<li>資料類型與適合的色盤形式</li>
+<li>HCL 工具與程序式的選色法</li>
+<li>製作色盤時考慮色盲問題</li>
+<li>語意、幻象與色彩心理學</li>
+</ul>
+<p>最後，實際上要挑選顏色的時候，來自 Tableau&nbsp;的色彩專家 Maureen Stone 則建議不要挑選太多色調，大約 2 ~ 3 種即可，再從中利用彩度與明度做區隔，以避免我們的色盤過度依賴色調做為區分基礎。到此為止，你已經知道如何搞定自己的色盤了嗎？也許有機會我們再將一些快速心法整理成另一篇文章，讓大家可以更輕鬆的快速做出屬於自己的最佳色盤囉！</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/achromatopsia/">achromatopsia</a>,<a rel="tag" href="http://blog.infographics.tw/tag/color/">color</a>,<a rel="tag" href="http://blog.infographics.tw/tag/colorblind/">colorblind</a>,<a rel="tag" href="http://blog.infographics.tw/tag/deuteranopia/">deuteranopia</a>,<a rel="tag" href="http://blog.infographics.tw/tag/hcl/">hcl</a>,<a rel="tag" href="http://blog.infographics.tw/tag/protanopia/">protanopia</a>,<a rel="tag" href="http://blog.infographics.tw/tag/semantic/">semantic</a>,<a rel="tag" href="http://blog.infographics.tw/tag/tritanopia/">tritanopia</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2016/03/choose-your-visualization-palette-2/">顏色這樣挑！搞定你的視覺化色盤（ 中 ）</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2016/04/use-labella-for-timeline/">不用再拉半天！用 Labella.js 幫我們製作美麗的時間軸標籤</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="讓我的視覺化動起來！D3.js 動畫函式入門" rel="bookmark" href="http://blog.infographics.tw/2016/11/d3js-transition/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x300.gif">																										<br>
+													讓我的視覺化動起來！D3.js 動畫函式入門												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="視覺化編程入門 — 我該選什麼程式語言？" rel="bookmark" href="http://blog.infographics.tw/2016/08/coding-intro/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x300.png">																										<br>
+													視覺化編程入門 — 我該選什麼程式語言？												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">E2D3 — 不懂程式也能用 Excel 建立 D3 圖表</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1684 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-chart tag-d3 tag-d3js tag-e2d3 tag-excel tag-microsoft tag-svg tag-visualization" id="post-1684">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-03-6" class="updated">6 3 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1694" href="http://blog.infographics.tw/wp-content/uploads/2016/03/cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/cover.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/cover-300x176.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/cover-768x450.jpg 768w" height="527" width="900" alt="cover" src="http://blog.infographics.tw/wp-content/uploads/2016/03/cover.jpg" class="aligncenter size-full wp-image-1694"></a>
+<p>不會寫程式，也想要做出 D3.js 的各種動態圖表嗎？動態圖表往往比靜態圖表強力許多，但礙於技術與工具的限制，要做出動態的視覺化並不簡單。現在，只要你會用 Microsoft Excel ，E2D3 就幫你快速的做出基於 D3.js 的動態圖表！</p>
+<p><span id="more-1684"></span></p>
+<p>寫程式並不是一件很難的事，但寫好程式也不是一件簡單的事；繪製圖表最簡單也有效的方式便是手繪，但手繪缺少了再利用性也無法參數化，互動與動畫的效果通常是沒辦法透過繪圖軟體做到的。這時，寫程式製作互動視覺化似乎變成了必經的一條坎坷路，是不是有什麼方法能讓我們不需要寫程式也能做出 D3.js 作品般的效果呢？</p>
+<p>E2D3 如同字面上的「Excel to D3」，他是一個 Excel 的增益集，讓我們可以透過 Excel 來建立 D3.js 圖表。簡單的說，再也不用自己寫程式了！</p>
+<h3>安裝</h3>
+<p>E2D3 適用於 Excel 2013 SP1 或 Excel Online 版本，若你本機安裝的 Excel 不夠新，也可以試著使用 Excel Online 看看，我們以下便以 Excel Online 做範例。首先，連至 <a href="https://store.office.com/e2d3-excel-to-d3-js-WA104379169.aspx?assetid=WA104379169">E2D3 的市集頁面</a>，點擊「新增」：</p>
+<a rel="attachment wp-att-1685" href="http://blog.infographics.tw/wp-content/uploads/2016/03/install.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/install.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/install-300x129.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/install-768x331.jpg 768w" height="388" width="900" alt="E2D3" src="http://blog.infographics.tw/wp-content/uploads/2016/03/install.jpg" class="aligncenter size-full wp-image-1685"></a>
+<p>若沒有 Microsoft 帳號或是尚未登入，接下來便會被導至登入畫面。這時我們便可以註冊、或用已有的 Microsoft 帳號登入：</p>
+<a rel="attachment wp-att-1686" href="http://blog.infographics.tw/wp-content/uploads/2016/03/login.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/login.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/login-300x167.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/login-768x427.jpg 768w" height="500" width="900" alt="login" src="http://blog.infographics.tw/wp-content/uploads/2016/03/login.jpg" class="aligncenter size-full wp-image-1686"></a>
+<p>接著，進入 <a href="https://office.live.com/start/Excel.aspx?ui=zh-TW">Microsoft Excel Online 網站</a>，建立新的活頁簿，然後點選「插入 → Office 增益集」，這時應該就會看到 E2D3，點選 E2D3 後按插入：</p>
+<a rel="attachment wp-att-1687" href="http://blog.infographics.tw/wp-content/uploads/2016/03/insert.jpg"><img sizes="(max-width: 898px) 100vw, 898px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/insert.jpg 898w, http://blog.infographics.tw/wp-content/uploads/2016/03/insert-300x126.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/insert-768x323.jpg 768w" height="378" width="898" alt="insert" src="http://blog.infographics.tw/wp-content/uploads/2016/03/insert.jpg" class="aligncenter size-full wp-image-1687"></a>
+<p>插入 E2D3 之後我們會看到如下圖的畫面，一個大大的對話框中有許多的圖表可選擇。E2D3 提供了數十種的圖表讓我們使用，包含常見的折線圖、散佈圖、也有比較複雜的統計地圖、 Sun Burst 等等的圖表類型，按他的分類來區別一共有八種類型：</p>
+<ul>
+<li>Recommended</li>
+<li>Statistics</li>
+<li>Examples</li>
+<li>Hackathon</li>
+<li>Map</li>
+<li>Marathon</li>
+<li>To Be Developed</li>
+<li>Uncategorized</li>
+</ul>
+<p>說真的，並不是很有幫助的分類，可能還是得自己先大致瀏覽過一遍，先了解有些什麼樣的圖表。</p>
+<a rel="attachment wp-att-1688" href="http://blog.infographics.tw/wp-content/uploads/2016/03/inserted.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/inserted.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/inserted-300x216.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/inserted-768x553.jpg 768w" height="648" width="900" alt="inserted" src="http://blog.infographics.tw/wp-content/uploads/2016/03/inserted.jpg" class="aligncenter size-full wp-image-1688"></a>
+<p>大致上了解他的圖表類型之後，我們挑選想使用的圖表，點擊彈出視窗的「Visualize」按鈕 ( 如上圖「Sequences Sunburst 右方的按鈕」 )，一個動態的 D3.js 便立刻建立了，例如下圖為我們建立的動態散布圖，泡泡會由畫面上方掉入繪圖區域：</p>
+<a rel="attachment wp-att-1689" href="http://blog.infographics.tw/wp-content/uploads/2016/03/scatter.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/scatter.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/scatter-300x175.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/scatter-768x449.jpg 768w" height="526" width="900" alt="scatter" src="http://blog.infographics.tw/wp-content/uploads/2016/03/scatter.jpg" class="aligncenter size-full wp-image-1689"></a>
+<p>這裡產生的圖表是使用 E2D3 本身所附帶的範例資料來製作的，一旦我們點擊「Visualize」鍵的同時，範例資料也會複製一份到 Excel 表格之中；為了看看資料，我們將這個視覺化對話框移開，便能在底下的資料格看到 E2D3 填入的資料，大約有 200 行：</p>
+<a rel="attachment wp-att-1690" href="http://blog.infographics.tw/wp-content/uploads/2016/03/grid.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/grid.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/grid-300x180.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/grid-768x461.jpg 768w" height="540" width="900" alt="Sample Data" src="http://blog.infographics.tw/wp-content/uploads/2016/03/grid.jpg" class="aligncenter size-full wp-image-1690"></a>
+<p>( Excel Online 的設計有點隱誨，我們要將滑鼠移到對話框的邊緣，等滑鼠遊標變成十字型箭頭時就能拖動對話框 )</p>
+<p>既然有範例資料，我們要製作自己的視覺化就容易多了：只要按照範例資料的格式把我們的資料填入即可！在下圖中，我們清除了所有的資料，然後自己鍵入了四筆資料，可以看到右方圖表中的泡泡同時也改變了：</p>
+<a rel="attachment wp-att-1691" href="http://blog.infographics.tw/wp-content/uploads/2016/03/reduce.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/reduce.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/reduce-300x113.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/reduce-768x290.jpg 768w" height="340" width="900" alt="edit data" src="http://blog.infographics.tw/wp-content/uploads/2016/03/reduce.jpg" class="aligncenter size-full wp-image-1691"></a>
+<p>若我們想要再別的資料欄中重新建立資料，也是可以的；首先照範例資料的格式把我們的數據填好並全選，接著點擊圖表上方的「Link Data」，便能將資料與圖表重新做連結。是不是很方便呢？</p>
+<p>最後，對於完成的圖表， E2D3 讓我們可以直接透過網址分享，也能夠直接下載 SVG 或 PNG 格式的圖表，不過我們在使用時似乎網址與 PNG 下載有點問題， SVG 仍是正常的。要分享或下載，點擊圖表上方的對應按鈕即可，下圖為點擊分享後彈出的對話框，裡面提供了分享用的連結以及嵌入用的 HTML 程式碼：</p>
+<a rel="attachment wp-att-1692" href="http://blog.infographics.tw/wp-content/uploads/2016/03/share.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/03/share.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2016/03/share-300x123.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/03/share-768x315.jpg 768w" height="369" width="900" alt="share button" src="http://blog.infographics.tw/wp-content/uploads/2016/03/share.jpg" class="aligncenter size-full wp-image-1692"></a>
+<h2>結語</h2>
+<p>E2D3 提供了一個相當方便的方式讓我們能夠快速產生各種 D3.js 圖表，我們其實也可以把他視為原生的 Excel 圖表工具的延伸；提供下載與分享的連結更是讓這個工具的價值更高了一些，更重要的是他是開源的！我們可以在 <a href="http://e2d3.org/">E2D3 的官方網站</a>找到<a href="https://github.com/e2d3/e2d3">其 github 的網址</a>，裡面甚至有教我們如何加入自己的視覺化，這代表他讓我們可以在 Excel 中追加自己想要的圖表類型，就算不會寫程式，也可以找人協助開發，完成後馬上就可以在 Excel 中使用了！</p>
+<p>開源、擴展性是他的優點，不過缺點也不是沒有的：</p>
+<ul>
+<li>實測下來我們注意到產生的圖表有些小錯誤，這代表我們得另外再下載處理才能正確使用。</li>
+<li>圖表的分類混亂，不容易找到想要的圖表</li>
+<li>總共 60 多個圖表中，不少是重覆、特定用途、地區限定的。除去這些，比較一般性的圖表可能不到 20 種。</li>
+<li>編輯資料時會需要等待重新產生圖表，使得編輯效率不佳。</li>
+<li>無法客製樣式。</li>
+<li>有些說明是日文，不易理解。</li>
+</ul>
+<p>這些問題，尤其是圖表種類這點，讓這個工具的實用性打了些折扣；不過若我們恰好需要 E2D3 裡所提供的動態圖表，那 E2D3 也是個不錯的選擇！所以，不妨玩玩看是否合乎你的需求，未來若要製作類似的動態視覺化時，就可以不求人自己來囉！</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/chart/">chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3/">d3</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="http://blog.infographics.tw/tag/e2d3/">e2d3</a>,<a rel="tag" href="http://blog.infographics.tw/tag/excel/">excel</a>,<a rel="tag" href="http://blog.infographics.tw/tag/microsoft/">microsoft</a>,<a rel="tag" href="http://blog.infographics.tw/tag/svg/">svg</a>,<a rel="tag" href="http://blog.infographics.tw/tag/visualization/">visualization</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2016/02/d3-js-4-0-preview/">D3.js 重大更新！ 4.0 版新鮮功能摘要整理</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2016/03/choose-your-visualization-palette/">顏色這樣挑！搞定你的視覺化色盤（ 上 ）</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

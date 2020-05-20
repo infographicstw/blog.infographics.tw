@@ -1,0 +1,267 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">突破 D3.js 的速度極限 — 2D WebGL 與 PIXI.js</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1475 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-canvas tag-d3 tag-pixi tag-svg tag-webgl" id="post-1475">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-12-6" class="updated">6 12 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/12/cover.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/12/cover.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/12/cover-300x176.jpg 300w" height="527" width="900" alt="PixiJS Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/12/cover.jpg" class="aligncenter size-full wp-image-1492"></a>
+<p>「好不容易學了 D3.js ，可是做出來的作品都好慢…」結合資料與文件模型的 D3.js 可說已是當代視覺化必備技能，可是與 SVG 的搭配使他有著先天上的效能限制，在繪製大量元素時更是力不從心。沒關係，聽說過 WebGL 嗎？這次我們為大家介紹另一個 JavaScript 函式庫 — PIXI.js ，讓你搭上 WebGL 的肩膀，做出更高效率的視覺化！</p>
+<p><span id="more-1475"></span></p>
+<p>如果你有玩視覺化，那麼你一定有聽過 D3.js 。 D3.js 可說是近年最火紅的視覺化函式庫，網路上太多的視覺化作品是基於 D3.js 開發出來的。然而， D3.js 的設計理念 — 資料與文件模型的連結 — 使他原生就必須建構在網頁顯示與排版的架構上，從而大大的拖慢了他顯示的效能。</p>
+<p>下圖是紐約時報「<a href="http://www.nytimes.com/interactive/2014/02/09/opinion/minimum-wage.html?_r=0">Can You Live on the Minimum Wage?</a>」專題報導，利用四處飄動的綠色小方塊表示一美元。這張圖裡至少有 16000 個方塊。</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/12/minwage.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/12/minwage.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/12/minwage-300x173.png 300w" height="520" width="900" alt="minwage" src="http://blog.infographics.tw/wp-content/uploads/2015/12/minwage.png" class="aligncenter size-full wp-image-1480"></a>
+<p>當我們使用各別的 SVG 來繪製圖形時，重覆的資料更新、屬性分析與繪製會讓整個動畫更新的過程額外花上非常多的時間，這時候 WebGL 就派上用場了。屬於 HTML5 的技術之一，WebGL 是一組類似 OpenGL 的 JavaScript，搭配硬體繪圖加速的力量做後盾，提供 3D 繪圖相關的函式給網頁前端程式設計師使用。</p>
+<p>只是 WebGL 並不是這麼容易入門，對一般網頁程式設計師來說可能還是有些門檻； 況且我們只需要做 2D 的視覺化，並不需要用到複雜的空間計算、光線調控跟視角設定。很幸運地，有個人叫做&nbsp;Mat Groves ，他也覺得 WebGL 實在是有夠複雜，「我們需要一個夠快又簡單的函式庫才對」( 小編腦補 ) 於是他便利用 WebGL 開發了 PIXI.js 這個跨平台的 2D 繪圖函式庫。</p>
+<h2>PIXI.js</h2>
+<p>基本的 PIXI 繪圖包含了兩個部份：</p>
+<ul>
+<li>幫我們把東西畫出來的 Renderer</li>
+<li>紀錄我們要畫的東西的 Container</li>
+</ul>
+<p>首先我們要在網頁源碼中引入 PIXI 函式：</p>
+<pre>&nbsp; &lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.8/pixi.min.js"&gt;&lt;/script&gt;</pre>
+<p>接著，建立繪圖的兩大元件，並將元件連結至網頁中：</p>
+<pre>&nbsp; var renderer = new PIXI.WebGLRenderer(900,400);
+&nbsp; var stage = new PIXI.Container();
+  document.body.appendChild(renderer.view); // 連結至網頁</pre>
+<p>這樣便可以準備開始繪圖了。想要畫什麼呢？來畫個矩形吧！使用 PIXI.Graphics 物件幫我們畫：</p>
+<pre>&nbsp; var graphics = new PIXI.Graphics();
+&nbsp; stage.addChild(graphics); &nbsp;// 要將 Graphics 物件加到 Stage 中
+&nbsp; graphics.beginFill(0xff0000); // 設定我們要畫的顏色
+&nbsp; graphics.drawRect(100,100,700,200);</pre>
+<p>最後利用 renderer 把 stage 畫出來：</p>
+<pre>&nbsp; renderer.render(stage);</pre>
+<p>執行的結果如下：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/12/render.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/12/render.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/12/render-300x133.png 300w" height="400" width="900" alt="render rect" src="http://blog.infographics.tw/wp-content/uploads/2015/12/render.png" class="aligncenter size-full wp-image-1481"></a>
+<p>當然我們不會只想畫一個這樣的矩形就算了，讓我們來畫一萬個矩形吧：</p>
+<pre>&nbsp; for(var i=0;i&lt;10000;i++) {
+&nbsp; &nbsp;&nbsp; graphics.drawRect(Math.random()*900,Math.random()*400,3,3); // 隨機決定位置
+&nbsp; }</pre>
+<p>匯製出來的結果如下：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/12/20000.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/12/20000.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/12/20000-300x133.png 300w" height="400" width="900" alt="10000 rectangles" src="http://blog.infographics.tw/wp-content/uploads/2015/12/20000.png" class="aligncenter size-full wp-image-1482"></a>
+<p>除了矩形以外，我們也可以畫其它的形狀，例如圓形；只要將 drawRect 改為 drawCircle 即可：</p>
+<pre>&nbsp; for(var i=0;i&lt;10000;i++) {
+&nbsp; &nbsp;&nbsp; graphics.drawCircle(Math.random()*900,Math.random()*900,3); // 隨機決定位置
+&nbsp; }</pre>
+<p>於是我們現在有了一萬個圓圈：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/12/20000-circle.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/12/20000-circle.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/12/20000-circle-300x133.png 300w" height="400" width="900" alt="10000 Circles" src="http://blog.infographics.tw/wp-content/uploads/2015/12/20000-circle.png" class="aligncenter size-full wp-image-1483"></a>
+<h2><strong>進一步優化</strong></h2>
+<p>到目前為止，繪製大量圖形的執行速度仍是差強人意，為了更快速的繪圖， PIXI 提供了特別的 Container — ParticleContainer ，他只保留少數如平移、旋轉等圖形的動畫，讓執行速度大大的改善。首先建立 ParticleContainer 並將其加到 stage 中：</p>
+<pre>&nbsp; container = new PIXI.ParticleContainer();
+  stage.addChild(container);</pre>
+<p>ParticleContainer 只能繪製 Sprite 物件而無法繪製 Graphics 物件，所以我們必須先利用 Graphics 產生圓形圖樣材質 ( texture )：</p>
+<pre>&nbsp; var circle = new PIXI.Graphics();
+&nbsp; circle.beginFill(0xff0000);
+&nbsp; circle.drawCircle(3,3,3);
+&nbsp; var texture = circle.generateTexture(3*3, PIXI.ScaleModes.DEFAULT);</pre>
+<p>然後再利用 texture 製作一萬個 Sprite ，加到 ParticleContainer 之中：</p>
+<pre>  for(var i=0;i&lt;10000;i++) {
+&nbsp;   var sprite = new PIXI.Sprite(texture);
+&nbsp;   sprite.x = Math.random() * 900;
+&nbsp;   sprite.y = Math.random() * 400;
+&nbsp;   container.addChild(sprite);
+  }</pre>
+<p>最後，我們利用 RequestAnimationFrame 來做移動的動畫，細節不再此贅述。下圖為結果截圖 ( 截取約 0.6 秒 ) ，可以看到動畫相當的順暢：</p>
+<div class="wp-caption aligncenter" style="width: 610px" id="attachment_1484"><a href="http://blog.infographics.tw/wp-content/uploads/2015/12/animation.gif"><img height="200" width="600" alt="animation of circles" src="http://blog.infographics.tw/wp-content/uploads/2015/12/animation.gif" class="wp-image-1484 size-full" aria-describedby="caption-attachment-1484"></a><p class="wp-caption-text" id="caption-attachment-1484">所有的圓往右下角移動 ( 截取約 0.6 秒 )</p></div>
+<h2><strong>與 D3.js 比較</strong></h2>
+<p>我們接著同時利用 D3.js 與 Pixi 製作一萬個點掉落的動畫。下圖為結果截圖，為時一秒的動畫可以很明顯看出兩者速度的差異：</p>
+<div class="wp-caption alignleft" style="width: 370px" id="attachment_1489"><a href="http://blog.infographics.tw/wp-content/uploads/2015/12/d3-drop.gif"><img height="270" width="360" alt="d3js drop animation" src="http://blog.infographics.tw/wp-content/uploads/2015/12/d3-drop.gif" class="wp-image-1489" aria-describedby="caption-attachment-1489"></a><p class="wp-caption-text" id="caption-attachment-1489">D3js</p></div>
+<div class="wp-caption alignleft" style="width: 370px" id="attachment_1490"><a href="http://blog.infographics.tw/wp-content/uploads/2015/12/pixi-drop.gif"><img height="270" width="360" alt="Pixi Drop Animation" src="http://blog.infographics.tw/wp-content/uploads/2015/12/pixi-drop.gif" class="wp-image-1490" aria-describedby="caption-attachment-1490"></a><p class="wp-caption-text" id="caption-attachment-1490">Pixi</p></div>
+<p>&nbsp;</p>
+<hr style="clear: both;">
+<h2><strong>結語</strong></h2>
+<p>實作互動式視覺化很難不去碰觸到使用體驗與大量資料的問題。 D3.js 雖然方便，但其基於 SVG 與文件模型的特性使得我們在其上要深入做出更複雜的視覺化是件相當具有挑戰性的事。這時像 Pixi 這樣的輔助函式庫便可以派上用場。</p>
+<p>事實上，也有不少人想嘗試著將 D3.js 利用 WebGL 加速 ( 例如「<a href="http://engineering.ayasdi.com/2015/01/09/converting-a-d3-visualization-to-webgl-how-and-why/">Converting a D3 Visualization to WebGL</a>」這篇文章中所提及的 ) ，亦有利用模擬文件模型的方式來介接 Canvas 與 D3.js 的嘗試 ( 例如：「<a href="https://bocoup.com/weblog/d3js-and-canvas">Working with D3.js and Canvas: When and How</a>」)。</p>
+<p>若不使用 D3.js 的文件模型機制， D3.js 仍提供了像是 Force Layout 、 Scale 與 Geometry 等相當方便的輔助函式，因此這篇文章並不是在提倡丟掉你的 D3.js ，而是去思考如何搭配各式各樣的技術讓我們的視覺化作品可以達到盡善盡美。畢竟，重點不是在背後的技術，而是前面的成果，不是嗎？ 🙂</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/canvas/">canvas</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3/">d3</a>,<a rel="tag" href="http://blog.infographics.tw/tag/pixi/">pixi</a>,<a rel="tag" href="http://blog.infographics.tw/tag/svg/">svg</a>,<a rel="tag" href="http://blog.infographics.tw/tag/webgl/">webgl</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/11/chartico-introduction/">Chartico – 快速製作可愛長條圖</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/12/storybird/">他的插畫說你的故事 — 用 Storybird 創作視覺故事</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

@@ -1,0 +1,286 @@
+
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">不用再拉半天！用 Labella.js 幫我們製作美麗的時間軸標籤</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1766 post type-post status-publish format-standard has-post-thumbnail hentry category-9 category-18 tag-d3js tag-d3kit tag-d3kit-timeline tag-labella tag-ldcolorpicker tag-timeline tag-tool tag-twitter tag-visualization" id="post-1766">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-04-3" class="updated">3 4 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="https://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>, <a rel="category tag" href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a rel="attachment wp-att-1777" href="https://blog.infographics.tw/wp-content/uploads/2016/04/cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/cover.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-300x176.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/cover-768x450.png 768w" height="527" width="900" alt="Cover" src="https://blog.infographics.tw/wp-content/uploads/2016/04/cover.png" class="aligncenter size-full wp-image-1777"></a>
+<p>事件太多，拉起時間軸傷透腦筋嗎？時間軸是常見的視覺化手法，但現成工具往往缺乏變化，手繪又曠日費時。不要緊！Labella.js 幫我們自動排版標籤，從此麻煩事就交給他，完成事情更有效率！</p>
+<p><span id="more-1766"></span></p>
+<p>繪製時間軸難免得為事件標上細節，但我們常會碰到幾個問題：</p>
+<ul>
+<li>內容往往視資料而定，可長可短可大可小</li>
+<li>資料點有時很稀疏，有時又很密集</li>
+<li>手動對應時間點的位置很麻煩，但大多數時間軸工具例如 timeline.js 又缺乏客製的彈性</li>
+</ul>
+<p>在自行排版時間軸標籤時，牽涉到的大多是操作式的無聊動作，這樣的任務便是程式自動化的最好對象。 Labella.js 是一個時間軸的標籤套件，他可以為我們標記事件在時間軸上的位置，並自動排版標籤至適當位置，除了省時省力外，排版出來的結果還不錯看！比方說，下圖為截自 <a href="https://twitter.github.io/labella.js/">Labella.js 的示範頁面</a>：</p>
+<a rel="attachment wp-att-1767" href="https://blog.infographics.tw/wp-content/uploads/2016/04/labella.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/labella.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/labella-300x84.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/labella-768x216.png 768w" height="253" width="900" alt="labella Screenshot" src="https://blog.infographics.tw/wp-content/uploads/2016/04/labella.png" class="aligncenter size-full wp-image-1767"></a>
+<p>在這個範例中我們彈性的設定各種屬性，標籤便會自動依照我們的選擇擺放位置。它的輸出甚至是 SVG ，我們很輕易的就可以利用 SVG Crowbar 等工具 ( 請參考先前的：<a href="https://blog.infographics.tw/2015/10/svg-crowbar/">SVG Crowbar — 視覺化一鍵打包帶回家</a> ) 介紹把他整組下載來修改。完美！</p>
+<p>但是，很可惜的這個範例中並沒有讓我們填事件細節的地方，也因此產生的時間軸只能做為參考，若要直接拿來用，還是得重新調整半天。沒關係， Labella.js 正如其名，是個 JavaScript 函式庫，我們可以運用他所提供的 API 來打造自己的時間軸。</p>
+<p>( 編按：如果你不會寫程式，我們直接在文章最後提供了一個做好的時間軸標籤產生器，可以直接拉到底玩玩看喔！)</p>
+<p>首先，將 Labella.js 引入網頁中，並準備一個 SVG 標籤 ( id 亦設為 “svg” )：</p>
+<pre>&nbsp; &lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/labella/1.1.2/labella.min.js"&gt;&lt;/script&gt;
+&nbsp; &lt;svg id="svg" width="800px" height="500px" viewBox="0 0 800 500"&gt;&lt;/svg&gt;</pre>
+<p>接著以下列程式碼產生標籤排版資料：</p>
+<pre>&nbsp; // 一共三組資料，對應位置在 10, 20, 30，標籤寬度 100, 80, 60
+&nbsp; var nodes = [
+&nbsp; &nbsp; new labella.Node(10,100), &nbsp;
+&nbsp; &nbsp; new labella.Node(20,80),
+&nbsp; &nbsp; new.labella.Node(30,60),
+&nbsp; ];
+&nbsp; nodes = new labella.Force().nodes(nodes).compute().nodes();</pre>
+<p>接著我們利用 Labella 的 Renderer 函式搭配 D3.js 繪製標籤：</p>
+<pre>// 計算位置
+var renderer = new labella.Renderer();
+nodes = renderer.layout(nodes);
+// 建立分組標籤
+d3.select("#svg").selectAll("path").data(nodes).enter()
+&nbsp; .append("g").each(function(d,i) {
+&nbsp; &nbsp; var node = d3.select(this);
+&nbsp; &nbsp; // 繪製連線
+&nbsp; &nbsp; node.append("path").attr({
+&nbsp; &nbsp; &nbsp; d: renderer.generatePath,
+&nbsp; &nbsp; &nbsp; fill: "none", stroke: "crimson"
+&nbsp; &nbsp; });
+&nbsp; &nbsp; // 繪製標籤
+&nbsp; &nbsp; node.append("rect").rect({
+&nbsp; &nbsp; &nbsp; x: function(it) { return it.x - it.dx / 2 ; },
+&nbsp; &nbsp; &nbsp; y: function(it) { return it.y; },
+&nbsp; &nbsp; &nbsp; width: function(it) { return it.dx; },
+&nbsp; &nbsp; &nbsp; height: function(it) { return it.dy; },
+&nbsp; &nbsp; &nbsp; fill: "crimson"
+&nbsp; &nbsp; });
+&nbsp; });</pre>
+<p>產生的結果如下：</p>
+<a rel="attachment wp-att-1768" href="https://blog.infographics.tw/wp-content/uploads/2016/04/simple1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/simple1.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/simple1-300x50.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/simple1-768x128.png 768w" height="150" width="900" alt="simple result from labella" src="https://blog.infographics.tw/wp-content/uploads/2016/04/simple1.png" class="aligncenter size-full wp-image-1768"></a>
+<p>&nbsp;</p>
+<h2>利用 d3Kit-timeline</h2>
+<p>雖然我們成功做出了一個時間軸雛型，但還有很多沒搞定的，包含軸線、軸點、標籤文字等等問題，再這樣搞下去輕鬆都不輕鬆了。沒關係， Labella.js 作者深知民間疾苦，他將 Labella.js 搭配包裝成另一個好用的工具 — d3Kit-timeline ！</p>
+<p>d3Kit-timeline 透過包裝繪圖的細節讓我們省掉大部份上述的工，而透過 D3.js 則為我們保留了許多彈性。這裡我們直接引用 d3Kit-timeline usage 裡的程式碼簡單為大家做解說。</p>
+<p>首先，引入必要的函式庫；除了 d3.js 與 labella.js 以外，我們需要另外取得 <a href="https://raw.githubusercontent.com/twitter/d3kit/master/dist/d3kit.min.js">d3kit</a> 與 <a href="https://raw.githubusercontent.com/kristw/d3kit-timeline/master/dist/d3kit-timeline.min.js">d3kit-timeline</a>：</p>
+<pre>&nbsp; &lt;script src="d3.min.js"&gt;&lt;/script&gt;
+&nbsp; &lt;script src="<a href="https://raw.githubusercontent.com/twitter/d3kit/master/dist/d3kit.min.js">d3kit.min.js</a>"&gt;&lt;/script&gt;
+&nbsp; &lt;script src="labella.min.js"&gt;&lt;/script&gt;
+&nbsp; &lt;script src="<a href="https://raw.githubusercontent.com/kristw/d3kit-timeline/master/dist/d3kit-timeline.min.js">d3kit-timeline.min.js</a>"&gt;&lt;/script&gt;</pre>
+<p>接著設定我們要用的資料，這裡使用的資料是星際大戰電影各集的年代與名稱：</p>
+<pre>  var data = [
+   {time: new Date(1977, 4,25), name: 'A New Hope'},
+   {time: new Date(1980, 4,17), name: 'The Empire Strikes Back'},
+   {time: new Date(1984, 4,25), name: 'Return of the Jedi'},
+   {time: new Date(1999, 4,19), name: 'The Phantom Menace'},
+   {time: new Date(2002, 4,16), name: 'Attack of the Clones'},
+   {time: new Date(2005, 4,19), name: 'Revenge of the Sith'},
+   {time: new Date(2015,11,18), name: 'The Force Awakens'}
+  ];</pre>
+<p>然後使用 d3Kit-timeline 繪制時間軸：</p>
+<pre>  chart = new d3KitTimeline('#svg', {
+    direction: 'down', // 朝下的時間軸標籤
+    initialWidth: 800, labella: {maxPos: 800}, // 控制圖表寬度
+    textFn: function(d) { return d.time.getFullYear() + ' - ' + d.name }
+  });</pre>
+<pre>  chart.data(data).resizeToFit();</pre>
+<p>產生結果如下：</p>
+<a rel="attachment wp-att-1771" href="https://blog.infographics.tw/wp-content/uploads/2016/04/sample1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/sample1.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/sample1-300x111.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/sample1-768x285.png 768w" height="334" width="900" alt="labella with d3Kit-timeline" src="https://blog.infographics.tw/wp-content/uploads/2016/04/sample1.png" class="aligncenter size-full wp-image-1771"></a>
+<h2>Labella UI</h2>
+<p>即便 Labella + d3Kit-timeline 相當的方便，對於不會寫程式的讀者來說仍然是無法使用，沒關係！小編將上列的範例程式碼整理成一個可以動態填入資料的線上版本，如果你想要嘗試看看，直接玩玩看吧：</p>
+<p></p>
+<p>這裡提供另一段範例資料供讀者參考，可以試著在上方的文字框中貼上：</p>
+<pre>&nbsp; time,name
+&nbsp; 1983/4/18,US Embassy bombing
+&nbsp; 1983/12/12,Kuwait bombings
+&nbsp; 1989/7/7,Jerusalem Bus Suicide Attack
+&nbsp; 1993/2/26,WTC Bombing
+&nbsp; 1993/3/12,Serial Blasts in Mumbai
+&nbsp; 1994/12/24,Flight Hijacking in Algiers
+&nbsp; 1996/6/5,Khobar Towers Bombing
+&nbsp; 1997/11/17,Luxor Massacre
+&nbsp; 1998/2/14,Coimbatore Bomb Attacks
+&nbsp; 1998/8/7,US Embassy bombing
+&nbsp; 2000/10/12,Yemeni Attack
+&nbsp; 2000/12/22,Delhi Attack
+&nbsp; 2000/12/24,Indonesia Bombings
+&nbsp; 2001/9/11,911</pre>
+<p>這組範例資料的產生結果類似下圖：</p>
+<a rel="attachment wp-att-1780" href="https://blog.infographics.tw/wp-content/uploads/2016/04/sample2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/04/sample2.png 900w, https://blog.infographics.tw/wp-content/uploads/2016/04/sample2-300x97.png 300w, https://blog.infographics.tw/wp-content/uploads/2016/04/sample2-768x247.png 768w" height="290" width="900" alt="sample2" src="https://blog.infographics.tw/wp-content/uploads/2016/04/sample2.png" class="aligncenter size-full wp-image-1780"></a>
+<p>我們也在其中提供了基本設定顏色的功能，但最後你都可以利用 SVG Crowbar 下載後再利用 Adobe Illustrator 或是 Vectr.com 做調整。若你未來想再使用這個小工具，你可以儲存這篇文章供參考，或直接將<a href="https://infographicstw.github.io/labella-ui/">這個小工具的網址</a> (&nbsp;https://infographicstw.github.io/labella-ui/ ) 加入書籤。</p>
+<h2>結語</h2>
+<p>Labella.js 為來自 Twitter 的 Krist Wongsuphasawat 開發，在其程式碼中也可以看到類似 D3.js 結構的設計，而正如 D3.js 其中強大的一面 — 「不光是給你圖表，而是幫你計算各種版面」一般， Labella 也可以想成是一個 d3.layout 的實用擴充。或者說，原本作者就是以這樣的思維來設計的吧！</p>
+<p>&nbsp;</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="https://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="https://blog.infographics.tw/tag/d3kit/">d3kit</a>,<a rel="tag" href="https://blog.infographics.tw/tag/d3kit-timeline/">d3kit-timeline</a>,<a rel="tag" href="https://blog.infographics.tw/tag/labella/">labella</a>,<a rel="tag" href="https://blog.infographics.tw/tag/ldcolorpicker/">ldColorpicker</a>,<a rel="tag" href="https://blog.infographics.tw/tag/timeline/">timeline</a>,<a rel="tag" href="https://blog.infographics.tw/tag/tool/">tool</a>,<a rel="tag" href="https://blog.infographics.tw/tag/twitter/">twitter</a>,<a rel="tag" href="https://blog.infographics.tw/tag/visualization/">visualization</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="https://blog.infographics.tw/2016/03/choose-your-visualization-palette-3/">顏色這樣挑！搞定你的視覺化色盤（ 下 ）</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="https://blog.infographics.tw/2016/04/interactive-r-with-shiny/">R 也能互動！用 Shiny 與 R 語言將你的數據變成互動圖表</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="https://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="https://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料" rel="bookmark" href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-150x150.jpg 150w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.jpg">																										<br>
+													無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="https://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, https://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="https://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>1</span> Comment</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-770">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="https://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="https://www.gravatar.com/avatar/c1f8ce411834c9f53c789df3b316b3a6?s=40">
+                <cite class="fn">Amy</cite>         <time datetime="2017-01-20"><a href="https://blog.infographics.tw/2016/04/use-labella-for-timeline/#comment-770">20 1 月, 2017 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>請問產生的圖該怎麼存成圖檔呢？<br>
+時間軸的長度是否可以調整呢？</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="https://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="https://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="https://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="https://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="https://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="https://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="https://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="https://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="https://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="https://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="https://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="https://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			

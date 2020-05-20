@@ -1,0 +1,282 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">為所有人打造的資料視覺化服務 — PlotDB</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-1927 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-chart tag-d3js tag-infographics tag-plot tag-plotdb tag-reusable tag-visualization" id="post-1927">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2016-11-13" class="updated">13 11 月, 2016</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2016/10/cover.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-300x176.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-768x450.png 768w" height="527" width="900" alt="Cover" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover.png" class="aligncenter size-full wp-image-1945"></a>
+<p>看到想嘗試的視覺化手法，卻不知道該怎麼做嗎？讓 PlotDB 幫你吧！線上視覺化服務 PlotDB 提供上百種的視覺圖表樣版供我們自由選用，同時也提供了一個專為視覺化打造的編輯介面，而且最酷的是 – 不會寫程式也能上手！</p>
+<p><span id="more-1927"></span></p>
+<p>視覺化是種很有效的溝通方式。隨著網路普及，越來越多各領域的人 – 包括商管、行銷、甚至新聞媒體 – 都想利用視覺化的力量，但當套件軟體的基本圖表無法滿足他們的時候，他們都面臨到了一個很大的門檻：程式設計。</p>
+<p>圖表產製通常牽涉到自動化，而編程製圖能讓我們免於費時且重覆的手工繪圖；然而，雖然 D3.js 的作者 Mike Bostock 提出了「<a href="https://bost.ocks.org/mike/chart/">Toward Reusable Chart</a>」的概念，另一方面我們卻看到網路上有越來越多樣性的圖表，即使已經開源，也都只能使用「一次」 – 若你完全不懂程式，你幾乎不太可能利用它們。</p>
+<p>為什麼我們不能像逛街購物一樣的挑圖表，回家打開來就可以直接使用？於是 infographics.tw 團隊決定親手打造一個這樣的工具，經過了幾個月的努力後 — PlotDB 就這樣誕生了。</p>
+<p>首先進入 <a href="https://plotdb.com">plotdb.com</a> ，往下一拉，馬上可以看到相當多數量的圖表：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/list.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/list.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/list-300x161.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/list-768x413.png 768w" height="484" width="900" alt="list" src="http://blog.infographics.tw/wp-content/uploads/2016/10/list.png" class="aligncenter size-full wp-image-1928"></a>
+<p>這些即是 PlotDB 所提供的圖表樣版，種類相當多；不光是一些基本圖表的變形，一些比較少見的圖表如 Pareto Diagram ( 品管七手法之一 ) 、Marimekko Chart ( 堆積長條的變形 ) 或是互動式的立體地球儀、弦圖與資訊圖表常用的弧式長條、Pictogram 等等都可以看到，比方說下圖的<a href="https://plotdb.com/chart/1050/">飄雪散布圖</a>：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/snow.gif"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/snow.gif 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/snow-300x147.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/snow-768x377.gif 768w" height="442" width="900" alt="snow scatter plot" src="http://blog.infographics.tw/wp-content/uploads/2016/10/snow.gif" class="aligncenter size-full wp-image-1929"></a>
+<p>或是這個<a href="https://plotdb.com/chart/1091">全球地震視覺化</a>，可以用滑鼠拖動來瀏覽不同地區：</p>
+<div style="width: 100%;">
+<div style="position: relative; height: 0; overflor: hidden; padding-bottom: 75%;"></div>
+</div>
+<p>這些圖表都是利用 PlotDB 製作出來的喔！那麼，要怎麼使用 PlotDB 來製作視覺圖表呢？</p>
+<h2>基本操作</h2>
+<p>使用上相當容易，莫約四個步驟便能做出一個最基本的視覺化。首先準備好想要呈現的資料，然後從 PlotDB 挑選一個適合的圖表，點擊進入編輯介面，這裡我們使用 Treemap 為例，下圖即為 Treemap 的編輯介面：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/editor.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/editor.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/editor-300x180.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/editor-768x462.png 768w" height="541" width="900" alt="PlotDB Editor" src="http://blog.infographics.tw/wp-content/uploads/2016/10/editor.png" class="aligncenter size-full wp-image-1930"></a>
+<p>在上圖中，右方 (1) 為圖表結果預覽，左方(2) 則為圖表設定。每張圖的設定都不太一樣，但項目不會太多，包含<br>
+顏色、尺寸等等的設定，我們可以自行調整看看。</p>
+<p>比方說下圖是簡單的調整一些參數的結果：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/sample.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/sample.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/sample-300x150.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/sample-768x384.png 768w" height="450" width="900" alt="Sample Design of Treemap" src="http://blog.infographics.tw/wp-content/uploads/2016/10/sample.png" class="aligncenter size-full wp-image-1932"></a>
+<h2>資料連結</h2>
+<p>當然，最重要的還是要將我們的資料呈現出來；接著我們將網頁往下拉至「Data Binding」的部份，這裡提供的是連結資料與圖表的功能：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/binding2.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/binding2.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/binding2-300x142.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/binding2-768x363.png 768w" height="425" width="900" alt="data binding panel" src="http://blog.infographics.tw/wp-content/uploads/2016/10/binding2.png" class="aligncenter size-full wp-image-1934"></a>
+<p>上圖左方 (1) 陳列了我們可以使用的資料集，除了我們自行上傳的檔案外，也提供了一些基本的範例，比方說台灣各年齡層的人口數等；我們可以在這裡點擊「New Dataset」來上傳資料，也可以直接點選列表中的資料集， PlotDB 會將資料集中的欄位呈現在上圖右上 (2) 的地方，可以看到這個範例中有八個不同的欄位，包含月份 ( month )、軍隊人數 ( army size )、死亡人數 ( death number ) 等等。</p>
+<p>上圖右下 (3) 的地方列出了圖表使用的資料類型，以 Treemap 為例包含了下列三者：</p>
+<ul>
+<li>category ( color of block / 顏色 )</li>
+<li>name ( name of block / 標籤 )</li>
+<li>value (size of block / 大小 )</li>
+</ul>
+<p>看到這裡你大概也曉得要怎麼使用了 – 在 (1) 處選擇資料集，然後從 (2) 將想表現的欄位拖曳到 (3) 圖表的對應維度！</p>
+<p>我們使用「近兩年世界各國來台旅遊人數 (逐月)」 ( <a href="http://example.infographics.tw/1927/taiwan-travel.csv">可以於此取得</a> ) 資料集來做個範例。首先，點擊「New Dataset 」開啟資料編輯器，並從選單「Import –&gt; upload CSV file 」將檔案上傳：<br>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/upload.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/upload.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/upload-300x127.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/upload-768x325.png 768w" height="381" width="900" alt="upload dataset" src="http://blog.infographics.tw/wp-content/uploads/2016/10/upload.png" class="aligncenter size-full wp-image-1935"></a></p>
+<p>上傳後資料會以試算表表格的形式讓我們直接預覽，我們可以先看看資料長什麼樣子，或者便點擊右下角的「Save」，並為資料集取個名字，我們這裡將它命名為「來台旅遊」：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/save-as.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/save-as.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/save-as-300x133.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/save-as-768x341.png 768w" height="400" width="900" alt="save as dataset" src="http://blog.infographics.tw/wp-content/uploads/2016/10/save-as.png" class="aligncenter size-full wp-image-1936"></a>
+<p>存檔之後便會回到「Data Binding」介面，這時我們的新資料集應該已經出現在資料集列表了；若你找不到，也可以直接搜尋資料集名稱。</p>
+<p>點選「來台旅遊」資料集，我們會在右方看到很多個欄位，除了存放國名的「國家」、該國對應洲名的「洲別」外，還有兩年內各個月的人數資料；我們逐一將「洲別」、「國家」與「105/04 ( 代表105年 4 月的各國來台旅遊人數 ) 」三個欄位拖曳到下方的圖表維度中：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/drag.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/drag.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/drag-300x183.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/drag-768x469.png 768w" height="550" width="900" alt="drag" src="http://blog.infographics.tw/wp-content/uploads/2016/10/drag.png" class="aligncenter size-full wp-image-1937"></a>
+<p>這時再將網頁拉回到上方圖表預覽的地方，我們的圖表已經製作好等著我們了：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/output.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/output.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/output-300x145.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/output-768x371.png 768w" height="435" width="900" alt="treemap - travel to taiwan from other country" src="http://blog.infographics.tw/wp-content/uploads/2016/10/output.png" class="aligncenter size-full wp-image-1938"></a>
+<p>最後，於編輯介面左上角為圖表命名並點擊「Fork」按鈕將圖表存檔，以後有需要便可以再開啟進行編輯囉！是不是很簡單呢？</p>
+<h2>使用圖表</h2>
+<p>製作完成後，我們該怎麼使用圖表呢？ PlotDB 提供許多不同的圖表使用方式，不過大家最常用到的應該會是這兩種方法：</p>
+<ol>
+<li>下載成 PNG / SVG 並進行進一步編輯</li>
+<li>使用嵌入網頁碼並嵌入於自己的文章中</li>
+</ol>
+<p>上述兩個用法分別對應到下圖的兩個箭頭處：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/share.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/share.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/share-300x120.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/share-768x307.png 768w" height="360" width="900" alt="share" src="http://blog.infographics.tw/wp-content/uploads/2016/10/share.png" class="aligncenter size-full wp-image-1940"></a>
+<p>點擊箭頭 1 處的按鈕，會彈出 PNG / SVG / PLOTDB 的下載選項，你可以選擇有需要的類型下載；若點擊右方的「Share」按鈕則會跳出分享對話框，並提供我們所需的連結或嵌入程式碼，我們也可以直接指定嵌入碼使用的長寬比 (Aspect Ratio )，以利於不同顯示裝置中都得到最好的顯示體驗：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/share-panel.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/share-panel.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/share-panel-300x190.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/share-panel-768x486.png 768w" height="570" width="900" alt="share-panel" src="http://blog.infographics.tw/wp-content/uploads/2016/10/share-panel.png" class="aligncenter size-full wp-image-1941"></a>
+<p>兩種模式各有什麼好處呢？使用連結或 iframe 嵌入方式可以保留圖表的互動效果與 RWD 的功能，讓我們可以在不同大小的裝置上都能有不錯的使用體驗；而 SVG 下載的方式則可以讓我們做進一步的編輯，比方說我們之前便利用 PlotDB 的 Ternary Plot 搭配 Adobe Illustrator 製作了「<a href="http://blog.infographics.tw/2016/08/coding-intro/">視覺化編程入門 — 我該選什麼程式語言？</a>」一文的封面圖片：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-300x176.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1-768x450.png 768w" height="527" width="900" alt="cover - programming language for data visualization" src="http://blog.infographics.tw/wp-content/uploads/2016/08/cover-1.png" class="aligncenter size-full wp-image-1919"></a>
+<h2>進階客製化</h2>
+<p>當然，光是這樣並不足以讓 PlotDB 成為一個與眾不同的圖表服務；事實上， PlotDB 不光只是提供圖表，它還讓我們可以自由的修改圖表！在圖表預覽框上方有幾個按鈕可以點選 ( 下圖紅框處 )，包括了「Code」、「Stylesheet」與「Document」，它們分別對應到網頁基本的「JavaScript 檔」、「CSS 檔」與「HTML 檔」，而這些是所有組成圖表該有的元件了：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2016/10/editing.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/editing.png 900w, http://blog.infographics.tw/wp-content/uploads/2016/10/editing-300x117.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/editing-768x300.png 768w" height="352" width="900" alt="editing code" src="http://blog.infographics.tw/wp-content/uploads/2016/10/editing.png" class="aligncenter size-full wp-image-1944"></a>
+<p>這些程式碼執行之後便會產生我們所看到的預覽圖結果，上圖展示了點擊「code」按鈕之後所看到的原始碼內容。原始碼的修改功讓我們可以針對圖表做很有彈性的客製化，這在工作團隊中相當有用 – 需要製作圖表時由工程師來開發、不會寫程式的編輯則可以直接透過 PlotDB 的操作介面客製並產生圖表；最棒的是這些圖表程式一旦製作完成，便可以直接重覆運用於未來的文章或簡報中，不需要工程師也可以直接產生！</p>
+<h2>結語</h2>
+<p>媒體革新的這個年代，我們有了越來越多運用視覺圖表、互動技術的內容平台，然而這些內容不同於以往，不再只是傳統編輯手中的文字與照片；我們有了資料、程式碼、3D模型、甚至影片、音效與轉譯前的原始碼，而且其數量是越來越多。</p>
+<p>PlotDB 不僅提供我們大量的圖表樣板做武器，也提供了一個嶄新的方式管理與維護我們的數位內容，還記得前面提到 Mike Bostock 所提到的概念「Reusable Chart」嗎？妥善的管理我們的數位內容，將成為我們成長的一個強大後盾。</p>
+<p>目前 PlotDB 還在 Beta 階段，除了問題修正之外，也會針對使用需求進行功能發展，為了讓服務永續營運，未來也會走向 Freemium 的月費模式並保持基本功能免費使用，現階段並沒有任何使用限制，就請各位讀者盡量的玩玩看吧！</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/chart/">chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/d3js/">d3js</a>,<a rel="tag" href="http://blog.infographics.tw/tag/infographics/">infographics</a>,<a rel="tag" href="http://blog.infographics.tw/tag/plot/">plot</a>,<a rel="tag" href="http://blog.infographics.tw/tag/plotdb/">plotdb</a>,<a rel="tag" href="http://blog.infographics.tw/tag/reusable/">reusable</a>,<a rel="tag" href="http://blog.infographics.tw/tag/visualization/">visualization</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2016/11/d3js-transition/">讓我的視覺化動起來！D3.js 動畫函式入門</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+    <h3 class="h2" id="comments-title"><span>1</span> Comment</h3>
+
+    <section class="commentlist">
+        <div class="comment even thread-even depth-1 cf" id="comment-724">
+    <article class="cf">
+      <header class="comment-author vcard">
+                                <img src="http://blog.infographics.tw/wp-content/themes/simply-read/library/images/nothing.gif" width="40" height="40" class="load-gravatar avatar avatar-48 photo" data-gravatar="http://www.gravatar.com/avatar/6c66a3fa6d4922515c3cc8bb34fb9ca4?s=40">
+                <cite class="fn"><a class="url" rel="external nofollow ugc" href="http://www.hk9527.com">有趣的故事</a></cite>         <time datetime="2016-12-25"><a href="http://blog.infographics.tw/2016/11/plotdb-the-data-visualization-service/#comment-724">25 12 月, 2016 </a></time>
+
+      </header>
+            <section class="comment_content cf">
+        <p>寫得不錯</p>
+      </section>
+          </article>
+  </div>
+    </section>
+
+    
+        	<p class="no-comments">Comments are closed.</p>
+    
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>

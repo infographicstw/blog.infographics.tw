@@ -1,0 +1,242 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldui/ldui.min.css"><style type="text/css">.article-header {
+  margin: 3em 0;
+}
+.comments-title,
+.commentlist,
+#comments-title,
+.no-comments,
+#sidebar1 {
+  display: none;
+}
+.next-prev-post,
+.article-footer,
+.tag-links {
+  display: none;
+}
+.related.posts {
+  display: none;
+}
+.related.posts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.related.posts ul li {
+  margin-bottom: 1em;
+}
+.byline.vcard {
+  display: none;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+</style></head><body><div class="w-1024 mx-auto rwd typeset heading-contrast" style="padding:24px">
+				<header class="article-header">
+					<div class="wrap cf" id="inner-content">
+						<h1 class="entry-title single-title">統計圖表製作 － 使用 RAW</h1>
+					</div>
+				</header> 
+				<div class="wrap cf" id="inner-content">
+					
+					<div role="main" class="m-all t-2of3 d-5of7 cf" id="main">
+
+													<article role="article" class="cf post-192 post type-post status-publish format-standard has-post-thumbnail hentry category-9 tag-curved-bar-chart tag-raw tag-14" id="post-192">
+							<p class="byline vcard">
+								Posted <time pubdate="" datetime="2015-03-4" class="updated">4 3 月, 2015</time> by <span class="author"><a rel="author external" title="造訪「infographics.tw」的網站" href="http://infographics.tw">infographics.tw</a></span>								under <a rel="category tag" href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>							</p>
+
+							<section class="entry-content cf">
+  
+  <a href="http://blog.infographics.tw/wp-content/uploads/2015/02/cover1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/02/cover1.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/02/cover1-300x176.jpg 300w" height="527" width="900" alt="Raw.densitydesign - Cover" src="http://blog.infographics.tw/wp-content/uploads/2015/02/cover1.jpg" class="aligncenter size-full wp-image-194"></a>
+<p>RAW (&nbsp;<a href="http://raw.densitydesign.org/" title="RAW">http://raw.densitydesign.org/</a> ) 是個很特別的圖表工具。基於 D3.js，一頁式不需註冊的使用方式，讓你可以很快做出不同於常見圖表的作品，再加上開放源碼的本質，隨時都能自己追加新的圖表類型。</p>
+<p><span id="more-192"></span></p>
+<p>單就圖表工具來說， RAW 相當容易使用。簡單的分成四個步驟，匯入資料、選擇圖表、欄位對應、調整參數後一張圖表就做出來了，下面讓我們一步一步快速的看一下流程。</p>
+<h3>匯入資料</h3>
+<p>需要用手打或貼上的方式，主要是逗號分隔 (CSV) 的純文字。首行定義了各欄的名稱，以粗體標示。這邊我們輸入了隨意九個國家 2014 年的出生率數據：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/02/data.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/02/data.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/02/data-300x140.jpg 300w" height="420" width="900" alt="RAW - import data" src="http://blog.infographics.tw/wp-content/uploads/2015/02/data.jpg" class="aligncenter size-full wp-image-195"></a>
+<h3>選擇圖表</h3>
+<p>資料輸入完成以後接著選擇圖表類型，目前一共有 16 種類型可以選擇並附帶圖表說明，全都是非主流的圖表 － Circular Dendrogram 、 Hexagonal Binning 、 Stream Graph 、 Treemap － 或者說如果 Google Chart Tool 裡沒有的話，來這裡找找看就對了：</p>
+<h3><a href="http://blog.infographics.tw/wp-content/uploads/2015/02/chart-type.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/02/chart-type.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/02/chart-type-300x152.jpg 300w" height="455" width="900" alt="Raw - Chart Type" src="http://blog.infographics.tw/wp-content/uploads/2015/02/chart-type.jpg" class="aligncenter size-full wp-image-196"></a></h3>
+<h3>欄位對應</h3>
+<p>由於各個圖表的繪製方式不同，資料與圖表屬性之間的對應也會不一樣。在選定圖表之後，右邊會出現該圖表所使用的參數列表，左邊則是資料集各欄，我們利用拖拉的方式把資料集欄位丟到右邊的參數中，即完成參數對應。</p>
+<p>比方說，當我選定了泡泡圖，我可以把國家名稱丟到 Label 參數中，然後把生育率同時丟到 Color 參數與 Size 參數，這樣子做出來的泡泡圖顏色跟大小會依生育率而定，而每個泡泡中間都會有國家的名字。</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_199"><a href="http://blog.infographics.tw/wp-content/uploads/2015/02/mapping1.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/02/mapping1.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/02/mapping1-300x121.jpg 300w" height="364" width="900" alt="Raw - Attribute Mapping (Before)" src="http://blog.infographics.tw/wp-content/uploads/2015/02/mapping1.jpg" class="wp-image-199 size-full" aria-describedby="caption-attachment-199"></a><p class="wp-caption-text" id="caption-attachment-199">欄位對應前</p></div>
+<p>&nbsp;</p>
+<div class="wp-caption aligncenter" style="width: 910px" id="attachment_200"><a href="http://blog.infographics.tw/wp-content/uploads/2015/02/mapping2.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/02/mapping2.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/02/mapping2-300x121.jpg 300w" height="364" width="900" alt="Raw - Attribute Mapping (After)" src="http://blog.infographics.tw/wp-content/uploads/2015/02/mapping2.jpg" class="wp-image-200 size-full" aria-describedby="caption-attachment-200"></a><p class="wp-caption-text" id="caption-attachment-200">欄位對應後</p></div>
+<h3>調整參數</h3>
+<p>欄位對應的同時圖表就已經產生了，往下拉我們可以看到一個依我們資料安排而成的圖表，再來就是看有沒有需要微調的部份，在左方有些選項可以讓我們調整，而同樣的這些設定也是因圖而異。</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/02/chart.jpg"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/02/chart.jpg 900w, http://blog.infographics.tw/wp-content/uploads/2015/02/chart-300x183.jpg 300w" height="550" width="900" alt="Raw - Chart Option" src="http://blog.infographics.tw/wp-content/uploads/2015/02/chart.jpg" class="aligncenter size-full wp-image-201"></a>
+<p>最後，製作完的圖表可以選擇用 png 或 svg 的方式下載後存檔。 RAW 本身不提供 Data 或 Chart Hosting 的功能，你得自己找地方放。</p>
+<h2>追加個人圖表</h2>
+<p>個人認為 RAW 的一個很特別的點在於他本身是開源的，你可以在 <a href="https://github.com/densitydesign/raw" title="raw.densitydesign.org">RAW 的&nbsp;Github 頁面</a>找到他的原始碼，下載之後跑在自己的電腦裡，甚至利用他架設另一個網站，例如我們就架了一個 <a href="http://raw.infographics.tw" title="RAW@infographics.tw">raw.infographics.tw</a> 。而以這點為基礎， RAW 提供了一個簡明的介面，在 RAW 本身以及客製化圖表之間，讓我們可以輕鬆的利用 RAW 的介面提供自己的圖表服務。</p>
+<p>換句話說，今天我有特別的圖表想要供大家使用，我就依照 RAW 的圖表規範製作，然後透過自營 RAW 平台發表即可，不需要再花時間去刻設定界面，資料建表介面了。這使得 RAW 從一個單純的圖表工具升級成一個圖表框架，提供給圖表開發者用來分享圖表工具。相當酷的一個概念。</p>
+<p>至於圖表樣版要怎麼建立？有興趣的話可以直接參考他 Github 裡的<a href="https://github.com/densitydesign/raw/wiki/Adding-New-Charts" title="RAW - Add New Charts">說明文件</a>，我們在 <a href="http://raw.infographics.tw" title="RAW@infographics.tw">raw.infographics.tw</a> 裡也照這份說明文件追加了一個圖表「Curved Bar Chart」，算是不太常見但又相對容易實作的例子，利用上面生育率的資料繪製出來的例子如下：</p>
+<a href="http://blog.infographics.tw/wp-content/uploads/2015/03/custom.png"><img sizes="(max-width: 900px) 100vw, 900px" srcset="http://blog.infographics.tw/wp-content/uploads/2015/03/custom.png 900w, http://blog.infographics.tw/wp-content/uploads/2015/03/custom-300x173.png 300w" height="520" width="900" alt="RAW Custom Chart (Curved Bar Chart)" src="http://blog.infographics.tw/wp-content/uploads/2015/03/custom.png" class="aligncenter size-full wp-image-224"></a>
+<p>若你對 Curved Bar Chart 這個樣板有興趣，可以參考<a href="https://github.com/infographicstw/raw/blob/gh-pages/charts/curvedBarChart.js" title="Curved Bar Chart Template">這個位於 Github 的原始程式碼</a>來對照前面的說明文件閱讀。</p>
+<p>還有一點值得一提的是， RAW 本身不經手你的資料 － 圖表完全在 Client 端製作產生，與 plot.ly 完全相反的是他對你的資料能不碰就不碰，讓 RAW 本身成為一個單純的工具。這個保證讓這個工具更有機會被運用在較敏感的資料上頭。</p>
+<h2>優缺點總結</h2>
+<p>雖然 RAW 是個很酷的專案，我們還是先回歸線上圖表製作的角度來總結一下吧。</p>
+<h3>優點</h3>
+<ul>
+<li>圖表類型多元，不落俗套</li>
+<li>快速無負擔</li>
+<li>不需登入，不用花錢</li>
+<li>考慮到資料隱私性問題</li>
+</ul>
+<h3>缺點</h3>
+<ul>
+<li>資料匯入不易</li>
+<li>不提供線上分享功能</li>
+<li>顏色設定不易</li>
+</ul>
+<p>&nbsp;</p>
+<p>當然我不覺得用圖表製作工具的角度評論他是公平的 － 但就圖表平台而言，我會希望 RAW 可以把資料匯入的部份做得更完整一點，同時圖表的種類也應該要再多一些比較有意思。有興趣的朋友不妨一起來開發一些獨特的圖表來送 Patch 給他們囉。</p>
+<br>      <div class="tag-links">
+      <div class="clear"></div>
+      TAGS:       <a rel="tag" href="http://blog.infographics.tw/tag/curved-bar-chart/">curved-bar-chart</a>,<a rel="tag" href="http://blog.infographics.tw/tag/raw/">raw</a>,<a rel="tag" href="http://blog.infographics.tw/tag/%e5%9c%96%e8%a1%a8/">圖表</a>    </div>
+  </section> 
+							<div class="next-prev-post">
+			                  <div class="prev">
+			                    <p><span class="fa fa-angle-left"></span> PREVIOUS POST</p> <a rel="prev" href="http://blog.infographics.tw/2015/03/crawl-chart-data-with-d3-deconstructor/">只有圖表卻想要資料？讓 D3 Deconstructor 幫你！</a>			                  </div>
+			                  <div class="center-divider"></div>
+			                  <div class="next">
+			                  <p>NEXT POST <span class="fa fa-angle-right"></span></p> <a rel="next" href="http://blog.infographics.tw/2015/03/social-chart-visualization-with-plotly/">看過圖表社交平台嗎? － 使用 plot.ly 製作圖表</a>			                  </div>
+			                  <div class="clear"></div>
+			                </div> 
+
+							
+							<footer class="article-footer">
+								<div class="avatar">
+									<img width="150" height="150" class="avatar avatar-150 photo" srcset="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=300&amp;d=mm&amp;r=g 2x" src="http://2.gravatar.com/avatar/2868ceab90bafecec35f8d80cc91795f?s=150&amp;d=mm&amp;r=g" alt="">								</div>
+								<div class="info">
+									<p class="author"><span>Written by</span> infographics.tw</p>
+									<p class="author-desc">  </p>
+								</div>
+								<div class="clear"></div>
+							</footer> 
+																						<div class="related posts">
+								
+									<h3>Related Posts</h3>
+									<ul> 
+																					
+											<li>
+												<a title="讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫" rel="bookmark" href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-150x150.gif 150w, http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-125x125.gif 125w" alt="bouncing rainbow heart" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2018/02/thumbnail-300x300.gif">																										<br>
+													讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Vectr – 永久免費的線上向量圖形編輯服務" rel="bookmark" href="http://blog.infographics.tw/2016/11/vectr/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-150x150.jpg 150w, http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-125x125.jpg 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/COVER-300x300.jpg">																										<br>
+													Vectr – 永久免費的線上向量圖形編輯服務												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="微動畫簡單做！使用 animate.css 五秒提升作品質感" rel="bookmark" href="http://blog.infographics.tw/2016/11/animate-css/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif 300w, http://blog.infographics.tw/wp-content/uploads/2016/11/cover-125x125.gif 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/11/cover-300x300.gif">																										<br>
+													微動畫簡單做！使用 animate.css 五秒提升作品質感												</a>
+
+											</li>
+
+																					
+											<li>
+												<a title="Reveal.js + slides.com 製作令人驚豔的互動式簡報" rel="bookmark" href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">
+													<img sizes="(max-width: 300px) 100vw, 300px" srcset="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png 300w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-150x150.png 150w, http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-125x125.png 125w" alt="" class="attachment-simplyread-thumb-image-300by300 size-simplyread-thumb-image-300by300 wp-post-image" src="http://blog.infographics.tw/wp-content/uploads/2016/10/cover-1-300x300.png">																										<br>
+													Reveal.js + slides.com 製作令人驚豔的互動式簡報												</a>
+
+											</li>
+
+																				<div class="clear"></div>
+									</ul>
+
+								</div>
+							
+							
+
+  
+  
+							</article> 
+						
+						
+					</div>
+
+					<div role="complementary" class="sidebar m-all t-1of3 d-2of7 last-col cf" id="sidebar1">
+
+	
+		<div class="widget_text widget widget_custom_html" id="custom_html-6"><div class="textwidget custom-html-widget"><ins data-ad-changeminwidth="1024" data-ad-height-min="250" data-ad-width-min="300" data-ad-height-max="250" data-ad-width-max="300" data-ad-zone-min="6432" data-ad-zone-max="6431" style="display:inline-block;" class="clickforceads"></ins>
+</div></div><div class="widget widget_search" id="search-2"><h4 class="widgettitle">全站搜尋</h4><form action="http://blog.infographics.tw/" class="searchform" id="searchform" method="get" role="search">
+				<div>
+					<label for="s" class="screen-reader-text">搜尋關鍵字:</label>
+					<input id="s" name="s" value="" type="text">
+					<input value="搜尋" id="searchsubmit" type="submit">
+				</div>
+			</form></div>		<div class="widget widget_recent_entries" id="recent-posts-2">		<h4 class="widgettitle">最新文章</h4>		<ul>
+											<li>
+					<a href="http://blog.infographics.tw/2018/02/loading-io-animated-icons/">讓視覺化作品躍出畫面 – 使用 loading.io 動畫圖示庫</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/vectr/">Vectr – 永久免費的線上向量圖形編輯服務</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/animate-css/">微動畫簡單做！使用 animate.css 五秒提升作品質感</a>
+									</li>
+											<li>
+					<a href="http://blog.infographics.tw/2016/11/reveal-js-and-slides-com/">Reveal.js + slides.com 製作令人驚豔的互動式簡報</a>
+									</li>
+					</ul>
+		</div><div class="widget widget_recent_comments" id="recent-comments-2"><h4 class="widgettitle">最新留言</h4><ul id="recentcomments"><li class="recentcomments">「<span class="comment-author-link"><a class="url" rel="external nofollow ugc" href="https://raykuaza-ex.blogspot.com/">Ray</a></span>」在〈<a href="http://blog.infographics.tw/2016/08/coding-intro/#comment-1636">視覺化編程入門 — 我該選什麼程式語言？</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">戴領袖</span>」在〈<a href="http://blog.infographics.tw/2016/04/interactive-visualization-with-bokeh-and-python/#comment-1622">Python 上前端！利用 Bokeh 與 Python 製作網頁互動視覺化</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">JUZ</span>」在〈<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/#comment-1568">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Shealy</span>」在〈<a href="http://blog.infographics.tw/about-us/#comment-1557">關於我們</a>〉發佈留言</li><li class="recentcomments">「<span class="comment-author-link">Jett</span>」在〈<a href="http://blog.infographics.tw/2016/05/text-visualization-with-jieba/#comment-1468">用結巴斷詞實作文字視覺化 — 以 2016 總統就職演講為例</a>〉發佈留言</li></ul></div><div class="widget widget_archive" id="archives-2"><h4 class="widgettitle">過去文章</h4>		<ul>
+				<li><a href="http://blog.infographics.tw/2018/02/">2018 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/11/">2016 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/08/">2016 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/05/">2016 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/04/">2016 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/03/">2016 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/02/">2016 年 2 月</a></li>
+	<li><a href="http://blog.infographics.tw/2016/01/">2016 年 1 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/12/">2015 年 12 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/11/">2015 年 11 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/10/">2015 年 10 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/09/">2015 年 9 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/08/">2015 年 8 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/07/">2015 年 7 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/06/">2015 年 6 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/05/">2015 年 5 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/04/">2015 年 4 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/03/">2015 年 3 月</a></li>
+	<li><a href="http://blog.infographics.tw/2015/02/">2015 年 2 月</a></li>
+		</ul>
+			</div><div class="widget widget_categories" id="categories-2"><h4 class="widgettitle">分類瀏覽</h4>		<ul>
+				<li class="cat-item cat-item-9"><a href="http://blog.infographics.tw/category/%e4%bb%8b%e7%b4%b9/">介紹</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.infographics.tw/category/%e4%bd%9c%e5%93%81/">作品</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.infographics.tw/category/%e5%af%a6%e6%88%b0/">實戰</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.infographics.tw/category/%e5%bf%83%e6%b3%95/">心法</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.infographics.tw/category/%e6%95%99%e5%ad%b8/">教學</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="http://blog.infographics.tw/category/%e6%a1%88%e4%be%8b/">案例</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.infographics.tw/category/%e6%a6%82%e5%bf%b5/">概念</a>
+</li>
+		</ul>
+			</div><div class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget">
+
+<ins data-ad-slot="8866475899" data-ad-client="ca-pub-2167218457160447" style="display:inline-block;width:336px;height:280px" class="adsbygoogle"></ins>
+</div></div>
+	
+</div>
+				</div>
+
+			</div></body></html>
